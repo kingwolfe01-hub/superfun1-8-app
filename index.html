@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Super Fun 教材整合平台 v2</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;min-height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;color:#1e293b}.login-wrapper{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#f0fdf4 0%,#eff6ff 100%);z-index:1000}.login-box{width:100%;max-width:380px;background:#fff;border-radius:18px;padding:30px;text-align:center;box-shadow:0 20px 40px rgba(15,23,42,.12);border:1px solid #e2e8f0}.login-box h3{margin-top:0;color:#16a34a;font-size:22px}.login-box p{color:#64748b;font-size:14px;margin-bottom:20px;line-height:1.5}.login-box select,.login-box input{width:100%;padding:12px;margin-bottom:15px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px;text-align:center;outline:none}.login-btn{width:100%;background:linear-gradient(135deg,#16a34a 0%,#22c55e 100%);color:white;border:none;padding:13px 18px;border-radius:999px;cursor:pointer;font-size:16px;font-weight:800}.login-btn:disabled{background:#94a3b8;cursor:not-allowed}.error-msg{color:#dc2626;font-size:14px;font-weight:bold;margin-bottom:15px;display:none}.loading-text{display:none;color:#475569;font-weight:bold;margin-bottom:15px}.main-menu-wrapper{min-height:100vh;display:none;justify-content:center;align-items:center;padding:24px}.main-menu-card{width:100%;max-width:430px;background:#fff;border-radius:28px;padding:28px;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,.35)}.student-badge,.book-badge{display:inline-block;border-radius:999px;padding:8px 14px;font-size:.9rem;font-weight:800;margin:4px 0 10px}.student-badge{background:#e0e7ff;color:#4338ca}.book-badge{background:#dcfce7;color:#166534}.module-choice{width:100%;border:none;border-radius:22px;padding:18px;margin:10px 0;cursor:pointer;font-size:1.05rem;font-weight:900;color:white;box-shadow:0 12px 22px rgba(15,23,42,.12)}.module-choice.player{background:linear-gradient(135deg,#16a34a 0%,#22c55e 100%)}.module-choice.vocab{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%)}.module-choice small{display:block;margin-top:6px;font-size:.82rem;font-weight:600;opacity:.9}.module-wrapper{display:none;min-height:100vh;padding:12px;justify-content:center;align-items:center}.top-back-btn{border:none;border-radius:999px;background:#0f172a;color:white;font-weight:800;padding:10px 16px;cursor:pointer;box-shadow:0 8px 16px rgba(15,23,42,.18)}#player-wrapper.album-player{background:#fff;border-radius:18px;width:100%;max-width:450px;box-shadow:0 20px 40px rgba(0,0,0,.18);overflow:hidden;flex-direction:column;max-height:94vh;align-self:center}#player-wrapper .player-topbar{display:flex;justify-content:flex-start;padding:10px;background:#f8fafc;border-bottom:1px solid #e2e8f0}#player-wrapper .copyright-banner{background:#ffebee;color:#d32f2f;padding:10px 15px;font-size:13px;font-weight:bold;text-align:center;border-bottom:1px solid #ffcdd2}#player-wrapper .school-header{background:#4CAF50;color:white;text-align:center;padding:12px;font-size:16px;font-weight:bold}#player-wrapper .now-playing{padding:20px;text-align:center;background:linear-gradient(to bottom,#fff,#f9f9f9)}#player-wrapper .track-title{font-size:18px;color:#333;margin:0 0 20px 0;font-weight:bold}#player-wrapper .controls{display:flex;justify-content:center;align-items:center;gap:15px;margin-bottom:20px}#player-wrapper .player-btn{background:#4CAF50;color:white;border:none;padding:10px 20px;border-radius:30px;cursor:pointer;font-size:16px;font-weight:bold}#player-wrapper .player-btn-side{background:#e0e0e0;color:#333;padding:8px 16px;font-size:14px}#player-wrapper .progress-container{display:flex;align-items:center;gap:10px;font-size:13px;color:#666}#player-wrapper .progress-area{flex-grow:1;background:#e0e0e0;height:8px;border-radius:4px;cursor:pointer;position:relative}#player-wrapper .progress-bar{background:#4CAF50;height:100%;width:0%;border-radius:4px}#player-wrapper .player-tab-container{display:flex;border-bottom:1px solid #e0e0e0;border-top:1px solid #e0e0e0;background:#f9f9f9}#player-wrapper .player-tab-btn{flex:1;padding:12px 0;border:none;background:transparent;font-size:16px;font-weight:bold;color:#888;cursor:pointer}#player-wrapper .player-tab-btn.active{color:#4CAF50;border-bottom:3px solid #4CAF50;background:#fff}#player-wrapper .playlist-wrapper{flex-grow:1;overflow-y:auto;background:#fff}#player-wrapper .playlist{list-style:none;padding:0;margin:0}#player-wrapper .playlist li{padding:15px 20px;border-bottom:1px solid #f0f0f0;cursor:pointer;color:#444;display:flex;align-items:center}#player-wrapper .playlist li.active{background:#e8f5e9;color:#2e7d32;font-weight:bold;border-left:4px solid #4CAF50}#vocab-wrapper{flex-direction:column;gap:10px}.vocab-topbar{width:100%;max-width:430px;display:flex;justify-content:flex-start}.app-viewport{width:100%;max-width:430px;height:calc(100vh - 72px);max-height:932px;background:#fff;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative}.app-header{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);color:white;padding:14px;text-align:center;box-shadow:0 4px 12px rgba(79,70,229,.3);z-index:10}.app-title{margin:0 0 10px 0;font-size:1.18rem;font-weight:900}.control-panel{background:#f8fafc;padding:10px 12px;border-bottom:1px solid #e2e8f0}.select-label{display:block;color:#475569;font-size:.78rem;font-weight:900;margin:0 0 5px 2px}.select-input{width:100%;padding:10px 14px;font-size:.92rem;border-radius:12px;border:none;background-color:rgba(255,255,255,.22);color:white;font-weight:800;outline:none;cursor:pointer}.select-input option{background-color:#1e1b4b;color:white}.unit-select{width:100%;padding:10px 14px;font-size:.9rem;border-radius:12px;border:1px solid #cbd5e1;background:white;color:#334155;font-weight:800;outline:none}.content-area{flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column}.mode-section{display:none;height:100%;flex-direction:column;justify-content:space-between}.mode-section.active{display:flex}.card-box{background:white;border-radius:26px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:0 10px 25px -5px rgba(0,0,0,.05);border:2px solid #f1f5f9;flex:1;margin-bottom:14px;position:relative}.word-img{width:155px;height:155px;object-fit:cover;border-radius:20px;margin-bottom:12px;box-shadow:0 8px 16px rgba(0,0,0,.08);background-color:#f8fafc}.word-text{font-size:2.1rem;font-weight:900;color:#0f172a;text-align:center;line-height:1.25}.meaning-text{font-size:1.25rem;color:#4f46e5;font-weight:800;margin-top:8px;text-align:center}.btn-group{display:flex;gap:10px;width:100%}.btn{width:100%;padding:14px;font-size:1rem;font-weight:800;border:none;border-radius:18px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.08)}.btn-primary{background:linear-gradient(135deg,#4f46e5 0%,#6366f1 100%);color:white}.btn-success{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white}.btn-warning{background:#f59e0b;color:white}.btn-outline{background:white;color:#475569;border:1px solid #e2e8f0}.nav-row{display:flex;gap:10px;width:100%;margin-top:8px}.feedback-box{margin-top:12px;padding:12px;border-radius:14px;text-align:center;font-weight:800;width:100%;min-height:46px}.correct{background:#dcfce7;color:#166534}.incorrect{background:#fee2e2;color:#991b1b}.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:16px}.option-img-btn,.option-text-btn{border:2px solid #e2e8f0;background:white;border-radius:18px;padding:12px;min-height:82px;font-size:1rem;font-weight:900;color:#334155}.option-img-btn img{width:100%;height:110px;object-fit:contain}.progress-badge{display:inline-block;background:#e0e7ff;color:#4f46e5;padding:6px 16px;border-radius:999px;font-weight:900;font-size:.95rem}.wave-container{display:none}.score-stars{font-size:2rem}.wrong-item{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e2e8f0;font-weight:bold}.score-tag{padding:2px 8px;border-radius:8px;font-size:.85rem;color:white}.score-pass{background-color:#10b981}.score-fail{background-color:#ef4444}@media (min-width:440px){.app-viewport{height:92vh;border-radius:40px;border:8px solid #334155}}@media (max-width:380px){.app-title{font-size:1rem}.word-text{font-size:1.75rem}.meaning-text{font-size:1.05rem}.btn{padding:12px;font-size:.92rem}.card-box{padding:14px}.content-area{padding:10px}.word-img{width:135px;height:135px}}
+</style>
+</head>
+<body>
+<div class="login-wrapper" id="login-wrapper"><div class="login-box"><h3>🏫 專屬教材驗證中心</h3><p>本教材受版權保護，請驗證身分後開始使用。</p><select id="school-select"><option value="" disabled selected>-- 請選擇學校 --</option><option value="華龍國小">華龍國小</option><option value="大同國小">大同國小</option></select><select id="class-select"><option value="" disabled selected>-- 請選擇班級 --</option><option value="三年甲班">三年甲班</option><option value="三年乙班">三年乙班</option><option value="三年丙班">三年丙班</option><option value="四年甲班">四年甲班</option><option value="四年乙班">四年乙班</option><option value="四年丙班">四年丙班</option><option value="五年甲班">五年甲班</option><option value="五年乙班">五年乙班</option><option value="五年丙班">五年丙班</option><option value="六年甲班">六年甲班</option><option value="六年乙班">六年乙班</option><option value="六年丙班">六年丙班</option></select><input type="number" id="number-input" placeholder="請輸入座號"><input type="text" id="name-input" placeholder="請輸入真實姓名"><div class="error-msg" id="error-msg"></div><div class="loading-text" id="loading-text">資料驗證中，請稍候...</div><button class="login-btn" id="login-btn">驗證身分並開始上課</button></div></div>
+<div class="main-menu-wrapper" id="main-menu-wrapper"><div class="main-menu-card"><h1>Super Fun 教材中心</h1><p>請選擇今天要使用的學習功能。</p><div class="student-badge" id="student-badge">已完成身分驗證</div><br><div class="book-badge" id="book-badge">目前教材</div><button class="module-choice player" onclick="showModule('player')">🎧 教學音檔播放器<small>依目前冊別載入 CD 音檔</small></button><button class="module-choice vocab" onclick="showModule('vocab')">📚 學習與測驗<small>第一層選功能，第二層選單元</small></button></div></div>
+<div class="album-player module-wrapper" id="player-wrapper"><div class="player-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div><div class="copyright-banner">⚠️ 版權宣告：本音檔僅限於學校教學使用，不可外傳</div><div class="school-header" id="dynamic-school-header">教學音檔播放器</div><div class="now-playing"><h3 class="track-title" id="display-title">請選擇曲目</h3><audio id="main-audio"></audio><div class="controls"><button class="player-btn player-btn-side" id="prev-btn">上一首</button><button class="player-btn" id="play-btn">播放</button><button class="player-btn player-btn-side" id="next-btn">下一首</button></div><div class="progress-container"><span id="current-time">0:00</span><div class="progress-area" id="progress-area"><div class="progress-bar" id="progress-bar"></div></div><span id="total-time">0:00</span></div></div><div class="player-tab-container"><button class="player-tab-btn active" id="btn-CD1" onclick="switchPlayerTab('CD1')">CD 1</button><button class="player-tab-btn" id="btn-CD2" onclick="switchPlayerTab('CD2')">CD 2</button></div><div class="playlist-wrapper"><ul class="playlist" id="playlist-container"></ul></div></div>
+<div class="module-wrapper" id="vocab-wrapper"><div class="vocab-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div><div class="app-viewport"><div class="app-header"><h1 class="app-title">Super Fun 教材學習方程式</h1><label class="select-label" style="color:white;">第一層：學習功能</label><select id="modeSelect" class="select-input" onchange="switchMode(this.value)"><option value="flashcard">⚡ 閃示卡</option><option value="listening">👂 看圖測驗</option><option value="phonicsQuiz">🔤 辨音測驗</option><option value="speaking">🎙️ 口說測驗</option><option value="sentencePractice">📘 句子跟讀</option><option value="storyPractice">📖 Story Time 跟讀</option><option value="patternPractice">🧩 句型操練</option></select></div><div class="control-panel"><label class="select-label" for="unitSelect">第二層：學習單元</label><select id="unitSelect" class="unit-select" onchange="onUnitChange()"></select></div><div class="content-area">
+<div id="flashcard-mode" class="mode-section active"><div class="card-box"><img id="fc-img" class="word-img" src="" alt="圖片"><div class="word-text" id="fc-word">-</div><div class="meaning-text" id="fc-meaning">-</div></div><div class="btn-group"><button class="btn btn-outline" onclick="prevWord()">⬅️ 上一張</button><button class="btn btn-primary" onclick="playCurrentWordAudio()">🔊 播放</button><button class="btn btn-outline" onclick="nextWord()">下一張 ➡️</button></div></div>
+<div id="listening-mode" class="mode-section"><div id="listening-quiz-view"><span class="progress-badge" id="list-progress">題目 1 / 1</span><div class="card-box" style="min-height:160px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playQuizAudio()">🔊 點擊聽題目</button><p style="font-weight:800;color:#64748b;">請選出正確答案：</p></div><div class="option-grid" id="quiz-options"></div><div id="listening-feedback" class="feedback-box"></div></div><div id="listening-result-view" style="display:none;"></div></div>
+<div id="phonicsQuiz-mode" class="mode-section"><div id="phonics-quiz-view"><span class="progress-badge" id="phonics-progress">題目 1 / 1</span><div class="card-box" style="min-height:150px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playPhonicsQuizAudio()">🔊 點擊聽單字發音</button><p style="font-weight:800;color:#64748b;">請選出拼寫正確的英文：</p></div><div class="option-grid" id="phonics-quiz-options"></div><div id="phonics-feedback" class="feedback-box"></div></div><div id="phonics-result-view" style="display:none;"></div></div>
+<div id="speaking-mode" class="mode-section"><div id="speaking-quiz-view"><span class="progress-badge" id="spk-progress">題目 1 / 1</span><div class="card-box"><img id="sp-img" class="word-img" src="" alt="圖片"><div class="word-text" id="sp-word">-</div><div class="meaning-text" id="sp-meaning">-</div></div><button class="btn btn-success" onclick="startSpeechRecognition()">🎙️ 按下開始唸</button><div id="speaking-feedback" class="feedback-box"></div></div><div id="speaking-result-view" style="display:none;"></div></div>
+<div id="sentencePractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="sentence-progress">句子 1 / 1</span><div class="word-text" id="sentence-text" style="font-size:1.45rem;margin-top:18px;">-</div><div class="meaning-text" id="sentence-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentSentenceAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevSentenceItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextSentenceItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startSentenceSpeechRecognition()">🎙️ 開始跟讀</button><div id="sentence-feedback" class="feedback-box"></div></div>
+<div id="storyPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="story-progress">Story Time 1 / 1</span><div class="word-text" id="story-text" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="story-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentStoryAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevStoryItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextStoryItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startStorySpeechRecognition()">🎙️ 開始跟讀</button><div id="story-feedback" class="feedback-box"></div></div>
+<div id="patternPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="pattern-progress">句型 1 / 1</span><div class="word-text" id="pattern-title" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="pattern-meaning">-</div><div id="pattern-template" style="margin-top:12px;font-weight:900;color:#0f172a;text-align:center;font-size:1.05rem;line-height:1.5;">-</div><div id="pattern-slots" style="margin-top:12px;width:100%;font-size:.9rem;color:#475569;text-align:left;"></div><div id="pattern-generated" style="margin-top:14px;width:100%;padding:12px;border-radius:16px;background:#f0fdf4;border:2px solid #86efac;color:#166534;font-size:1.1rem;font-weight:900;text-align:center;line-height:1.55;">請選擇欄位產生句子</div><div id="pattern-blank-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#fff7ed;border:2px solid #fdba74;text-align:left;"><div style="font-weight:900;color:#9a3412;margin-bottom:8px;">📝 填空選答案</div><div id="pattern-blank-question" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請先選擇欄位產生填空題</div><div id="pattern-blank-options" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;"></div><div id="pattern-blank-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-order-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#eef2ff;border:2px solid #a5b4fc;text-align:left;"><div style="font-weight:900;color:#3730a3;margin-bottom:8px;">🔀 拖曳排序</div><div id="pattern-order-target" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請把單字排成正確句子</div><div style="margin-top:10px;font-size:.85rem;color:#64748b;font-weight:800;">可拖曳，也可點選單字加入答案區；點答案區單字可移回。</div><div id="pattern-order-bank" ondragover="patternAllowDrop(event)" ondrop="patternDropToBank(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:44px;padding:8px;border-radius:12px;background:white;border:1px dashed #818cf8;"></div><div id="pattern-order-answer" ondragover="patternAllowDrop(event)" ondrop="patternDropToAnswer(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:48px;padding:8px;border-radius:12px;background:#f8fafc;border:2px dashed #6366f1;"></div><div class="nav-row" style="margin-top:10px;"><button class="btn btn-outline" onclick="resetPatternOrderQuiz()">重新排序</button><button class="btn btn-success" onclick="checkPatternOrderAnswer()">檢查排序</button></div><div id="pattern-order-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-examples" style="margin-top:12px;width:100%;font-size:.92rem;color:#334155;text-align:left;line-height:1.55;"></div></div><button class="btn btn-primary" onclick="playCurrentPatternAudio()">🔊 播放產生句</button><div class="nav-row"><button class="btn btn-outline" onclick="prevPatternItem()">⬅️ 上一句型</button><button class="btn btn-outline" onclick="nextPatternItem()">下一句型 ➡️</button></div><button class="btn btn-success" onclick="startPatternSpeechRecognition()">🎙️ 跟讀產生句</button><div id="pattern-feedback" class="feedback-box"></div></div>
+</div></div></div>
+<script src="data/sf1-structured-data.js"></script><script src="data/sf3-structured-data.js"></script><script src="data/sf5-structured-data.js"></script><script src="data/sf7-structured-data.js"></script><script src="data/books.js"></script><script src="data/students-map.js"></script><script src="data/pattern-drag-order-ux-patch.js"></script>
+<script>
+const GOOGLE_SCRIPT_URL="https://script.google.com/macros/s/AKfycbw4fLrYwzEVwFnzoLhb2WH-JH6RpFEJH2WlbbRHtYP_TF7t-v-AcyBJxPvhQc3zPOTR2A/exec";
+const loginBtn=document.getElementById('login-btn'), schoolSelect=document.getElementById('school-select'), classSelect=document.getElementById('class-select'), numberInput=document.getElementById('number-input'), nameInput=document.getElementById('name-input'), errorMsg=document.getElementById('error-msg'), loadingText=document.getElementById('loading-text'), dynamicSchoolHeader=document.getElementById('dynamic-school-header'), studentBadge=document.getElementById('student-badge'), bookBadge=document.getElementById('book-badge');
+let loggedInStudent=null,currentClassInfo=null,currentBookId=null,currentBook=null,activeRawUnits={},activeCourseData={},activeWordList=[],currentUnitKey="",currentMode="flashcard",currentIndex=0,currentQuizList=[],quizIndex=0,score=0,wrongWords=[],audioUnlocked=false,audioCache={},playerInitializedBookId=null,activeRecognition=null;
+
+loginBtn.addEventListener('click',handleStudentLogin);
+[schoolSelect,classSelect,numberInput,nameInput].forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter')handleStudentLogin();}));
+
+function handleStudentLogin(){
+  const school=schoolSelect.value,gradeClass=classSelect.value,number=numberInput.value.trim(),name=nameInput.value.trim();
+  if(!school||!gradeClass||!number||!name){showError('請完整填寫學校、班級、座號與姓名！');return;}
+  errorMsg.style.display='none';
+  loadingText.style.display='block';
+  loginBtn.disabled=true;
+
+  fetch(GOOGLE_SCRIPT_URL,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({school,gradeClass,number,name})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    loadingText.style.display='none';
+    loginBtn.disabled=false;
+    if(data.status==='success'){
+      const serverStudent=data.student||{};
+      const serverBookId=data.bookId||serverStudent.bookId||'';
+      
+      let resolved=null;
+      if(typeof resolveBookForStudent==='function'){
+        resolved=resolveBookForStudent(school,gradeClass);
+      }
+
+      if(serverBookId&&typeof bookData!=='undefined'&&bookData[serverBookId]){
+        const baseClassInfo=(typeof getClassBookInfo==='function')?getClassBookInfo(school,gradeClass)||{}:{};
+        resolved={
+          ok:true,
+          classInfo:{...baseClassInfo,bookId:serverBookId},
+          book:bookData[serverBookId]
+        };
+      }
+
+      if(!resolved||!resolved.ok){
+        showError(resolved?resolved.message:'對應不到冊別資訊，請檢查教材設定檔。');
+        return;
+      }
+
+      loggedInStudent={
+        school:serverStudent.school||school,
+        gradeClass:serverStudent.gradeClass||gradeClass,
+        number:serverStudent.number||number,
+        name:serverStudent.displayName||data.displayName||name,
+        displayName:serverStudent.displayName||data.displayName||name
+      };
+      
+      currentClassInfo=resolved.classInfo;
+      currentBook=resolved.book;
+      currentBookId=currentBook.bookId;
+      activeRawUnits=currentBook.rawUnits||{};
+      activeCourseData=currentBook.courseData||{};
+
+      if(typeof buildStudentDisplayText==='function'){
+        const d=buildStudentDisplayText(loggedInStudent,currentClassInfo,currentBook);
+        studentBadge.textContent=d.studentBadge;
+        bookBadge.textContent=d.bookBadge;
+      }else{
+        studentBadge.textContent=`${loggedInStudent.name} 同學`;
+        bookBadge.textContent=currentBook.title||'Super Fun';
+      }
+
+      dynamicSchoolHeader.textContent=`${school} ${currentClassInfo.grade||''}${currentClassInfo.semester||''}｜${currentBook.title||''}`;
+      document.getElementById('login-wrapper').style.display='none';
+      document.getElementById('main-menu-wrapper').style.display='flex';
+    }else{
+      showError(data.message||'驗證失敗，請確認資料是否正確。');
+    }
+  })
+  .catch(err=>{
+    loadingText.style.display='none';
+    loginBtn.disabled=false;
+    showError('連線至資料庫失敗，請檢查網路連線。');
+    console.error('Login Fetch Error:',err);
+  });
+}
+
+function showError(msg){errorMsg.textContent=msg;errorMsg.style.display='block';}
+function showModule(moduleName){
+  document.getElementById('main-menu-wrapper').style.display='none';
+  document.getElementById('player-wrapper').style.display=moduleName==='player'?'flex':'none';
+  document.getElementById('vocab-wrapper').style.display=moduleName==='vocab'?'flex':'none';
+  if(moduleName==='player'){pauseVocabActivities();initPlayerForCurrentBook();}
+  if(moduleName==='vocab'){pauseTrackAudio();initVocabForCurrentBook();}
+}
+function backToMenu(){
+  pauseTrackAudio();
+  pauseVocabActivities();
+  document.getElementById('player-wrapper').style.display='none';
+  document.getElementById('vocab-wrapper').style.display='none';
+  document.getElementById('main-menu-wrapper').style.display='flex';
+}
+function initVocabForCurrentBook(){if(!currentBook)return;currentMode='flashcard';document.getElementById('modeSelect').value='flashcard';populateUnitSelector();switchMode('flashcard');}
+function pauseVocabActivities(){
+  if('speechSynthesis'in window)window.speechSynthesis.cancel();
+  if(activeRecognition){try{activeRecognition.abort();}catch(e){}activeRecognition=null;}
+}
+function unlockAudio(){audioUnlocked=true;}
+function normalizeText(t){return String(t||'').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,' ').trim();}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+function escapeHtml(text){return String(text).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
+function getItemText(item){return item?.word||item?.sentence||'';}
+function getItemMeaning(item){return item?.meaning||'';}
+function hasImage(item){return !!(item&&item.image);}
+function buildImageOnlyUnits(units){const output={};Object.entries(units||{}).forEach(([key,items])=>{const imageItems=(items||[]).filter(hasImage);if(imageItems.length>0)output[key]=imageItems;});return output;}
+function safeList(){return activeWordList||[];}
+
+function getUnitsForMode(mode){
+  if(!currentBook)return{};
+  if(['flashcard','speaking'].includes(mode))return currentBook.courseData||{};
+  if(mode==='listening')return buildImageOnlyUnits(currentBook.rawUnits||{});
+  if(mode==='phonicsQuiz')return currentBook.rawUnits||{};
+  if(mode==='sentencePractice')return currentBook.sentenceUnits||{};
+  if(mode==='storyPractice')return currentBook.storyUnits||{};
+  if(mode==='patternPractice')return currentBook.patternUnits||{};
+  return currentBook.courseData||{};
+}
+function populateUnitSelector(){
+  const select=document.getElementById('unitSelect');
+  const units=getUnitsForMode(currentMode);
+  select.innerHTML='';
+  Object.keys(units).forEach(k=>{const op=document.createElement('option');op.value=k;op.textContent=k;select.appendChild(op);});
+  currentUnitKey=Object.keys(units)[0]||'';
+  if(currentUnitKey)select.value=currentUnitKey;
+  activeWordList=units[currentUnitKey]||[];
+  currentIndex=0;quizIndex=0;
+}
+function onUnitChange(){
+  unlockAudio();
+  pauseVocabActivities();
+  const units=getUnitsForMode(currentMode);
+  currentUnitKey=document.getElementById('unitSelect').value;
+  activeWordList=units[currentUnitKey]||[];
+  currentIndex=0;quizIndex=0;
+  runCurrentMode();
+}
+function switchMode(mode){
+  unlockAudio();
+  pauseVocabActivities();
+  currentMode=mode;
+  document.getElementById('modeSelect').value=mode;
+  document.querySelectorAll('.mode-section').forEach(sec=>sec.classList.remove('active'));
+  document.getElementById(mode+'-mode')?.classList.add('active');
+  populateUnitSelector();
+  runCurrentMode();
+}
+function runCurrentMode(){
+  if(currentMode==='flashcard')updateFlashcard();
+  if(currentMode==='listening')restartListeningQuiz();
+  if(currentMode==='phonicsQuiz')restartPhonicsQuiz();
+  if(currentMode==='speaking')restartSpeakingQuiz();
+  if(currentMode==='sentencePractice')updateSentencePractice();
+  if(currentMode==='storyPractice')updateStoryPractice();
+  if(currentMode==='patternPractice')updatePatternPractice();
+}
+function playAudio(item){
+  unlockAudio();
+  if(!item)return;
+  const text=getItemText(item);
+  if(item.audio){
+    const audio=audioCache[item.audio]||new Audio(item.audio);
+    audioCache[item.audio]=audio;
+    try{audio.pause();audio.currentTime=0;}catch(e){}
+    audio.play().catch(()=>speakText(text));
+  }else speakText(text);
+}
+function speakText(text){
+  if('speechSynthesis'in window){
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';u.rate=.78;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function updateFlashcard(){
+  const list=safeList();if(!list.length)return;
+  const item=list[currentIndex];
+  const img=document.getElementById('fc-img');
+  const text=getItemText(item);
+  if(hasImage(item)){img.style.display='block';img.src=item.image;img.alt=text+' 圖片';}
+  else{img.style.display='none';img.removeAttribute('src');}
+  document.getElementById('fc-word').innerText=text;
+  document.getElementById('fc-meaning').innerText=getItemMeaning(item);
+}
+function playCurrentWordAudio(){playAudio(safeList()[currentIndex]);}
+function nextWord(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex+1)%l.length;updateFlashcard();}
+function prevWord(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex-1+l.length)%l.length;updateFlashcard();}
+
+function restartListeningQuiz(){
+  currentQuizList=shuffle(safeList().filter(hasImage));
+  quizIndex=0;score=0;wrongWords=[];
+  document.getElementById('listening-quiz-view').style.display='block';
+  document.getElementById('listening-result-view').style.display='none';
+  if(!currentQuizList.length){
+    document.getElementById('listening-quiz-view').innerHTML='<div class="card-box"><h3>此單元沒有可用圖片題目</h3><p style="font-weight:800;color:#64748b;text-align:center;">看圖測驗只會使用已設定圖片的單字。</p></div>';
+    return;
+  }
+  loadListeningQuestion();
+}
+function loadListeningQuestion(){
+  if(quizIndex>=currentQuizList.length){showSimpleResult('listening');return;}
+  const cur=currentQuizList[quizIndex];
+  document.getElementById('list-progress').innerText=`題目 ${quizIndex+1} / ${currentQuizList.length}`;
+  document.getElementById('listening-feedback').className='feedback-box';
+  document.getElementById('listening-feedback').innerHTML='';
+  const all=Object.values(getUnitsForMode(currentMode)).flat().filter(hasImage);
+  const opts=[cur];
+  while(opts.length<Math.min(4,all.length)){
+    const r=all[Math.floor(Math.random()*all.length)];
+    if(!opts.some(o=>normalizeText(getItemText(o))===normalizeText(getItemText(r))))opts.push(r);
+  }
+  const box=document.getElementById('quiz-options');
+  box.innerHTML='';
+  shuffle(opts).forEach(opt=>{
+    const btn=document.createElement('button');
+    if(hasImage(opt)){
+      btn.className='option-img-btn';
+      const img=document.createElement('img');img.src=opt.image;
+      img.onerror=function(){this.src='https://via.placeholder.com/120?text='+encodeURIComponent(getItemText(opt));};
+      btn.appendChild(img);
+    }else{
+      btn.className='option-text-btn';btn.innerText=getItemText(opt);
+    }
+    btn.onclick=()=>checkListeningAnswer(opt,cur,btn);
+    box.appendChild(btn);
+  });
+  if(audioUnlocked)playAudio(cur);
+}
+function playQuizAudio(){playAudio(currentQuizList[quizIndex]);}
+function checkListeningAnswer(sel,cor,btn){
+  document.querySelectorAll('#quiz-options button').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('listening-feedback');
+  if(normalizeText(getItemText(sel))===normalizeText(getItemText(cor))){
+    score++;fb.className='feedback-box correct';fb.innerHTML='🎉 答對了！';
+    setTimeout(()=>{quizIndex++;loadListeningQuestion();},800);
+  }else{
+    wrongWords.push(cor);fb.className='feedback-box incorrect';
+    fb.innerHTML=`正確答案：<strong>${escapeHtml(getItemText(cor))}</strong>`;
+    setTimeout(()=>{quizIndex++;loadListeningQuestion();},1600);
+  }
+}
+
+function restartPhonicsQuiz(){
+  currentQuizList=shuffle(safeList());
+  quizIndex=0;score=0;wrongWords=[];
+  document.getElementById('phonics-quiz-view').style.display='block';
+  document.getElementById('phonics-result-view').style.display='none';
+  loadPhonicsQuestion();
+}
+function buildPhonicsChoices(cur){
+  const correct=getItemText(cur);
+  const choices=[];
+  const add=w=>{if(!normalizeText(w))return;if(!choices.some(c=>normalizeText(c)===normalizeText(w)))choices.push(w);};
+  add(correct);
+  (cur.similarWords||[]).forEach(add);
+  shuffle(safeList().map(getItemText)).forEach(w=>{if(choices.length<4&&normalizeText(w)!==normalizeText(correct))add(w);});
+  shuffle(Object.values(activeRawUnits).flat().map(getItemText)).forEach(w=>{if(choices.length<4&&normalizeText(w)!==normalizeText(correct))add(w);});
+  return shuffle(choices.slice(0,4));
+}
+function loadPhonicsQuestion(){
+  if(quizIndex>=currentQuizList.length){showSimpleResult('phonics');return;}
+  const cur=currentQuizList[quizIndex];
+  document.getElementById('phonics-progress').innerText=`題目 ${quizIndex+1} / ${currentQuizList.length}`;
+  document.getElementById('phonics-feedback').className='feedback-box';
+  document.getElementById('phonics-feedback').innerHTML='';
+  const box=document.getElementById('phonics-quiz-options');
+  box.innerHTML='';
+  buildPhonicsChoices(cur).forEach(choice=>{
+    const btn=document.createElement('button');
+    btn.className='option-text-btn';
+    btn.innerText=choice;
+    btn.onclick=()=>checkPhonicsAnswer(choice,cur,btn);
+    box.appendChild(btn);
+  });
+  if(audioUnlocked)playAudio(cur);
+}
+function playPhonicsQuizAudio(){playAudio(currentQuizList[quizIndex]);}
+function checkPhonicsAnswer(sel,cor,btn){
+  document.querySelectorAll('#phonics-quiz-options button').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('phonics-feedback');
+  if(normalizeText(sel)===normalizeText(getItemText(cor))){
+    score++;fb.className='feedback-box correct';fb.innerHTML='🎉 答對了！';
+    setTimeout(()=>{quizIndex++;loadPhonicsQuestion();},800);
+  }else{
+    wrongWords.push(cor);fb.className='feedback-box incorrect';
+    fb.innerHTML=`正確答案：<strong>${escapeHtml(getItemText(cor))}</strong>`;
+    setTimeout(()=>{quizIndex++;loadPhonicsQuestion();},1600);
+  }
+}
+
+function restartSpeakingQuiz(){
+  currentQuizList=shuffle(safeList());
+  quizIndex=0;score=0;wrongWords=[];
+  document.getElementById('speaking-quiz-view').style.display='block';
+  document.getElementById('speaking-result-view').style.display='none';
+  loadSpeakingQuestion();
+}
+function loadSpeakingQuestion(){
+  if(quizIndex>=currentQuizList.length){showSimpleResult('speaking');return;}
+  const item=currentQuizList[quizIndex];
+  document.getElementById('spk-progress').innerText=`題目 ${quizIndex+1} / ${currentQuizList.length}`;
+  const img=document.getElementById('sp-img');
+  const text=getItemText(item);
+  if(hasImage(item)){img.style.display='block';img.src=item.image;}
+  else{img.style.display='none';img.removeAttribute('src');}
+  document.getElementById('sp-word').innerText=text;
+  document.getElementById('sp-meaning').innerText=getItemMeaning(item);
+  document.getElementById('speaking-feedback').className='feedback-box';
+  document.getElementById('speaking-feedback').innerHTML='';
+}
+
+const speechAliasMap={one:['one','1','won'],two:['two','2','to','too'],three:['three','3'],four:['four','4','for'],five:['five','5'],six:['six','6'],seven:['seven','7'],eight:['eight','8','ate'],nine:['nine','9'],ten:['ten','10']};
+function canonicalSpeechToken(t){const n=normalizeText(t);for(const [w,a] of Object.entries(speechAliasMap))if(a.includes(n))return w;return n;}
+function canonicalSpeechText(t){return normalizeText(t).split(' ').map(canonicalSpeechToken).join(' ').trim();}
+function isSpeakingMatch(ans,cor){
+  const a=canonicalSpeechText(ans),c=canonicalSpeechText(cor);
+  if(!a||!c)return false;
+  if(a===c)return true;
+  const aw=a.split(' ').filter(Boolean),cw=c.split(' ').filter(Boolean);
+  if(cw.length<=1)return aw.includes(c);
+  return cw.filter(w=>aw.includes(w)).length/cw.length>=.6;
+}
+
+function startSpeechRecognition(){
+  if(!currentQuizList.length)return;
+  startGenericRecognition(currentQuizList[quizIndex],'speaking-feedback',passed=>{
+    if(passed)score++;else wrongWords.push(currentQuizList[quizIndex]);
+    setTimeout(()=>{quizIndex++;loadSpeakingQuestion();},passed?1000:2200);
+  });
+}
+
+function updateSentencePractice(){
+  const item=safeList()[currentIndex];
+  document.getElementById('sentence-progress').innerText=safeList().length?`句子 ${currentIndex+1} / ${safeList().length}`:'尚無句子資料';
+  document.getElementById('sentence-text').innerText=item?getItemText(item):'尚無句子資料';
+  document.getElementById('sentence-meaning').innerText=item?getItemMeaning(item):'';
+  document.getElementById('sentence-feedback').className='feedback-box';
+  document.getElementById('sentence-feedback').innerHTML='';
+}
+function nextSentenceItem(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex+1)%l.length;updateSentencePractice();}
+function prevSentenceItem(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex-1+l.length)%l.length;updateSentencePractice();}
+function playCurrentSentenceAudio(){playAudio(safeList()[currentIndex]);}
+function startSentenceSpeechRecognition(){
+  const item=safeList()[currentIndex];
+  if(!item)return;
+  const text=getItemText(item).replace(/[.?!,]/g,'').trim();
+  startGenericRecognition({word:text,sentence:text,meaning:''},'sentence-feedback');
+}
+
+function updateStoryPractice(){
+  const item=safeList()[currentIndex];
+  document.getElementById('story-progress').innerText=safeList().length?`Story Time ${currentIndex+1} / ${safeList().length}`:'尚無 Story Time 資料';
+  document.getElementById('story-text').innerText=item?`${item.no?item.no+'. ':''}${getItemText(item)}`:'尚無 Story Time 資料';
+  document.getElementById('story-meaning').innerText=item?getItemMeaning(item):'';
+  document.getElementById('story-feedback').className='feedback-box';
+  document.getElementById('story-feedback').innerHTML='';
+}
+function nextStoryItem(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex+1)%l.length;updateStoryPractice();}
+function prevStoryItem(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex-1+l.length)%l.length;updateStoryPractice();}
+function playCurrentStoryAudio(){playAudio(safeList()[currentIndex]);}
+function startStorySpeechRecognition(){
+  const item=safeList()[currentIndex];
+  if(!item)return;
+  const text=getItemText(item).replace(/[.?!,]/g,'').trim();
+  startGenericRecognition({word:text,sentence:text,meaning:''},'story-feedback');
+}
+
+function getCurrentPatternExample(){const item=safeList()[currentIndex];if(!item||!item.examples||!item.examples.length)return null;return item.examples[0];}
+function getPatternResources(){return currentBook?.structuredData?.patternResources||currentBook?.practiceSets?.patternResources||{};}
+function getPatternSelectValues(){const values={};document.querySelectorAll('.pattern-slot-select').forEach(sel=>values[sel.dataset.key]=sel.value);return values;}
+function findPatternResource(listName,key,value){const resources=getPatternResources();const list=resources[listName]||[];return list.find(x=>String(x[key]||'').toLowerCase()===String(value||'').toLowerCase())||null;}
+function actionText(action,form){
+  if(!action)return'';
+  let targetAction = action === 'do my homework' ? 'do homework' : action;
+  const data=findPatternResource('actions','base',targetAction);
+  if(form==='thirdPerson')return data?.thirdPerson||targetAction;
+  return data?.base||targetAction;
+}
+function patternAuxForSubject(subject,lower){const aux=(subject==='you'||subject==='I')?'do':'does';return lower?aux:aux.charAt(0).toUpperCase()+aux.slice(1);}
+function patternVerbForSubject(subject,base,third){return ['He','She','he','she'].includes(subject)?third:base;}
+
+function generatePatternSentence(item,values){
+  if(!item)return'';
+  const id=item.patternId||'';const v=values||{};
+  if(id==='sf5_t1_l1_what_day_question')return'What day is today?';
+  if(id==='sf5_t1_l1_it_is_day')return`It’s ${v.day||'Friday'}.`;
+  if(id==='sf5_t1_l1_is_today_day')return`Is today ${v.day||'Friday'}?`;
+  if(id==='sf5_t1_l2_what_time_do_does'){const subject=v.subject||'you';const action=v.action||'get up';return`What time ${patternAuxForSubject(subject,true)} ${subject} ${actionText(action,'base')}?`;}
+  if(id==='sf5_t1_l2_subject_action_time'){
+    const subject=v.subject||'I';
+    const action=v.action||'get up';
+    const time=v.time||'6:50';
+    const isThird = ['He', 'She', 'he', 'she'].includes(subject);
+    return`${subject} ${actionText(action, isThird ? 'thirdPerson' : 'base')} at ${time}.`;
+  }
+  if(id==='sf5_t2_l3_hows_weather')return'How’s the weather?';
+  if(id==='sf5_t2_l3_its_weather')return`It’s ${v.weather||'sunny'}.`;
+  if(id==='sf5_t2_l3_is_it_weather')return`Is it ${v.weather||'hot'}?`;
+  if(id==='sf5_t2_l4_what_subject_like'){const subject=v.subject||'you';return`What subject ${patternAuxForSubject(subject,true)} ${subject} like?`;}
+  if(id==='sf5_t2_l4_subject_like_subject'){const subject=v.subject||'I';const schoolSubject=v.schoolSubject||'art';return`${subject} ${patternVerbForSubject(subject,'like','likes')} ${schoolSubject}.`;}
+  if(id==='sf5_t2_l4_have_class_on_day'){const subject=v.subject||'you';const schoolSubject=v.schoolSubject||'PE';const day=v.day||'Monday';return`${patternAuxForSubject(subject,false)} ${subject} have ${schoolSubject} class on ${day}?`;}
+  let text=item.template||getCurrentPatternExample()?.sentence||'';
+  Object.entries(v).forEach(([k,val])=>{text=text.replaceAll(`{${k}}`,val)});
+  return text.replace(/\{[^}]+\}/g,'___');
+}
+function getCurrentGeneratedPatternSentence(){const item=safeList()[currentIndex];if(!item)return'';const values=getPatternSelectValues();return generatePatternSentence(item,values)||getCurrentPatternExample()?.sentence||'';}
+function patternShuffle(arr){const a=[...(arr||[])];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function uniquePatternOptions(list){const seen=new Set();return(list||[]).filter(x=>{const key=String(x||'').toLowerCase();if(!key||seen.has(key))return false;seen.add(key);return true;});}
+function makePatternOptions(answer,candidates){const opts=uniquePatternOptions([answer,...(candidates||[])]).slice(0,4);return patternShuffle(opts);}
+function blankPatternText(sentence,answer){if(!sentence||!answer)return sentence||'';const idx=sentence.indexOf(answer);if(idx<0)return sentence.replace(/\w+/, '___');return sentence.slice(0,idx)+'___'+sentence.slice(idx+String(answer).length);}
+function getActionForms(action){
+  let targetAction = action === 'do my homework' ? 'do homework' : action;
+  const data=findPatternResource('actions','base',targetAction);
+  return uniquePatternOptions([data?.base||targetAction,data?.thirdPerson||targetAction]);
+}
+
+function makePatternBlankQuiz(item,values){
+  if(!item)return null;
+  const v=values||{};const id=item.patternId||'';
+  const sentence=generatePatternSentence(item,v);
+  let answer='', candidates=[];
+  if(id==='sf5_t1_l2_what_time_do_does'||id==='sf5_t2_l4_what_subject_like'){const subject=v.subject||'you';answer=patternAuxForSubject(subject,true);candidates=['do','does'];}
+  else if(id==='sf5_t2_l4_have_class_on_day'){const subject=v.subject||'you';answer=patternAuxForSubject(subject,false);candidates=['Do','Does'];}
+  else if(id==='sf5_t2_l4_subject_like_subject'){const subject=v.subject||'I';answer=patternVerbForSubject(subject,'like','likes');candidates=['like','likes'];}
+  else if(id==='sf5_t1_l2_subject_action_time'){
+    const action=v.action||'get up';
+    const subject=v.subject||'I';
+    const isThird = ['He', 'She', 'he', 'she'].includes(subject);
+    answer=actionText(action, isThird ? 'thirdPerson' : 'base');
+    candidates=getActionForms(action);
+  }
+  else if(item.slots&&item.slots.length){const s=item.slots[0];answer=v[s.key]||s.options?.[0]||'';candidates=s.options||[];}
+  else {
+    const words = (getCurrentPatternExample()?.sentence || sentence).replace(/[^a-zA-Z0-9\s]/g, '').split(/\s+/).filter(Boolean);
+    answer = words[0] || 'It';
+    candidates = [answer];
+  }
+  if(!answer)return null;
+  return{question:blankPatternText(sentence,answer),answer,options:makePatternOptions(answer,candidates),sentence};
+}
+
+function renderPatternBlankQuiz(q){
+  const question=document.getElementById('pattern-blank-question');
+  const options=document.getElementById('pattern-blank-options');
+  const feedback=document.getElementById('pattern-blank-feedback');
+  if(!question||!options||!feedback)return;
+  if(!q){question.innerText='請先選擇欄位產生填空題';options.innerHTML='';feedback.className='feedback-box';feedback.innerHTML='';return;}
+  question.innerText=q.question;
+  options.innerHTML='';
+  q.options.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='btn btn-outline';
+    btn.style.cssText='padding:10px;font-size:.95rem;';
+    btn.textContent=opt;
+    btn.addEventListener('click',()=>checkPatternBlankAnswer(opt));
+    options.appendChild(btn);
+  });
+  feedback.className='feedback-box';feedback.innerHTML='';
+  window.currentPatternBlankQuiz=q;
+}
+
+function updatePatternBlankQuiz(){const item=safeList()[currentIndex];const values=getPatternSelectValues();renderPatternBlankQuiz(makePatternBlankQuiz(item,values));}
+function checkPatternBlankAnswer(answer){
+  const q=window.currentPatternBlankQuiz;const fb=document.getElementById('pattern-blank-feedback');
+  if(!q||!fb)return;
+  const ok=String(answer||'').trim()===String(q.answer||'').trim();
+  fb.className=ok?'feedback-box correct':'feedback-box incorrect';
+  fb.innerHTML=ok?`🎉 答對了！完整句：<strong>${escapeHtml(q.sentence)}</strong>`:`再試一次。正確答案是：<strong>${escapeHtml(q.answer)}</strong><br>完整句：${escapeHtml(q.sentence)}`;
+}
+
+function patternOrderNormalize(text){return String(text||'').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();}
+function patternOrderTokenize(sentence){return String(sentence||'').trim().split(/\s+/).filter(Boolean);}
+function makePatternOrderQuiz(sentence){
+  const tokens=patternOrderTokenize(sentence);
+  let shuffled=patternShuffle(tokens);
+  if(tokens.length>1&&shuffled.join(' ')===tokens.join(' '))shuffled=[...tokens].reverse();
+  return{sentence,tokens,shuffled};
+}
+function patternOrderButton(token,idx,zone){return`<button id="pattern-order-${zone}-${idx}" class="btn btn-outline pattern-order-token pattern-order-${zone}-token" draggable="true" data-token="${escapeHtml(token)}" ondragstart="patternDragStart(event)" onclick="${zone==='bank'?'selectPatternOrderToken(this)':'removePatternOrderToken(this)'}" style="padding:8px 10px;font-size:.92rem;font-weight:900;">${escapeHtml(token)}</button>`;}
+
+function renderPatternOrderQuiz(q){
+  const bank=document.getElementById('pattern-order-bank');
+  const answer=document.getElementById('pattern-order-answer');
+  const target=document.getElementById('pattern-order-target');
+  const feedback=document.getElementById('pattern-order-feedback');
+  if(!bank||!answer||!target||!feedback)return;
+  if(!q||!q.tokens||!q.tokens.length){target.innerText='請把單字排成正確句子';bank.innerHTML='';answer.innerHTML='';feedback.className='feedback-box';feedback.innerHTML='';window.currentPatternOrderQuiz=null;return;}
+  window.currentPatternOrderQuiz=q;
+  target.innerText='請排序：'+q.sentence;
+  bank.innerHTML=q.shuffled.map((t,i)=>patternOrderButton(t,i,'bank')).join('');
+  answer.innerHTML='';
+  feedback.className='feedback-box';feedback.innerHTML='';
+}
+function updatePatternOrderQuiz(){const sentence=getCurrentGeneratedPatternSentence();renderPatternOrderQuiz(makePatternOrderQuiz(sentence));}
+function patternAllowDrop(event){event.preventDefault();}
+function patternDragStart(event){event.dataTransfer.setData('text/plain',event.target.dataset.token||'');event.dataTransfer.setData('source-id',event.target.id||'');}
+function patternAppendAnswerToken(token){const answer=document.getElementById('pattern-order-answer');if(!answer||!token)return;const idx=answer.querySelectorAll('.pattern-order-answer-token').length;answer.insertAdjacentHTML('beforeend',patternOrderButton(token,idx,'answer'));const fb=document.getElementById('pattern-order-feedback');if(fb){fb.className='feedback-box';fb.innerHTML='';}}
+function patternAppendBankToken(token){const bank=document.getElementById('pattern-order-bank');if(!bank||!token)return;const idx=bank.querySelectorAll('.pattern-order-bank-token').length;bank.insertAdjacentHTML('beforeend',patternOrderButton(token,idx,'bank'));const fb=document.getElementById('pattern-order-feedback');if(fb){fb.className='feedback-box';fb.innerHTML='';}}
+function selectPatternOrderToken(btn){if(!btn)return;patternAppendAnswerToken(btn.dataset.token||'');btn.remove();}
+function removePatternOrderToken(btn){if(!btn)return;patternAppendBankToken(btn.dataset.token||'');btn.remove();}
+function patternDropToAnswer(event){event.preventDefault();const token=event.dataTransfer.getData('text/plain');const sourceId=event.dataTransfer.getData('source-id');if(token)patternAppendAnswerToken(token);const source=sourceId?document.getElementById(sourceId):null;if(source&&source.classList.contains('pattern-order-bank-token'))source.remove();}
+function patternDropToBank(event){event.preventDefault();const token=event.dataTransfer.getData('text/plain');const sourceId=event.dataTransfer.getData('source-id');const source=sourceId?document.getElementById(sourceId):null;if(source&&source.classList.contains('pattern-order-answer-token')){patternAppendBankToken(token);source.remove();}}
+function getPatternOrderAnswerText(){return Array.from(document.querySelectorAll('.pattern-order-answer-token')).map(el=>el.dataset.token||'').join(' ');}
+function resetPatternOrderQuiz(){const q=window.currentPatternOrderQuiz;if(q)renderPatternOrderQuiz(makePatternOrderQuiz(q.sentence));}
+function checkPatternOrderAnswer(){
+  const q=window.currentPatternOrderQuiz;const fb=document.getElementById('pattern-order-feedback');
+  if(!q||!fb)return;
+  const answer=getPatternOrderAnswerText();
+  const ok=patternOrderNormalize(answer)===patternOrderNormalize(q.sentence);
+  fb.className=ok?'feedback-box correct':'feedback-box incorrect';
+  fb.innerHTML=ok?`🎉 排對了！完整句：<strong>${escapeHtml(q.sentence)}</strong>`:`再調整一次。<br>你的答案：${escapeHtml(answer||'尚未排序')}<br>正確句：<strong>${escapeHtml(q.sentence)}</strong>`;
+}
+
+function updateGeneratedPatternSentence(){
+  const item=safeList()[currentIndex];const box=document.getElementById('pattern-generated');
+  if(!box)return;
+  const sentence=getCurrentGeneratedPatternSentence();
+  box.innerText=sentence?`產生句：${sentence}`:'請選擇欄位產生句子';
+  updatePatternBlankQuiz();
+  updatePatternOrderQuiz();
+}
+function buildPatternSlotControls(item){
+  if(!item||!item.slots||!item.slots.length)return'<strong>固定句型：</strong>不需要替換欄位。';
+  return'<strong>選擇欄位組句：</strong>'+item.slots.map((s,idx)=>`<label style="display:block;margin-top:10px;font-weight:900;color:#334155;">${escapeHtml(s.label||s.key)}<select class="pattern-slot-select" data-key="${escapeHtml(s.key)}" onchange="updateGeneratedPatternSentence()" style="width:100%;margin-top:6px;padding:10px;border:2px solid #c7d2fe;border-radius:12px;font-size:1rem;font-weight:800;color:#312e81;background:#fff;">${(s.options||[]).map(o=>`<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('')}</select></label>`).join('');
+}
+
+function updatePatternPractice(){
+  const list=safeList();const item=list[currentIndex];
+  const progress=document.getElementById('pattern-progress');
+  const title=document.getElementById('pattern-title');
+  const meaning=document.getElementById('pattern-meaning');
+  const template=document.getElementById('pattern-template');
+  const slots=document.getElementById('pattern-slots');
+  const examples=document.getElementById('pattern-examples');
+  const feedback=document.getElementById('pattern-feedback');
+  const generated=document.getElementById('pattern-generated');
+
+  document.getElementById('pattern-blank-feedback').className='feedback-box';
+  document.getElementById('pattern-blank-feedback').innerHTML='';
+  document.getElementById('pattern-order-feedback').className='feedback-box';
+  document.getElementById('pattern-order-feedback').innerHTML='';
+
+  if(!item){
+    progress.innerText='尚無句型資料';title.innerText='此冊別尚未提供句型操練';meaning.innerText='請先選擇有 patternUnits 的冊別，例如 Super Fun 5。';template.innerText='';slots.innerHTML='';examples.innerHTML='';if(generated)generated.innerText='';renderPatternBlankQuiz(null);renderPatternOrderQuiz(null);feedback.className='feedback-box';feedback.innerHTML='';return;
+  }
+  progress.innerText=`句型 ${currentIndex+1} / ${list.length}`;
+  title.innerText=item.title||'-';
+  meaning.innerText=item.focus||item.meaning||'';
+  template.innerText=item.template?`句型：${item.template}`:'';
+  slots.innerHTML=buildPatternSlotControls(item);
+  examples.innerHTML=(item.examples&&item.examples.length)?'<strong>範例：</strong><br>'+item.examples.map(ex=>`• ${escapeHtml(ex.sentence||'')}<br><span style="color:#64748b;">${escapeHtml(ex.meaning||'')}</span>`).join('<br>'):'';
+  feedback.className='feedback-box';feedback.innerHTML='';
+  updateGeneratedPatternSentence();
+}
+function nextPatternItem(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex+1)%l.length;updatePatternPractice();}
+function prevPatternItem(){const l=safeList();if(!l.length)return;currentIndex=(currentIndex-1+l.length)%l.length;updatePatternPractice();}
+function playCurrentPatternAudio(){const sentence=getCurrentGeneratedPatternSentence();if(sentence)speakText(sentence);}
+function startPatternSpeechRecognition(){
+  const sentence=getCurrentGeneratedPatternSentence();
+  if(!sentence)return;
+  const cleanSentence = sentence.replace(/[.?!,]/g, '').trim();
+  startGenericRecognition({word:cleanSentence,sentence:cleanSentence,meaning:''},'pattern-feedback');
+}
+
+function startGenericRecognition(item,feedbackId,onDone){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const fb=document.getElementById(feedbackId);
+  if(!SR){fb.className='feedback-box incorrect';fb.innerHTML='此瀏覽器不支援語音辨識，建議使用 Chrome。';return;}
+  if(activeRecognition){try{activeRecognition.abort();}catch(e){}}
+  const rec=new SR();activeRecognition=rec;
+  rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;
+  fb.className='feedback-box';fb.innerHTML='正在聆聽，請開始跟讀...';
+  rec.onresult=e=>{
+    activeRecognition=null;
+    const transcript=e.results[0][0].transcript;
+    const target=getItemText(item);
+    const passed=isSpeakingMatch(transcript,target);
+    fb.className=passed?'feedback-box correct':'feedback-box incorrect';
+    fb.innerHTML=passed?`🎉 很棒！我聽到：<strong>${escapeHtml(transcript)}</strong>`:`再練一次會更好。<br>正確內容：<strong>${escapeHtml(target)}</strong><br>我聽到：${escapeHtml(transcript||'未辨識到')}`;
+    if(onDone)onDone(passed);
+  };
+  rec.onerror=()=>{
+    activeRecognition=null;
+    fb.className='feedback-box incorrect';
+    fb.innerHTML='沒有成功收到聲音，請確認麥克風權限後再試一次。';
+  };
+  rec.start();
+}
+
+function showSimpleResult(type){
+  const text=`完成！分數：${score} / ${currentQuizList.length}`;
+  if(type==='listening'){
+    document.getElementById('listening-quiz-view').style.display='none';
+    document.getElementById('listening-result-view').style.display='block';
+    document.getElementById('listening-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3><button class="btn btn-primary" onclick="restartListeningQuiz()">重新測驗</button></div>`;
+  }
+  if(type==='phonics'){
+    document.getElementById('phonics-quiz-view').style.display='none';
+    document.getElementById('phonics-result-view').style.display='block';
+    document.getElementById('phonics-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3><button class="btn btn-primary" onclick="restartPhonicsQuiz()">重新測驗</button></div>`;
+  }
+  if(type==='speaking'){
+    document.getElementById('speaking-quiz-view').style.display='none';
+    document.getElementById('speaking-result-view').style.display='block';
+    document.getElementById('speaking-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3><button class="btn btn-primary" onclick="restartSpeakingQuiz()">重新測驗</button></div>`;
+  }
+}
+</script>
+<script>
+let playerTracks=[],currentTrackIndex=0,playerIsPlaying=false,currentPlayerTab='CD1';
+const playerAudio=document.getElementById('main-audio'),playerPlayBtn=document.getElementById('play-btn'),playerPrevBtn=document.getElementById('prev-btn'),playerNextBtn=document.getElementById('next-btn'),playerProgressBar=document.getElementById('progress-bar'),playerProgressArea=document.getElementById('progress-area'),playerDisplayTitle=document.getElementById('display-title'),playerPlaylistContainer=document.getElementById('playlist-container'),playerCurrentTimeEl=document.getElementById('current-time'),playerTotalTimeEl=document.getElementById('total-time');
+
+function formatPlayerTime(s){if(isNaN(s))return'0:00';const m=Math.floor(s/60),sec=Math.floor(s%60);return`${m}:${sec<10?'0':''}${sec}`;}
+function loadPlayerPlaylist(){
+  playerPlaylistContainer.innerHTML='';
+  playerTracks.forEach((track,index)=>{
+    const li=document.createElement('li');
+    li.textContent=track.title;
+    li.setAttribute('data-index',index);
+    li.setAttribute('data-cd',track.cd);
+    li.addEventListener('click',()=>loadPlayerTrack(index,true));
+    playerPlaylistContainer.appendChild(li);
+  });
+}
+function switchPlayerTab(cdName){
+  currentPlayerTab=cdName;
+  document.getElementById('btn-CD1')?.classList.toggle('active',cdName==='CD1');
+  document.getElementById('btn-CD2')?.classList.toggle('active',cdName==='CD2');
+  playerPlaylistContainer.querySelectorAll('li').forEach(item=>item.style.display=item.getAttribute('data-cd')===cdName?'flex':'none');
+}
+function loadPlayerTrack(index,isAutoPlay=false){
+  if(!playerTracks.length)return;
+  currentTrackIndex=index;
+  playerAudio.src=playerTracks[currentTrackIndex].file;
+  playerDisplayTitle.textContent=playerTracks[currentTrackIndex].title;
+  if(playerTracks[currentTrackIndex].cd!==currentPlayerTab)switchPlayerTab(playerTracks[currentTrackIndex].cd);
+  playerPlaylistContainer.querySelectorAll('li').forEach(item=>item.classList.remove('active'));
+  const activeLi=playerPlaylistContainer.querySelector(`li[data-index="${index}"]`);
+  if(activeLi){activeLi.classList.add('active');activeLi.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  if(isAutoPlay)playTrackAudio();else pauseTrackAudio();
+}
+function playTrackAudio(){
+  if(!playerAudio.src&&playerTracks.length>0)loadPlayerTrack(currentTrackIndex,false);
+  playerAudio.play().catch(()=>{});
+  playerIsPlaying=true;
+  playerPlayBtn.textContent='暫停';
+}
+function pauseTrackAudio(){
+  if(playerAudio)playerAudio.pause();
+  playerIsPlaying=false;
+  if(playerPlayBtn)playerPlayBtn.textContent='播放';
+}
+function initPlayerForCurrentBook(){
+  if(!currentBook)return;
+  if(playerInitializedBookId===currentBookId)return;
+  pauseTrackAudio();
+  if(typeof buildCdTracksForBook==='function'){
+    playerTracks=buildCdTracksForBook(currentBook);
+  }else{
+    playerTracks=[];
+  }
+  currentTrackIndex=0;
+  playerPlaylistContainer.innerHTML='';
+  loadPlayerPlaylist();
+  switchPlayerTab('CD1');
+  if(playerTracks.length>0)loadPlayerTrack(0,false);
+  else playerDisplayTitle.textContent=`${currentBook.title} 尚未設定 CD 音檔`;
+  playerInitializedBookId=currentBookId;
+}
+
+playerPlayBtn.addEventListener('click',()=>playerIsPlaying?pauseTrackAudio():playTrackAudio());
+playerPrevBtn.addEventListener('click',()=>{if(!playerTracks.length)return;currentTrackIndex=(currentTrackIndex-1+playerTracks.length)%playerTracks.length;loadPlayerTrack(currentTrackIndex,true);});
+playerNextBtn.addEventListener('click',()=>{if(!playerTracks.length)return;currentTrackIndex=(currentTrackIndex+1)%playerTracks.length;loadPlayerTrack(currentTrackIndex,true);});
+playerAudio.addEventListener('loadedmetadata',()=>playerTotalTimeEl.textContent=formatPlayerTime(playerAudio.duration));
+playerAudio.addEventListener('timeupdate',()=>{if(playerAudio.duration){playerProgressBar.style.width=`${(playerAudio.currentTime/playerAudio.duration)*100}%`;playerCurrentTimeEl.textContent=formatPlayerTime(playerAudio.currentTime);}});
+playerProgressArea.addEventListener('click',e=>{if(!playerAudio.duration)return;playerAudio.currentTime=(e.offsetX/playerProgressArea.clientWidth)*playerAudio.duration;});
+playerAudio.addEventListener('ended',()=>playerNextBtn.click());
+</script>
+</body>
+</html>
