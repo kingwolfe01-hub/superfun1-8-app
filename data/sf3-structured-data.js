@@ -13,8 +13,8 @@ const sf3StructuredData = {
         "meaning": "十六",
         "sourceUnit": "Numbers",
         "category": "number",
-        "image": "sixteen.png",
-        "audio": "sixteen.mp3",
+        "image": "sixteen.webp",
+        "audio": "books/sf3/vocab-audio/sixteen.mp3",
         "similarWords": []
       },
       {
@@ -24,8 +24,8 @@ const sf3StructuredData = {
         "meaning": "十七",
         "sourceUnit": "Numbers",
         "category": "number",
-        "image": "seventeen.png",
-        "audio": "seventeen.mp3",
+        "image": "seventeen.webp",
+        "audio": "books/sf3/vocab-audio/seventeen.mp3",
         "similarWords": []
       },
       {
@@ -35,8 +35,8 @@ const sf3StructuredData = {
         "meaning": "十八",
         "sourceUnit": "Numbers",
         "category": "number",
-        "image": "eighteen.png",
-        "audio": "eighteen.mp3",
+        "image": "eighteen.webp",
+        "audio": "books/sf3/vocab-audio/eighteen.mp3",
         "similarWords": []
       },
       {
@@ -46,8 +46,8 @@ const sf3StructuredData = {
         "meaning": "十九",
         "sourceUnit": "Numbers",
         "category": "number",
-        "image": "nineteen.png",
-        "audio": "nineteen.mp3",
+        "image": "nineteen.webp",
+        "audio": "books/sf3/vocab-audio/nineteen.mp3",
         "similarWords": []
       },
       {
@@ -57,8 +57,8 @@ const sf3StructuredData = {
         "meaning": "二十",
         "sourceUnit": "Numbers",
         "category": "number",
-        "image": "twenty.png",
-        "audio": "twenty.mp3",
+        "image": "twenty.webp",
+        "audio": "books/sf3/vocab-audio/twenty.mp3",
         "similarWords": []
       }
     ],
@@ -70,9 +70,9 @@ const sf3StructuredData = {
         "meaning": "球棒",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "bat.png",
-        "audio": "bat.mp3",
-        "similarWords": []
+        "image": "bat.webp",
+        "audio": "books/sf3/vocab-audio/bat.mp3",
+        "similarWords": ["pat", "cat", "bag"]
       },
       {
         "kind": "word",
@@ -81,8 +81,8 @@ const sf3StructuredData = {
         "meaning": "大的",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "big.png",
-        "audio": "big.mp3",
+        "image": "big.webp",
+        "audio": "books/sf3/vocab-audio/big.mp3",
         "similarWords": []
       },
       {
@@ -92,8 +92,8 @@ const sf3StructuredData = {
         "meaning": "輕拍",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "pat.png",
-        "audio": "pat.mp3",
+        "image": "pat.webp",
+        "audio": "books/sf3/vocab-audio/pat.mp3",
         "similarWords": []
       },
       {
@@ -103,8 +103,8 @@ const sf3StructuredData = {
         "meaning": "豬",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "pig.png",
-        "audio": "pig.mp3",
+        "image": "pig.webp",
+        "audio": "books/sf3/vocab-audio/pig.mp3",
         "similarWords": []
       },
       {
@@ -114,8 +114,8 @@ const sf3StructuredData = {
         "meaning": "巴士",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "bus.png",
-        "audio": "bus.mp3",
+        "image": "bus.webp",
+        "audio": "books/sf3/vocab-audio/bus.mp3",
         "similarWords": []
       },
       {
@@ -125,8 +125,8 @@ const sf3StructuredData = {
         "meaning": "大頭針",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "pin.png",
-        "audio": "pin.mp3",
+        "image": "pin.webp",
+        "audio": "books/sf3/vocab-audio/pin.mp3",
         "similarWords": []
       },
       {
@@ -136,8 +136,8 @@ const sf3StructuredData = {
         "meaning": "床",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "bed.png",
-        "audio": "bed.mp3",
+        "image": "bed.webp",
+        "audio": "books/sf3/vocab-audio/bed.mp3",
         "similarWords": []
       },
       {
@@ -147,8 +147,8 @@ const sf3StructuredData = {
         "meaning": "鍋子",
         "sourceUnit": "Phonics 1",
         "category": "phonics",
-        "image": "pot.png",
-        "audio": "pot.mp3",
+        "image": "pot.webp",
+        "audio": "books/sf3/vocab-audio/pot.mp3",
         "similarWords": []
       }
     ],
@@ -160,8 +160,8 @@ const sf3StructuredData = {
         "meaning": "洞穴",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "den.png",
-        "audio": "den.mp3",
+        "image": "den.webp",
+        "audio": "books/sf3/vocab-audio/den.mp3",
         "similarWords": []
       },
       {
@@ -171,8 +171,8 @@ const sf3StructuredData = {
         "meaning": "浸泡",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "dip.png",
-        "audio": "dip.mp3",
+        "image": "dip.webp",
+        "audio": "books/sf3/vocab-audio/dip.mp3",
         "similarWords": []
       },
       {
@@ -182,8 +182,8 @@ const sf3StructuredData = {
         "meaning": "十",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "ten.png",
-        "audio": "ten.mp3",
+        "image": "ten.webp",
+        "audio": "books/sf3/vocab-audio/ten.mp3",
         "similarWords": []
       },
       {
@@ -193,8 +193,8 @@ const sf3StructuredData = {
         "meaning": "尖端",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "tip.png",
-        "audio": "tip.mp3",
+        "image": "tip.webp",
+        "audio": "books/sf3/vocab-audio/tip.mp3",
         "similarWords": []
       },
       {
@@ -204,8 +204,8 @@ const sf3StructuredData = {
         "meaning": "爸爸",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "dad.png",
-        "audio": "dad.mp3",
+        "image": "dad.webp",
+        "audio": "books/sf3/vocab-audio/dad.mp3",
         "similarWords": []
       },
       {
@@ -215,8 +215,8 @@ const sf3StructuredData = {
         "meaning": "頂端",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "top.png",
-        "audio": "top.mp3",
+        "image": "top.webp",
+        "audio": "books/sf3/vocab-audio/top.mp3",
         "similarWords": []
       },
       {
@@ -226,8 +226,8 @@ const sf3StructuredData = {
         "meaning": "鴨子",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "duck.png",
-        "audio": "duck.mp3",
+        "image": "duck.webp",
+        "audio": "books/sf3/vocab-audio/duck.mp3",
         "similarWords": []
       },
       {
@@ -237,8 +237,8 @@ const sf3StructuredData = {
         "meaning": "浴缸",
         "sourceUnit": "Phonics 2",
         "category": "phonics",
-        "image": "tub.png",
-        "audio": "tub.mp3",
+        "image": "tub.webp",
+        "audio": "books/sf3/vocab-audio/tub.mp3",
         "similarWords": []
       }
     ],
@@ -250,8 +250,8 @@ const sf3StructuredData = {
         "meaning": "間隙",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "gap.png",
-        "audio": "gap.mp3",
+        "image": "gap.webp",
+        "audio": "books/sf3/vocab-audio/gap.mp3",
         "similarWords": []
       },
       {
@@ -261,8 +261,8 @@ const sf3StructuredData = {
         "meaning": "腸道",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "gut.png",
-        "audio": "gut.mp3",
+        "image": "gut.webp",
+        "audio": "books/sf3/vocab-audio/gut.mp3",
         "similarWords": []
       },
       {
@@ -272,8 +272,8 @@ const sf3StructuredData = {
         "meaning": "鴨舌帽",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "cap.png",
-        "audio": "cap.mp3",
+        "image": "cap.webp",
+        "audio": "books/sf3/vocab-audio/cap.mp3",
         "similarWords": []
       },
       {
@@ -283,8 +283,8 @@ const sf3StructuredData = {
         "meaning": "切；剪",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "cut.png",
-        "audio": "cut.mp3",
+        "image": "cut.webp",
+        "audio": "books/sf3/vocab-audio/cut.mp3",
         "similarWords": []
       },
       {
@@ -294,8 +294,8 @@ const sf3StructuredData = {
         "meaning": "口香糖",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "gum.png",
-        "audio": "gum.mp3",
+        "image": "gum.webp",
+        "audio": "books/sf3/vocab-audio/gum.mp3",
         "similarWords": []
       },
       {
@@ -305,8 +305,8 @@ const sf3StructuredData = {
         "meaning": "貓",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "cat.png",
-        "audio": "cat.mp3",
+        "image": "cat.webp",
+        "audio": "books/sf3/vocab-audio/cat.mp3",
         "similarWords": []
       },
       {
@@ -316,8 +316,8 @@ const sf3StructuredData = {
         "meaning": "瓦斯",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "gas.png",
-        "audio": "gas.mp3",
+        "image": "gas.webp",
+        "audio": "books/sf3/vocab-audio/gas.mp3",
         "similarWords": []
       },
       {
@@ -327,8 +327,8 @@ const sf3StructuredData = {
         "meaning": "警察",
         "sourceUnit": "Phonics 3",
         "category": "phonics",
-        "image": "cop.png",
-        "audio": "cop.mp3",
+        "image": "cop.webp",
+        "audio": "books/sf3/vocab-audio/cop.mp3",
         "similarWords": []
       }
     ],
@@ -340,8 +340,8 @@ const sf3StructuredData = {
         "meaning": "箱型車",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "van.png",
-        "audio": "van.mp3",
+        "image": "van.webp",
+        "audio": "books/sf3/vocab-audio/van.mp3",
         "similarWords": []
       },
       {
@@ -351,8 +351,8 @@ const sf3StructuredData = {
         "meaning": "背心",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "vest.png",
-        "audio": "vest.mp3",
+        "image": "vest.webp",
+        "audio": "books/sf3/vocab-audio/vest.mp3",
         "similarWords": []
       },
       {
@@ -362,8 +362,8 @@ const sf3StructuredData = {
         "meaning": "電風扇",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "fan.png",
-        "audio": "fan.mp3",
+        "image": "fan.webp",
+        "audio": "books/sf3/vocab-audio/fan.mp3",
         "similarWords": []
       },
       {
@@ -373,8 +373,8 @@ const sf3StructuredData = {
         "meaning": "節日",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "fest.png",
-        "audio": "fest.mp3",
+        "image": "fest.webp",
+        "audio": "books/sf3/vocab-audio/fest.mp3",
         "similarWords": []
       },
       {
@@ -384,8 +384,8 @@ const sf3StructuredData = {
         "meaning": "桶",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "vat.png",
-        "audio": "vat.mp3",
+        "image": "vat.webp",
+        "audio": "books/sf3/vocab-audio/vat.mp3",
         "similarWords": []
       },
       {
@@ -395,8 +395,8 @@ const sf3StructuredData = {
         "meaning": "胖的",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "fat.png",
-        "audio": "fat.mp3",
+        "image": "fat.webp",
+        "audio": "books/sf3/vocab-audio/fat.mp3",
         "similarWords": []
       },
       {
@@ -406,8 +406,8 @@ const sf3StructuredData = {
         "meaning": "獸醫",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "vet.png",
-        "audio": "vet.mp3",
+        "image": "vet.webp",
+        "audio": "books/sf3/vocab-audio/vet.mp3",
         "similarWords": []
       },
       {
@@ -417,8 +417,8 @@ const sf3StructuredData = {
         "meaning": "狐狸",
         "sourceUnit": "Phonics 4",
         "category": "phonics",
-        "image": "fox.png",
-        "audio": "fox.mp3",
+        "image": "fox.webp",
+        "audio": "books/sf3/vocab-audio/fox.mp3",
         "similarWords": []
       }
     ],
@@ -430,8 +430,8 @@ const sf3StructuredData = {
         "meaning": "拉鍊",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "zip.png",
-        "audio": "zip.mp3",
+        "image": "zip.webp",
+        "audio": "books/sf3/vocab-audio/zip.mp3",
         "similarWords": []
       },
       {
@@ -441,8 +441,8 @@ const sf3StructuredData = {
         "meaning": "（男子名）",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "zack.png",
-        "audio": "zack.mp3",
+        "image": "zack.webp",
+        "audio": "books/sf3/vocab-audio/zack.mp3",
         "similarWords": []
       },
       {
@@ -452,8 +452,8 @@ const sf3StructuredData = {
         "meaning": "啜飲",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "sip.png",
-        "audio": "sip.mp3",
+        "image": "sip.webp",
+        "audio": "books/sf3/vocab-audio/sip.mp3",
         "similarWords": []
       },
       {
@@ -463,8 +463,8 @@ const sf3StructuredData = {
         "meaning": "麻布袋",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "sack.png",
-        "audio": "sack.mp3",
+        "image": "sack.webp",
+        "audio": "books/sf3/vocab-audio/sack.mp3",
         "similarWords": []
       },
       {
@@ -474,8 +474,8 @@ const sf3StructuredData = {
         "meaning": "痘痘；疹子",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "zit.png",
-        "audio": "zit.mp3",
+        "image": "zit.webp",
+        "audio": "books/sf3/vocab-audio/zit.mp3",
         "similarWords": []
       },
       {
@@ -485,8 +485,8 @@ const sf3StructuredData = {
         "meaning": "坐下",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "sit.png",
-        "audio": "sit.mp3",
+        "image": "sit.webp",
+        "audio": "books/sf3/vocab-audio/sit.mp3",
         "similarWords": []
       },
       {
@@ -496,8 +496,8 @@ const sf3StructuredData = {
         "meaning": "急轉",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "zag.png",
-        "audio": "zag.mp3",
+        "image": "zag.webp",
+        "audio": "books/sf3/vocab-audio/zag.mp3",
         "similarWords": []
       },
       {
@@ -507,8 +507,8 @@ const sf3StructuredData = {
         "meaning": "太陽",
         "sourceUnit": "Phonics 5",
         "category": "phonics",
-        "image": "sun.png",
-        "audio": "sun.mp3",
+        "image": "sun.webp",
+        "audio": "books/sf3/vocab-audio/sun.mp3",
         "similarWords": []
       }
     ],
@@ -520,9 +520,9 @@ const sf3StructuredData = {
         "meaning": "蝙蝠",
         "sourceUnit": "Culture & Festival Halloween萬聖節 - Words",
         "category": "word",
-        "image": "bat.png",
-        "audio": "bat.mp3",
-        "similarWords": []
+        "image": "bat_1.webp",
+        "audio": "books/sf3/vocab-audio/bat.mp3",
+        "similarWords": ["cat", "hat", "rat"]
       },
       {
         "kind": "word",
@@ -531,8 +531,8 @@ const sf3StructuredData = {
         "meaning": "鬼",
         "sourceUnit": "Culture & Festival Halloween萬聖節 - Words",
         "category": "word",
-        "image": "ghost.png",
-        "audio": "ghost.mp3",
+        "image": "ghost.webp",
+        "audio": "books/sf3/vocab-audio/ghost.mp3",
         "similarWords": []
       },
       {
@@ -542,8 +542,8 @@ const sf3StructuredData = {
         "meaning": "南瓜燈",
         "sourceUnit": "Culture & Festival Halloween萬聖節 - Words",
         "category": "word",
-        "image": "jack_o_lantern.png",
-        "audio": "jack_o_lantern.mp3",
+        "image": "jack_o_lantern.webp",
+        "audio": "books/sf3/vocab-audio/jack_o_lantern.mp3",
         "similarWords": []
       },
       {
@@ -553,8 +553,8 @@ const sf3StructuredData = {
         "meaning": "蜘蛛",
         "sourceUnit": "Culture & Festival Halloween萬聖節 - Words",
         "category": "word",
-        "image": "spider.png",
-        "audio": "spider.mp3",
+        "image": "spider.webp",
+        "audio": "books/sf3/vocab-audio/spider.mp3",
         "similarWords": []
       }
     ],
@@ -566,20 +566,20 @@ const sf3StructuredData = {
         "meaning": "誰",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 1 Words",
         "category": "word",
-        "image": "who.png",
-        "audio": "who.mp3",
+        "image": "who.webp",
+        "audio": "books/sf3/vocab-audio/who.mp3",
         "similarWords": []
       },
       {
         "kind": "word",
-        "word": "father (dad)",
-        "sentence": "father (dad)",
+        "word": "father",
+        "sentence": "father",
         "meaning": "爸爸",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 1 Words",
         "category": "word",
-        "image": "father_dad.png",
-        "audio": "father_dad.mp3",
-        "similarWords": []
+        "image": "father.webp",
+        "audio": "books/sf3/vocab-audio/father.mp3",
+        "similarWords": ["feather", "farther", "mother"]
       },
       {
         "kind": "word",
@@ -588,8 +588,8 @@ const sf3StructuredData = {
         "meaning": "祖父；爺爺",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 1 Words",
         "category": "word",
-        "image": "grandfather.png",
-        "audio": "grandfather.mp3",
+        "image": "grandfather.webp",
+        "audio": "books/sf3/vocab-audio/grandfather.mp3",
         "similarWords": []
       },
       {
@@ -599,8 +599,8 @@ const sf3StructuredData = {
         "meaning": "祖母；奶奶",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 1 Words",
         "category": "word",
-        "image": "grandmother.png",
-        "audio": "grandmother.mp3",
+        "image": "grandmother.webp",
+        "audio": "books/sf3/vocab-audio/grandmother.mp3",
         "similarWords": []
       },
       {
@@ -610,20 +610,20 @@ const sf3StructuredData = {
         "meaning": "姐妹",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 1 Words",
         "category": "word",
-        "image": "sister.png",
-        "audio": "sister.mp3",
+        "image": "sister.webp",
+        "audio": "books/sf3/vocab-audio/sister.mp3",
         "similarWords": []
       },
       {
         "kind": "word",
-        "word": "mother (mom)",
-        "sentence": "mother (mom)",
+        "word": "mother",
+        "sentence": "mother",
         "meaning": "媽媽",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 1 Words",
         "category": "word",
-        "image": "mother_mom.png",
-        "audio": "mother_mom.mp3",
-        "similarWords": []
+        "image": "mother.webp",
+        "audio": "books/sf3/vocab-audio/mother.mp3",
+        "similarWords": ["brother", "other", "smother"]
       },
       {
         "kind": "word",
@@ -632,77 +632,77 @@ const sf3StructuredData = {
         "meaning": "兄弟",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 1 Words",
         "category": "word",
-        "image": "brother.png",
-        "audio": "brother.mp3",
+        "image": "brother.webp",
+        "audio": "books/sf3/vocab-audio/brother.mp3",
         "similarWords": []
       }
     ],
     "Topic 1 Me and My Family - Lesson 2 Words": [
       {
         "kind": "word",
-        "word": "teacher",
-        "sentence": "teacher",
-        "meaning": "老師",
+        "word": "a teacher",
+        "sentence": "a teacher",
+        "meaning": "一位老師",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 2 Words",
         "category": "word",
-        "image": "teacher.png",
-        "audio": "teacher.mp3",
-        "similarWords": []
+        "image": "teacher.webp",
+        "audio": "books/sf3/vocab-audio/teacher.mp3",
+        "similarWords": ["a preacher", "a feature", "a creature"]
       },
       {
         "kind": "word",
-        "word": "student",
-        "sentence": "student",
-        "meaning": "學生",
+        "word": "a student",
+        "sentence": "a student",
+        "meaning": "一位學生",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 2 Words",
         "category": "word",
-        "image": "student.png",
-        "audio": "student.mp3",
-        "similarWords": []
+        "image": "student.webp",
+        "audio": "books/sf3/vocab-audio/student.mp3",
+        "similarWords": ["a prudent", "a patent", "a talent"]
       },
       {
         "kind": "word",
-        "word": "cook",
-        "sentence": "cook",
-        "meaning": "廚師",
+        "word": "a cook",
+        "sentence": "a cook",
+        "meaning": "一位廚師",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 2 Words",
         "category": "word",
-        "image": "cook.png",
-        "audio": "cook.mp3",
-        "similarWords": []
+        "image": "cook.webp",
+        "audio": "books/sf3/vocab-audio/cook.mp3",
+        "similarWords": ["a book", "a look", "a hook"]
       },
       {
         "kind": "word",
-        "word": "doctor",
-        "sentence": "doctor",
-        "meaning": "醫生",
+        "word": "a doctor",
+        "sentence": "a doctor",
+        "meaning": "一位醫生",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 2 Words",
         "category": "word",
-        "image": "doctor.png",
-        "audio": "doctor.mp3",
-        "similarWords": []
+        "image": "doctor.webp",
+        "audio": "books/sf3/vocab-audio/doctor.mp3",
+        "similarWords": ["an actor", "a factor", "a sector"]
       },
       {
         "kind": "word",
-        "word": "nurse",
-        "sentence": "nurse",
-        "meaning": "護理師",
+        "word": "a nurse",
+        "sentence": "a nurse",
+        "meaning": "一位護理師",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 2 Words",
         "category": "word",
-        "image": "nurse.png",
-        "audio": "nurse.mp3",
-        "similarWords": []
+        "image": "nurse.webp",
+        "audio": "books/sf3/vocab-audio/nurse.mp3",
+        "similarWords": ["a purse", "a verse", "a horse"]
       },
       {
         "kind": "word",
-        "word": "farmer",
-        "sentence": "farmer",
-        "meaning": "農夫",
+        "word": "a farmer",
+        "sentence": "a farmer",
+        "meaning": "一位農夫",
         "sourceUnit": "Topic 1 Me and My Family - Lesson 2 Words",
         "category": "word",
-        "image": "farmer.png",
-        "audio": "farmer.mp3",
-        "similarWords": []
+        "image": "farmer.webp",
+        "audio": "books/sf3/vocab-audio/farmer.mp3",
+        "similarWords": ["a father", "a former", "a hammer"]
       }
     ],
     "Topic 2 My Home - Lesson 3 Words": [
@@ -713,8 +713,8 @@ const sf3StructuredData = {
         "meaning": "哪裡",
         "sourceUnit": "Topic 2 My Home - Lesson 3 Words",
         "category": "word",
-        "image": "where.png",
-        "audio": "where.mp3",
+        "image": "where.webp",
+        "audio": "books/sf3/vocab-audio/where.mp3",
         "similarWords": []
       },
       {
@@ -724,8 +724,8 @@ const sf3StructuredData = {
         "meaning": "浴室",
         "sourceUnit": "Topic 2 My Home - Lesson 3 Words",
         "category": "word",
-        "image": "bathroom.png",
-        "audio": "bathroom.mp3",
+        "image": "bathroom.webp",
+        "audio": "books/sf3/vocab-audio/bathroom.mp3",
         "similarWords": []
       },
       {
@@ -735,8 +735,8 @@ const sf3StructuredData = {
         "meaning": "臥室",
         "sourceUnit": "Topic 2 My Home - Lesson 3 Words",
         "category": "word",
-        "image": "bedroom.png",
-        "audio": "bedroom.mp3",
+        "image": "bedroom.webp",
+        "audio": "books/sf3/vocab-audio/bedroom.mp3",
         "similarWords": []
       },
       {
@@ -746,8 +746,8 @@ const sf3StructuredData = {
         "meaning": "廚房",
         "sourceUnit": "Topic 2 My Home - Lesson 3 Words",
         "category": "word",
-        "image": "kitchen.png",
-        "audio": "kitchen.mp3",
+        "image": "kitchen.webp",
+        "audio": "books/sf3/vocab-audio/kitchen.mp3",
         "similarWords": []
       },
       {
@@ -757,8 +757,8 @@ const sf3StructuredData = {
         "meaning": "飯廳",
         "sourceUnit": "Topic 2 My Home - Lesson 3 Words",
         "category": "word",
-        "image": "dining_room.png",
-        "audio": "dining_room.mp3",
+        "image": "dining_room.webp",
+        "audio": "books/sf3/vocab-audio/dining_room.mp3",
         "similarWords": []
       },
       {
@@ -768,77 +768,77 @@ const sf3StructuredData = {
         "meaning": "客廳",
         "sourceUnit": "Topic 2 My Home - Lesson 3 Words",
         "category": "word",
-        "image": "living_room.png",
-        "audio": "living_room.mp3",
+        "image": "living_room.webp",
+        "audio": "books/sf3/vocab-audio/living_room.mp3",
         "similarWords": []
       }
     ],
     "Topic 2 My Home - Lesson 4 Words": [
       {
         "kind": "word",
-        "word": "bird",
-        "sentence": "bird",
-        "meaning": "鳥",
+        "word": "a bird",
+        "sentence": "a bird",
+        "meaning": "一隻鳥",
         "sourceUnit": "Topic 2 My Home - Lesson 4 Words",
         "category": "word",
-        "image": "bird.png",
-        "audio": "bird.mp3",
-        "similarWords": []
+        "image": "bird.webp",
+        "audio": "books/sf3/vocab-audio/a_bird.mp3",
+        "similarWords": ["a word", "a bed", "a bad"]
       },
       {
         "kind": "word",
-        "word": "rabbit",
-        "sentence": "rabbit",
-        "meaning": "兔子",
+        "word": "a rabbit",
+        "sentence": "a rabbit",
+        "meaning": "一隻兔子",
         "sourceUnit": "Topic 2 My Home - Lesson 4 Words",
         "category": "word",
-        "image": "rabbit.png",
-        "audio": "rabbit.mp3",
-        "similarWords": []
+        "image": "rabbit.webp",
+        "audio": "books/sf3/vocab-audio/a_rabbit.mp3",
+        "similarWords": ["a habit", "a robot", "a ribbon"]
       },
       {
         "kind": "word",
-        "word": "turtle",
-        "sentence": "turtle",
-        "meaning": "烏龜",
+        "word": "a turtle",
+        "sentence": "a turtle",
+        "meaning": "一隻烏龜",
         "sourceUnit": "Topic 2 My Home - Lesson 4 Words",
         "category": "word",
-        "image": "turtle.png",
-        "audio": "turtle.mp3",
-        "similarWords": []
+        "image": "turtle.webp",
+        "audio": "books/sf3/vocab-audio/a_turtle.mp3",
+        "similarWords": ["a title", "a bottle", "a table"]
       },
       {
         "kind": "word",
-        "word": "cat",
-        "sentence": "cat",
-        "meaning": "貓",
+        "word": "a cat",
+        "sentence": "a cat",
+        "meaning": "一隻貓",
         "sourceUnit": "Topic 2 My Home - Lesson 4 Words",
         "category": "word",
-        "image": "cat.png",
-        "audio": "cat.mp3",
-        "similarWords": []
+        "image": "cat.webp",
+        "audio": "books/sf3/vocab-audio/a_cat.mp3",
+        "similarWords": ["a cap", "a bat", "a cut"]
       },
       {
         "kind": "word",
-        "word": "dog",
-        "sentence": "dog",
-        "meaning": "狗",
+        "word": "a dog",
+        "sentence": "a dog",
+        "meaning": "一隻狗",
         "sourceUnit": "Topic 2 My Home - Lesson 4 Words",
         "category": "word",
-        "image": "dog.png",
-        "audio": "dog.mp3",
-        "similarWords": []
+        "image": "dog.webp",
+        "audio": "books/sf3/vocab-audio/a_dog.mp3",
+        "similarWords": ["a duck", "a dig", "a log"]
       },
       {
         "kind": "word",
-        "word": "fish",
-        "sentence": "fish",
-        "meaning": "魚",
+        "word": "a fish",
+        "sentence": "a fish",
+        "meaning": "一條魚",
         "sourceUnit": "Topic 2 My Home - Lesson 4 Words",
         "category": "word",
-        "image": "fish.png",
-        "audio": "fish.mp3",
-        "similarWords": []
+        "image": "fish.webp",
+        "audio": "books/sf3/vocab-audio/a_fish.mp3",
+        "similarWords": ["a dish", "a wish", "a fist"]
       }
     ]
   },
