@@ -155,7 +155,7 @@
         <h2 id="statAvgScore">0%</h2>
       </div>
       <div class="admin-stat-card">
-        <small>⚠️ 常錯單字榜 TOP 1</small>
+        <small>⚠️ 常錯句子榜 TOP 1</small>
         <h2 id="statTopWrong" style="font-size:20px;color:#d97706;">無</h2>
       </div>
     </div>
@@ -321,7 +321,7 @@ function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
 function escapeHtml(text){return String(text).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
 function getItemText(item){return item?.word||item?.sentence||'';}
 function getItemMeaning(item){return item?.meaning||'';}
-function hasImage(item){return !!(item&&item.image);}
+function hasImage(item){return !!(item && item.image && typeof item.image === 'string' && item.image.trim() !== '' && item.image !== 'null');}
 function buildImageOnlyUnits(units){const output={};Object.entries(units||{}).forEach(([key,items])=>{const imageItems=(items||[]).filter(hasImage);if(imageItems.length>0)output[key]=imageItems;});return output;}
 function safeList(){return activeWordList||[];}
 
@@ -484,7 +484,7 @@ function buildPhonicsChoices(cur){
   return shuffle(choices.slice(0,4));
 }
 function loadPhonicsQuestion(){
-  if(quizIndex>=currentQuizList.length){showSimpleResult('phonics');return;}
+  if(quizIndex>=currentQuizList.length){showSimpleResult('phonicsQuiz');return;}
   const cur=currentQuizList[quizIndex];
   document.getElementById('phonics-progress').innerText=`題目 ${quizIndex+1} / ${currentQuizList.length}`;
   document.getElementById('phonics-feedback').className='feedback-box';
@@ -539,10 +539,28 @@ function loadSpeakingQuestion(){
 }
 
 const speechAliasMap={one:['one','1','won'],two:['two','2','to','too'],three:['three','3'],four:['four','4','for'],five:['five','5'],six:['six','6'],seven:['seven','7'],eight:['eight','8','ate'],nine:['nine','9'],ten:['ten','10']};
+
+// 新增縮寫展開函式 (強化口說容錯)
+function expandContractions(text) {
+  return String(text)
+    .replace(/i['’]m/gi, 'i am')
+    .replace(/he['’]s/gi, 'he is')
+    .replace(/she['’]s/gi, 'she is')
+    .replace(/it['’]s/gi, 'it is')
+    .replace(/they['’]re/gi, 'they are')
+    .replace(/we['’]re/gi, 'we are')
+    .replace(/you['’]re/gi, 'you are')
+    .replace(/don['’]t/gi, 'do not')
+    .replace(/can['’]t/gi, 'cannot')
+    .replace(/doesn['’]t/gi, 'does not');
+}
+
 function canonicalSpeechToken(t){const n=normalizeText(t);for(const [w,a] of Object.entries(speechAliasMap))if(a.includes(n))return w;return n;}
 function canonicalSpeechText(t){return normalizeText(t).split(' ').map(canonicalSpeechToken).join(' ').trim();}
+
+// 在比對前先展開雙方的縮寫
 function isSpeakingMatch(ans,cor){
-  const a=canonicalSpeechText(ans),c=canonicalSpeechText(cor);
+  const a=canonicalSpeechText(expandContractions(ans)),c=canonicalSpeechText(expandContractions(cor));
   if(!a||!c)return false;
   if(a===c)return true;
   const aw=a.split(' ').filter(Boolean),cw=c.split(' ').filter(Boolean);
@@ -879,7 +897,7 @@ function showSimpleResult(type){
     document.getElementById('listening-result-view').style.display='block';
     document.getElementById('listening-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3>${uploadTipHtml}<button class="btn btn-primary" style="margin-top:15px;" onclick="restartListeningQuiz()">重新測驗</button></div>`;
   }
-  if(type==='phonics'){
+  if(type==='phonicsQuiz'){
     document.getElementById('phonics-quiz-view').style.display='none';
     document.getElementById('phonics-result-view').style.display='block';
     document.getElementById('phonics-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3>${uploadTipHtml}<button class="btn btn-primary" style="margin-top:15px;" onclick="restartPhonicsQuiz()">重新測驗</button></div>`;
