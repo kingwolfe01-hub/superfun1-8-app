@@ -5,27 +5,214 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Super Fun 教材整合平台 - 南光國小專屬</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;min-height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;color:#1e293b}.login-wrapper{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#f0fdf4 0%,#eff6ff 100%);z-index:1000}.login-box{width:100%;max-width:380px;background:#fff;border-radius:18px;padding:30px;text-align:center;box-shadow:0 20px 40px rgba(15,23,42,.12);border:1px solid #e2e8f0}.login-box h3{margin-top:0;color:#16a34a;font-size:22px}.login-box p{color:#64748b;font-size:14px;margin-bottom:20px;line-height:1.5}.login-box select,.login-box input{width:100%;padding:12px;margin-bottom:15px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px;text-align:center;outline:none}.login-btn{width:100%;background:linear-gradient(135deg,#16a34a 0%,#22c55e 100%);color:white;border:none;padding:13px 18px;border-radius:999px;cursor:pointer;font-size:16px;font-weight:800}.login-btn:disabled{background:#94a3b8;cursor:not-allowed}.error-msg{color:#dc2626;font-size:14px;font-weight:bold;margin-bottom:15px;display:none}.loading-text{display:none;color:#475569;font-weight:bold;margin-bottom:15px}.main-menu-wrapper{min-height:100vh;display:none;justify-content:center;align-items:center;padding:24px}.main-menu-card{width:100%;max-width:430px;background:#fff;border-radius:28px;padding:28px;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,.35)}.student-badge,.book-badge{display:inline-block;border-radius:999px;padding:8px 14px;font-size:.9rem;font-weight:800;margin:4px 0 10px}.student-badge{background:#e0e7ff;color:#4338ca}.book-badge{background:#dcfce7;color:#166534}.module-choice{width:100%;border:none;border-radius:22px;padding:18px;margin:10px 0;cursor:pointer;font-size:1.05rem;font-weight:900;color:white;box-shadow:0 12px 22px rgba(15,23,42,.12)}.module-choice.player{background:linear-gradient(135deg,#16a34a 0%,#22c55e 100%)}.module-choice.vocab{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%)}.module-choice small{display:block;margin-top:6px;font-size:.82rem;font-weight:600;opacity:.9}.module-wrapper{display:none;min-height:100vh;padding:12px;justify-content:center;align-items:center}.top-back-btn{border:none;border-radius:999px;background:#0f172a;color:white;font-weight:800;padding:10px 16px;cursor:pointer;box-shadow:0 8px 16px rgba(15,23,42,.18)}#player-wrapper.album-player{background:#fff;border-radius:18px;width:100%;max-width:450px;box-shadow:0 20px 40px rgba(0,0,0,.18);overflow:hidden;flex-direction:column;max-height:94vh;align-self:center}#player-wrapper .player-topbar{display:flex;justify-content:flex-start;padding:10px;background:#f8fafc;border-bottom:1px solid #e2e8f0}#player-wrapper .copyright-banner{background:#ffebee;color:#d32f2f;padding:10px 15px;font-size:13px;font-weight:bold;text-align:center;border-bottom:1px solid #ffcdd2}#player-wrapper .school-header{background:#4CAF50;color:white;text-align:center;padding:12px;font-size:16px;font-weight:bold}#player-wrapper .now-playing{padding:20px;text-align:center;background:linear-gradient(to bottom,#fff,#f9f9f9)}#player-wrapper .track-title{font-size:18px;color:#333;margin:0 0 20px 0;font-weight:bold}#player-wrapper .controls{display:flex;justify-content:center;align-items:center;gap:15px;margin-bottom:20px}#player-wrapper .player-btn{background:#4CAF50;color:white;border:none;padding:10px 20px;border-radius:30px;cursor:pointer;font-size:16px;font-weight:bold}#player-wrapper .player-btn-side{background:#e0e0e0;color:#333;padding:8px 16px;font-size:14px}#player-wrapper .progress-container{display:flex;align-items:center;gap:10px;font-size:13px;color:#666}#player-wrapper .progress-area{flex-grow:1;background:#e0e0e0;height:8px;border-radius:4px;cursor:pointer;position:relative}#player-wrapper .progress-bar{background:#4CAF50;height:100%;width:0%;border-radius:4px}#player-wrapper .player-tab-container{display:flex;border-bottom:1px solid #e0e0e0;border-top:1px solid #e0e0e0;background:#f9f9f9}#player-wrapper .player-tab-btn{flex:1;padding:12px 0;border:none;background:transparent;font-size:16px;font-weight:bold;color:#888;cursor:pointer}#player-wrapper .player-tab-btn.active{color:#4CAF50;border-bottom:3px solid #4CAF50;background:#fff}#player-wrapper .playlist-wrapper{flex-grow:1;overflow-y:auto;background:#fff}#player-wrapper .playlist{list-style:none;padding:0;margin:0}#player-wrapper .playlist li{padding:15px 20px;border-bottom:1px solid #f0f0f0;cursor:pointer;color:#444;display:flex;align-items:center}#player-wrapper .playlist li.active{background:#e8f5e9;color:#2e7d32;font-weight:bold;border-left:4px solid #4CAF50}#vocab-wrapper{flex-direction:column;gap:10px}.vocab-topbar{width:100%;max-width:430px;display:flex;justify-content:flex-start}.app-viewport{width:100%;max-width:430px;height:calc(100vh - 72px);max-height:932px;background:#fff;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative}.app-header{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);color:white;padding:14px;text-align:center;box-shadow:0 4px 12px rgba(79,70,229,.3);z-index:10}.app-title{margin:0 0 10px 0;font-size:1.18rem;font-weight:900}.control-panel{background:#f8fafc;padding:10px 12px;border-bottom:1px solid #e2e8f0}.select-label{display:block;color:#475569;font-size:.78rem;font-weight:900;margin:0 0 5px 2px}.select-input{width:100%;padding:10px 14px;font-size:.92rem;border-radius:12px;border:none;background-color:rgba(255,255,255,.22);color:white;font-weight:800;outline:none;cursor:pointer}.select-input option{background-color:#1e1b4b;color:white}.unit-select{width:100%;padding:10px 14px;font-size:.9rem;border-radius:12px;border:1px solid #cbd5e1;background:white;color:#334155;font-weight:800;outline:none}.content-area{flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column}.mode-section{display:none;height:100%;flex-direction:column;justify-content:space-between}.mode-section.active{display:flex}.card-box{background:white;border-radius:26px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:0 10px 25px -5px rgba(0,0,0,.05);border:2px solid #f1f5f9;flex:1;margin-bottom:14px;position:relative}.word-img{width:155px;height:155px;object-fit:cover;border-radius:20px;margin-bottom:12px;box-shadow:0 8px 16px rgba(0,0,0,.08);background-color:#f8fafc}.word-text{font-size:2.1rem;font-weight:900;color:#0f172a;text-align:center;line-height:1.25}.meaning-text{font-size:1.25rem;color:#4f46e5;font-weight:800;margin-top:8px;text-align:center}.btn-group{display:flex;gap:10px;width:100%}.btn{width:100%;padding:14px;font-size:1rem;font-weight:800;border:none;border-radius:18px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.08)}.btn-primary{background:linear-gradient(135deg,#4f46e5 0%,#6366f1 100%);color:white}.btn-success{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white}.btn-warning{background:#f59e0b;color:white}.btn-outline{background:white;color:#475569;border:1px solid #e2e8f0}.nav-row{display:flex;gap:10px;width:100%;margin-top:8px}.feedback-box{margin-top:12px;padding:12px;border-radius:14px;text-align:center;font-weight:800;width:100%;min-height:46px}.correct{background:#dcfce7;color:#166534}.incorrect{background:#fee2e2;color:#991b1b}.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:16px}.option-img-btn,.option-text-btn{border:2px solid #e2e8f0;background:white;border-radius:18px;padding:12px;min-height:82px;font-size:1rem;font-weight:900;color:#334155}.option-img-btn img{width:100%;height:110px;object-fit:contain}.progress-badge{display:inline-block;background:#e0e7ff;color:#4f46e5;padding:6px 16px;border-radius:999px;font-weight:900;font-size:.95rem}.wave-container{display:none}.score-stars{font-size:2rem}.wrong-item{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e2e8f0;font-weight:bold}.score-tag{padding:2px 8px;border-radius:8px;font-size:.85rem;color:white}.score-pass{background-color:#10b981}.score-fail{background-color:#ef4444}@media (min-width:440px){.app-viewport{height:92vh;border-radius:40px;border:8px solid #334155}}@media (max-width:380px){.app-title{font-size:1rem}.word-text{font-size:1.75rem}.meaning-text{font-size:1.05rem}.btn{padding:12px;font-size:.92rem}.card-box{padding:14px}.content-area{padding:10px}.word-img{width:135px;height:135px}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;min-height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;color:#1e293b}.login-wrapper{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#f0fdf4 0%,#eff6ff 100%);z-index:1000}.login-box{width:100%;max-width:380px;background:#fff;border-radius:18px;padding:30px;text-align:center;box-shadow:0 20px 40px rgba(15,23,42,.12);border:1px solid #e2e8f0;position:relative}.login-box h3{margin-top:0;color:#16a34a;font-size:22px}.login-box p{color:#64748b;font-size:14px;margin-bottom:20px;line-height:1.5}.login-box select,.login-box input{width:100%;padding:12px;margin-bottom:15px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px;text-align:center;outline:none}.login-btn{width:100%;background:linear-gradient(135deg,#16a34a 0%,#22c55e 100%);color:white;border:none;padding:13px 18px;border-radius:999px;cursor:pointer;font-size:16px;font-weight:800}.login-btn:disabled{background:#94a3b8;cursor:not-allowed}.teacher-btn-link{display:block;margin-top:16px;font-size:13px;color:#64748b;text-decoration:none;font-weight:bold;background:none;border:none;cursor:pointer;width:100%}.teacher-btn-link:hover{color:#4f46e5}.error-msg{color:#dc2626;font-size:14px;font-weight:bold;margin-bottom:15px;display:none}.loading-text{display:none;color:#475569;font-weight:bold;margin-bottom:15px}.main-menu-wrapper{min-height:100vh;display:none;justify-content:center;align-items:center;padding:24px}.main-menu-card{width:100%;max-width:430px;background:#fff;border-radius:28px;padding:28px;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,.35)}.student-badge,.book-badge{display:inline-block;border-radius:999px;padding:8px 14px;font-size:.9rem;font-weight:800;margin:4px 0 10px}.student-badge{background:#e0e7ff;color:#4338ca}.book-badge{background:#dcfce7;color:#166534}.module-choice{width:100%;border:none;border-radius:22px;padding:18px;margin:10px 0;cursor:pointer;font-size:1.05rem;font-weight:900;color:white;box-shadow:0 12px 22px rgba(15,23,42,.12)}.module-choice.player{background:linear-gradient(135deg,#16a34a 0%,#22c55e 100%)}.module-choice.vocab{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%)}.module-choice small{display:block;margin-top:6px;font-size:.82rem;font-weight:600;opacity:.9}.module-wrapper{display:none;min-height:100vh;padding:12px;justify-content:center;align-items:center}.top-back-btn{border:none;border-radius:999px;background:#0f172a;color:white;font-weight:800;padding:10px 16px;cursor:pointer;box-shadow:0 8px 16px rgba(15,23,42,.18)}#player-wrapper.album-player{background:#fff;border-radius:18px;width:100%;max-width:450px;box-shadow:0 20px 40px rgba(0,0,0,.18);overflow:hidden;flex-direction:column;max-height:94vh;align-self:center}#player-wrapper .player-topbar{display:flex;justify-content:flex-start;padding:10px;background:#f8fafc;border-bottom:1px solid #e2e8f0}#player-wrapper .copyright-banner{background:#ffebee;color:#d32f2f;padding:10px 15px;font-size:13px;font-weight:bold;text-align:center;border-bottom:1px solid #ffcdd2}#player-wrapper .school-header{background:#4CAF50;color:white;text-align:center;padding:12px;font-size:16px;font-weight:bold}#player-wrapper .now-playing{padding:20px;text-align:center;background:linear-gradient(to bottom,#fff,#f9f9f9)}#player-wrapper .track-title{font-size:18px;color:#333;margin:0 0 20px 0;font-weight:bold}#player-wrapper .controls{display:flex;justify-content:center;align-items:center;gap:15px;margin-bottom:20px}#player-wrapper .player-btn{background:#4CAF50;color:white;border:none;padding:10px 20px;border-radius:30px;cursor:pointer;font-size:16px;font-weight:bold}#player-wrapper .player-btn-side{background:#e0e0e0;color:#333;padding:8px 16px;font-size:14px}#player-wrapper .progress-container{display:flex;align-items:center;gap:10px;font-size:13px;color:#666}#player-wrapper .progress-area{flex-grow:1;background:#e0e0e0;height:8px;border-radius:4px;cursor:pointer;position:relative}#player-wrapper .progress-bar{background:#4CAF50;height:100%;width:0%;border-radius:4px}#player-wrapper .player-tab-container{display:flex;border-bottom:1px solid #e0e0e0;border-top:1px solid #e0e0e0;background:#f9f9f9}#player-wrapper .player-tab-btn{flex:1;padding:12px 0;border:none;background:transparent;font-size:16px;font-weight:bold;color:#888;cursor:pointer}#player-wrapper .player-tab-btn.active{color:#4CAF50;border-bottom:3px solid #4CAF50;background:#fff}#player-wrapper .playlist-wrapper{flex-grow:1;overflow-y:auto;background:#fff}#player-wrapper .playlist{list-style:none;padding:0;margin:0}#player-wrapper .playlist li{padding:15px 20px;border-bottom:1px solid #f0f0f0;cursor:pointer;color:#444;display:flex;align-items:center}#player-wrapper .playlist li.active{background:#e8f5e9;color:#2e7d32;font-weight:bold;border-left:4px solid #4CAF50}#vocab-wrapper{flex-direction:column;gap:10px}.vocab-topbar{width:100%;max-width:430px;display:flex;justify-content:flex-start}.app-viewport{width:100%;max-width:430px;height:calc(100vh - 72px);max-height:932px;background:#fff;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative}.app-header{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);color:white;padding:14px;text-align:center;box-shadow:0 4px 12px rgba(79,70,229,.3);z-index:10}.app-title{margin:0 0 10px 0;font-size:1.18rem;font-weight:900}.control-panel{background:#f8fafc;padding:10px 12px;border-bottom:1px solid #e2e8f0}.select-label{display:block;color:#475569;font-size:.78rem;font-weight:900;margin:0 0 5px 2px}.select-input{width:100%;padding:10px 14px;font-size:.92rem;border-radius:12px;border:none;background-color:rgba(255,255,255,.22);color:white;font-weight:800;outline:none;cursor:pointer}.select-input option{background-color:#1e1b4b;color:white}.unit-select{width:100%;padding:10px 14px;font-size:.9rem;border-radius:12px;border:1px solid #cbd5e1;background:white;color:#334155;font-weight:800;outline:none}.content-area{flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column}.mode-section{display:none;height:100%;flex-direction:column;justify-content:space-between}.mode-section.active{display:flex}.card-box{background:white;border-radius:26px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:0 10px 25px -5px rgba(0,0,0,.05);border:2px solid #f1f5f9;flex:1;margin-bottom:14px;position:relative}.word-img{width:155px;height:155px;object-fit:cover;border-radius:20px;margin-bottom:12px;box-shadow:0 8px 16px rgba(0,0,0,.08);background-color:#f8fafc}.word-text{font-size:2.1rem;font-weight:900;color:#0f172a;text-align:center;line-height:1.25}.meaning-text{font-size:1.25rem;color:#4f46e5;font-weight:800;margin-top:8px;text-align:center}.btn-group{display:flex;gap:10px;width:100%}.btn{width:100%;padding:14px;font-size:1rem;font-weight:800;border:none;border-radius:18px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.08)}.btn-primary{background:linear-gradient(135deg,#4f46e5 0%,#6366f1 100%);color:white}.btn-success{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white}.btn-warning{background:#f59e0b;color:white}.btn-outline{background:white;color:#475569;border:1px solid #e2e8f0}.nav-row{display:flex;gap:10px;width:100%;margin-top:8px}.feedback-box{margin-top:12px;padding:12px;border-radius:14px;text-align:center;font-weight:800;width:100%;min-height:46px}.correct{background:#dcfce7;color:#166534}.incorrect{background:#fee2e2;color:#991b1b}.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:16px}.option-img-btn,.option-text-btn{border:2px solid #e2e8f0;background:white;border-radius:18px;padding:12px;min-height:82px;font-size:1rem;font-weight:900;color:#334155}.option-img-btn img{width:100%;height:110px;object-fit:contain}.progress-badge{display:inline-block;background:#e0e7ff;color:#4f46e5;padding:6px 16px;border-radius:999px;font-weight:900;font-size:.95rem}.wave-container{display:none}.score-stars{font-size:2rem}.wrong-item{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e2e8f0;font-weight:bold}.score-tag{padding:2px 8px;border-radius:8px;font-size:.85rem;color:white}.score-pass{background-color:#10b981}.score-fail{background-color:#ef4444}@media (min-width:440px){.app-viewport{height:92vh;border-radius:40px;border:8px solid #334155}}@media (max-width:380px){.app-title{font-size:1rem}.word-text{font-size:1.75rem}.meaning-text{font-size:1.05rem}.btn{padding:12px;font-size:.92rem}.card-box{padding:14px}.content-area{padding:10px}.word-img{width:135px;height:135px}}
+
+/* 教師後台整合樣式 */
+.admin-section-wrapper{display:none;min-height:100vh;background:#f8fafc;padding:20px;flex-direction:column;align-items:center}.admin-container{width:100%;max-width:1050px}.admin-nav-bar{background:#1e1b4b;color:white;padding:16px 20px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px}.admin-stat-card{background:white;padding:20px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05);border:1px solid #e2e8f0}.admin-stat-card small{color:#64748b;font-weight:bold}.admin-stat-card h2{margin:8px 0 0 0;color:#0f172a;font-size:26px}.admin-control-bar{background:white;padding:16px;border-radius:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.05);border:1px solid #e2e8f0}.admin-control-bar select{padding:8px 12px;border-radius:10px;border:1px solid #cbd5e1;font-size:14px;font-weight:bold;outline:none}.admin-table-box{background:white;border-radius:16px;padding:16px;overflow-x:auto;box-shadow:0 4px 12px rgba(0,0,0,.05);border:1px solid #e2e8f0}table.admin-table{width:100%;border-collapse:collapse;text-align:left;font-size:14px}table.admin-table th,table.admin-table td{padding:12px 14px;border-bottom:1px solid #e2e8f0}table.admin-table th{background:#f8fafc;color:#475569;font-weight:900}.admin-modal-wrapper{position:fixed;inset:0;background:rgba(15,23,42,.6);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px}
 </style>
 </head>
 <body>
-<div class="login-wrapper" id="login-wrapper"><div class="login-box"><h3>🏫 南投縣南光國小 英語學習平台</h3><p>南光國小專屬教材，請驗證身分後開始使用。</p><select id="school-select"><option value="南光國小" selected>南投縣南光國小</option></select><select id="class-select"><option value="" disabled selected>-- 請選擇班級 --</option><option value="三年甲班">三年甲班</option><option value="三年乙班">三年乙班</option><option value="三年丙班">三年丙班</option><option value="四年甲班">四年甲班</option><option value="四年乙班">四年乙班</option><option value="四年丙班">四年丙班</option><option value="五年甲班">五年甲班</option><option value="五年乙班">五年乙班</option><option value="五年丙班">五年丙班</option><option value="六年甲班">六年甲班</option><option value="六年乙班">六年乙班</option><option value="六年丙班">六年丙班</option></select><input type="number" id="number-input" placeholder="請輸入座號"><input type="text" id="name-input" placeholder="請輸入姓名"><div class="error-msg" id="error-msg"></div><div class="loading-text" id="loading-text">資料驗證中，請稍候...</div><button class="login-btn" id="login-btn">驗證身分並開始上課</button></div></div>
-<div class="main-menu-wrapper" id="main-menu-wrapper"><div class="main-menu-card"><h1>Super Fun 教材中心</h1><p>請選擇今天要使用的學習功能。</p><div class="student-badge" id="student-badge">已完成身分驗證</div><br><div class="book-badge" id="book-badge">目前教材</div><button class="module-choice player" onclick="showModule('player')">🎧 教學音檔播放器<small>依目前冊別載入 CD 音檔</small></button><button class="module-choice vocab" onclick="showModule('vocab')">📚 學習與測驗<small>第一層選功能，第二層選單元</small></button></div></div>
-<div class="album-player module-wrapper" id="player-wrapper"><div class="player-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div><div class="copyright-banner">⚠️ 版權宣告：本音檔僅限於學校教學使用，不可外傳</div><div class="school-header" id="dynamic-school-header">教學音檔播放器</div><div class="now-playing"><h3 class="track-title" id="display-title">請選擇曲目</h3><audio id="main-audio"></audio><div class="controls"><button class="player-btn player-btn-side" id="prev-btn">上一首</button><button class="player-btn" id="play-btn">播放</button><button class="player-btn player-btn-side" id="next-btn">下一首</button></div><div class="progress-container"><span id="current-time">0:00</span><div class="progress-area" id="progress-area"><div class="progress-bar" id="progress-bar"></div></div><span id="total-time">0:00</span></div></div><div class="player-tab-container"><button class="player-tab-btn active" id="btn-CD1" onclick="switchPlayerTab('CD1')">CD 1</button><button class="player-tab-btn" id="btn-CD2" onclick="switchPlayerTab('CD2')">CD 2</button></div><div class="playlist-wrapper"><ul class="playlist" id="playlist-container"></ul></div></div>
-<div class="module-wrapper" id="vocab-wrapper"><div class="vocab-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div><div class="app-viewport"><div class="app-header"><h1 class="app-title">Super Fun 教材學習方程式</h1><label class="select-label" style="color:white;">第一層：學習功能</label><select id="modeSelect" class="select-input" onchange="switchMode(this.value)"><option value="flashcard">⚡ 閃示卡</option><option value="listening">👂 看圖測驗</option><option value="phonicsQuiz">🔤 辨音測驗</option><option value="speaking">🎙️ 口說測驗</option><option value="sentencePractice">📘 句子跟讀</option><option value="storyPractice">📖 Story Time 跟讀</option><option value="patternPractice">🧩 句型操練</option></select></div><div class="control-panel"><label class="select-label" for="unitSelect">第二層：學習單元</label><select id="unitSelect" class="unit-select" onchange="onUnitChange()"></select></div><div class="content-area">
-<div id="flashcard-mode" class="mode-section active"><div class="card-box"><img id="fc-img" class="word-img" src="" alt="圖片"><div class="word-text" id="fc-word">-</div><div class="meaning-text" id="fc-meaning">-</div></div><div class="btn-group"><button class="btn btn-outline" onclick="prevWord()">⬅️ 上一張</button><button class="btn btn-primary" onclick="playCurrentWordAudio()">🔊 播放</button><button class="btn btn-outline" onclick="nextWord()">下一張 ➡️</button></div></div>
-<div id="listening-mode" class="mode-section"><div id="listening-quiz-view"><span class="progress-badge" id="list-progress">題目 1 / 1</span><div class="card-box" style="min-height:160px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playQuizAudio()">🔊 點擊聽題目</button><p style="font-weight:800;color:#64748b;">請選出正確答案：</p></div><div class="option-grid" id="quiz-options"></div><div id="listening-feedback" class="feedback-box"></div></div><div id="listening-result-view" style="display:none;"></div></div>
-<div id="phonicsQuiz-mode" class="mode-section"><div id="phonics-quiz-view"><span class="progress-badge" id="phonics-progress">題目 1 / 1</span><div class="card-box" style="min-height:150px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playPhonicsQuizAudio()">🔊 點擊聽單字發音</button><p style="font-weight:800;color:#64748b;">請選出拼寫正確的英文：</p></div><div class="option-grid" id="phonics-quiz-options"></div><div id="phonics-feedback" class="feedback-box"></div></div><div id="phonics-result-view" style="display:none;"></div></div>
-<div id="speaking-mode" class="mode-section"><div id="speaking-quiz-view"><span class="progress-badge" id="spk-progress">題目 1 / 1</span><div class="card-box"><img id="sp-img" class="word-img" src="" alt="圖片"><div class="word-text" id="sp-word">-</div><div class="meaning-text" id="sp-meaning">-</div></div><button class="btn btn-success" onclick="startSpeechRecognition()">🎙️ 按下開始唸</button><div id="speaking-feedback" class="feedback-box"></div></div><div id="speaking-result-view" style="display:none;"></div></div>
-<div id="sentencePractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="sentence-progress">句子 1 / 1</span><div class="word-text" id="sentence-text" style="font-size:1.45rem;margin-top:18px;">-</div><div class="meaning-text" id="sentence-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentSentenceAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevSentenceItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextSentenceItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startSentenceSpeechRecognition()">🎙️ 開始跟讀</button><div id="sentence-feedback" class="feedback-box"></div></div>
-<div id="storyPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="story-progress">Story Time 1 / 1</span><div class="word-text" id="story-text" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="story-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentStoryAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevStoryItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextStoryItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startStorySpeechRecognition()">🎙️ 開始跟讀</button><div id="story-feedback" class="feedback-box"></div></div>
-<div id="patternPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="pattern-progress">句型 1 / 1</span><div class="word-text" id="pattern-title" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="pattern-meaning">-</div><div id="pattern-template" style="margin-top:12px;font-weight:900;color:#0f172a;text-align:center;font-size:1.05rem;line-height:1.5;">-</div><div id="pattern-slots" style="margin-top:12px;width:100%;font-size:.9rem;color:#475569;text-align:left;"></div><div id="pattern-generated" style="margin-top:14px;width:100%;padding:12px;border-radius:16px;background:#f0fdf4;border:2px solid #86efac;color:#166534;font-size:1.1rem;font-weight:900;text-align:center;line-height:1.55;">請選擇欄位產生句子</div><div id="pattern-blank-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#fff7ed;border:2px solid #fdba74;text-align:left;"><div style="font-weight:900;color:#9a3412;margin-bottom:8px;">📝 填空選答案</div><div id="pattern-blank-question" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請先選擇欄位產生填空題</div><div id="pattern-blank-options" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;"></div><div id="pattern-blank-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-order-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#eef2ff;border:2px solid #a5b4fc;text-align:left;"><div style="font-weight:900;color:#3730a3;margin-bottom:8px;">🔀 拖曳排序</div><div id="pattern-order-target" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請把單字排成正確句子</div><div style="margin-top:10px;font-size:.85rem;color:#64748b;font-weight:800;">可拖曳，也可點選單字加入答案區；點答案區單字可移回。</div><div id="pattern-order-bank" ondragover="patternAllowDrop(event)" ondrop="patternDropToBank(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:44px;padding:8px;border-radius:12px;background:white;border:1px dashed #818cf8;"></div><div id="pattern-order-answer" ondragover="patternAllowDrop(event)" ondrop="patternDropToAnswer(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:48px;padding:8px;border-radius:12px;background:#f8fafc;border:2px dashed #6366f1;"></div><div class="nav-row" style="margin-top:10px;"><button class="btn btn-outline" onclick="resetPatternOrderQuiz()">重新排序</button><button class="btn btn-success" onclick="checkPatternOrderAnswer()">檢查排序</button></div><div id="pattern-order-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-examples" style="margin-top:12px;width:100%;font-size:.92rem;color:#334155;text-align:left;line-height:1.55;"></div></div><button class="btn btn-primary" onclick="playCurrentPatternAudio()">🔊 播放產生句</button><div class="nav-row"><button class="btn btn-outline" onclick="prevPatternItem()">⬅️ 上一句型</button><button class="btn btn-outline" onclick="nextPatternItem()">下一句型 ➡️</button></div><button class="btn btn-success" onclick="startPatternSpeechRecognition()">🎙️ 跟讀產生句</button><div id="pattern-feedback" class="feedback-box"></div></div>
-</div></div></div>
+
+<!-- 學生登入區 -->
+<div class="login-wrapper" id="login-wrapper">
+  <div class="login-box">
+    <h3>🏫 南投縣南光國小 英語學習平台</h3>
+    <p>南光國小專屬教材，請驗證身分後開始使用。</p>
+    <select id="school-select"><option value="南光國小" selected>南投縣南光國小</option></select>
+    <select id="class-select">
+      <option value="" disabled selected>-- 請選擇班級 --</option>
+      <option value="三年一班">三年一班</option><option value="三年二班">三年二班</option><option value="三年三班">三年三班</option><option value="三年四班">三年四班</option><option value="三年五班">三年五班</option><option value="三年六班">三年六班</option><option value="三年七班">三年七班</option><option value="三年八班">三年八班</option>
+      <option value="四年一班">四年一班</option><option value="四年二班">四年二班</option><option value="四年三班">四年三班</option><option value="四年四班">四年四班</option><option value="四年五班">四年五班</option><option value="四年六班">四年六班</option><option value="四年七班">四年七班</option><option value="四年八班">四年八班</option>
+      <option value="五年一班">五年一班</option><option value="五年二班">五年二班</option><option value="五年三班">五年三班</option><option value="五年四班">五年四班</option><option value="五年五班">五年五班</option><option value="五年六班">五年六班</option><option value="五年七班">五年七班</option><option value="五年八班">五年八班</option>
+      <option value="六年一班">六年一班</option><option value="六年二班">六年二班</option><option value="六年三班">六年三班</option><option value="六年四班">六年四班</option><option value="六年五班">六年五班</option><option value="六年六班">六年六班</option><option value="六年七班">六年七班</option><option value="六年八班">六年八班</option>
+    </select>
+    <input type="number" id="number-input" placeholder="請輸入座號">
+    <input type="text" id="name-input" placeholder="請輸入姓名">
+    <div class="error-msg" id="error-msg"></div>
+    <div class="loading-text" id="loading-text">資料驗證中，請稍候...</div>
+    <button class="login-btn" id="login-btn">驗證身分並開始上課</button>
+    <button class="teacher-btn-link" onclick="openTeacherAuthModal()">🔒 老師查閱管理專區</button>
+  </div>
+</div>
+
+<!-- 老師通行碼驗證彈窗 -->
+<div class="admin-modal-wrapper" id="teacherAuthModal">
+  <div class="login-box" style="max-width:350px;">
+    <h3>🔒 老師身分驗證</h3>
+    <p>請輸入教師專屬通行密碼</p>
+    <input type="password" id="modalPasscode" placeholder="請輸入通行密碼" onkeydown="if(event.key==='Enter')handleTeacherModalLogin()">
+    <div id="modalLoginError" style="color:#dc2626;font-size:13px;font-weight:bold;margin-bottom:12px;display:none;">密碼錯誤，請重新輸入</div>
+    <button class="btn btn-primary" onclick="handleTeacherModalLogin()">進入成績後台</button>
+    <button class="btn btn-outline" style="margin-top:8px;" onclick="closeTeacherAuthModal()">取消</button>
+  </div>
+</div>
+
+<!-- 學生主功能首頁 -->
+<div class="main-menu-wrapper" id="main-menu-wrapper">
+  <div class="main-menu-card">
+    <h1>Super Fun 教材中心</h1>
+    <p>請選擇今天要使用的學習功能。</p>
+    <div class="student-badge" id="student-badge">已完成身分驗證</div><br>
+    <div class="book-badge" id="book-badge">目前教材</div>
+    <button class="module-choice player" onclick="showModule('player')">🎧 教學音檔播放器<small>依目前冊別載入 CD 音檔</small></button>
+    <button class="module-choice vocab" onclick="showModule('vocab')">📚 學習與測驗<small>第一層選功能，第二層選單元</small></button>
+  </div>
+</div>
+
+<!-- CD 播放器模組 -->
+<div class="album-player module-wrapper" id="player-wrapper">
+  <div class="player-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div>
+  <div class="copyright-banner">⚠️ 版權宣告：本音檔僅限於學校教學使用，不可外傳</div>
+  <div class="school-header" id="dynamic-school-header">教學音檔播放器</div>
+  <div class="now-playing">
+    <h3 class="track-title" id="display-title">請選擇曲目</h3>
+    <audio id="main-audio"></audio>
+    <div class="controls">
+      <button class="player-btn player-btn-side" id="prev-btn">上一首</button>
+      <button class="player-btn" id="play-btn">播放</button>
+      <button class="player-btn player-btn-side" id="next-btn">下一首</button>
+    </div>
+    <div class="progress-container">
+      <span id="current-time">0:00</span>
+      <div class="progress-area" id="progress-area"><div class="progress-bar" id="progress-bar"></div></div>
+      <span id="total-time">0:00</span>
+    </div>
+  </div>
+  <div class="player-tab-container">
+    <button class="player-tab-btn active" id="btn-CD1" onclick="switchPlayerTab('CD1')">CD 1</button>
+    <button class="player-tab-btn" id="btn-CD2" onclick="switchPlayerTab('CD2')">CD 2</button>
+  </div>
+  <div class="playlist-wrapper"><ul class="playlist" id="playlist-container"></ul></div>
+</div>
+
+<!-- 學習與測驗模組 -->
+<div class="module-wrapper" id="vocab-wrapper">
+  <div class="vocab-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div>
+  <div class="app-viewport">
+    <div class="app-header">
+      <h1 class="app-title">Super Fun 教材學習方程式</h1>
+      <label class="select-label" style="color:white;">第一層：學習功能</label>
+      <select id="modeSelect" class="select-input" onchange="switchMode(this.value)">
+        <option value="flashcard">⚡ 閃示卡</option>
+        <option value="listening">👂 看圖測驗</option>
+        <option value="phonicsQuiz">🔤 辨音測驗</option>
+        <option value="speaking">🎙️ 口說測驗</option>
+        <option value="sentencePractice">📘 句子跟讀</option>
+        <option value="storyPractice">📖 Story Time 跟讀</option>
+        <option value="patternPractice">🧩 句型操練</option>
+      </select>
+    </div>
+    <div class="control-panel">
+      <label class="select-label" for="unitSelect">第二層：學習單元</label>
+      <select id="unitSelect" class="unit-select" onchange="onUnitChange()"></select>
+    </div>
+    <div class="content-area">
+      <div id="flashcard-mode" class="mode-section active"><div class="card-box"><img id="fc-img" class="word-img" src="" alt="圖片"><div class="word-text" id="fc-word">-</div><div class="meaning-text" id="fc-meaning">-</div></div><div class="btn-group"><button class="btn btn-outline" onclick="prevWord()">⬅️ 上一張</button><button class="btn btn-primary" onclick="playCurrentWordAudio()">🔊 播放</button><button class="btn btn-outline" onclick="nextWord()">下一張 ➡️</button></div></div>
+      <div id="listening-mode" class="mode-section"><div id="listening-quiz-view"><span class="progress-badge" id="list-progress">題目 1 / 1</span><div class="card-box" style="min-height:160px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playQuizAudio()">🔊 點擊聽題目</button><p style="font-weight:800;color:#64748b;">請選出正確答案：</p></div><div class="option-grid" id="quiz-options"></div><div id="listening-feedback" class="feedback-box"></div></div><div id="listening-result-view" style="display:none;"></div></div>
+      <div id="phonicsQuiz-mode" class="mode-section"><div id="phonics-quiz-view"><span class="progress-badge" id="phonics-progress">題目 1 / 1</span><div class="card-box" style="min-height:150px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playPhonicsQuizAudio()">🔊 點擊聽單字發音</button><p style="font-weight:800;color:#64748b;">請選出拼寫正確的英文：</p></div><div class="option-grid" id="phonics-quiz-options"></div><div id="phonics-feedback" class="feedback-box"></div></div><div id="phonics-result-view" style="display:none;"></div></div>
+      
+      <!-- 已修改的 Speaking Mode 區塊 -->
+      <div id="speaking-mode" class="mode-section">
+        <div id="speaking-quiz-view">
+          <span class="progress-badge" id="spk-progress">句子 1 / 1</span>
+          <div class="card-box">
+            <img id="sp-img" class="word-img" src="" alt="圖片" style="display:none;">
+            <div class="word-text" id="sp-word" style="font-size:1.45rem;margin-top:18px;">-</div>
+            <div class="meaning-text" id="sp-meaning">-</div>
+          </div>
+          <button class="btn btn-primary" style="margin-bottom:10px;" onclick="playSpeakingSentence()">🔊 播放示範句</button>
+          <button class="btn btn-success" onclick="startSpeechRecognition()">🎙️ 按下開始唸</button>
+          <div id="speaking-feedback" class="feedback-box"></div>
+        </div>
+        <div id="speaking-result-view" style="display:none;"></div>
+      </div>
+
+      <div id="sentencePractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="sentence-progress">句子 1 / 1</span><div class="word-text" id="sentence-text" style="font-size:1.45rem;margin-top:18px;">-</div><div class="meaning-text" id="sentence-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentSentenceAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevSentenceItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextSentenceItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startSentenceSpeechRecognition()">🎙️ 開始跟讀</button><div id="sentence-feedback" class="feedback-box"></div></div>
+      <div id="storyPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="story-progress">Story Time 1 / 1</span><div class="word-text" id="story-text" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="story-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentStoryAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevStoryItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextStoryItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startStorySpeechRecognition()">🎙️ 開始跟讀</button><div id="story-feedback" class="feedback-box"></div></div>
+      <div id="patternPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="pattern-progress">句型 1 / 1</span><div class="word-text" id="pattern-title" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="pattern-meaning">-</div><div id="pattern-template" style="margin-top:12px;font-weight:900;color:#0f172a;text-align:center;font-size:1.05rem;line-height:1.5;">-</div><div id="pattern-slots" style="margin-top:12px;width:100%;font-size:.9rem;color:#475569;text-align:left;"></div><div id="pattern-generated" style="margin-top:14px;width:100%;padding:12px;border-radius:16px;background:#f0fdf4;border:2px solid #86efac;color:#166534;font-size:1.1rem;font-weight:900;text-align:center;line-height:1.55;">請選擇欄位產生句子</div><div id="pattern-blank-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#fff7ed;border:2px solid #fdba74;text-align:left;"><div style="font-weight:900;color:#9a3412;margin-bottom:8px;">📝 填空選答案</div><div id="pattern-blank-question" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請先選擇欄位產生填空題</div><div id="pattern-blank-options" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;"></div><div id="pattern-blank-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-order-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#eef2ff;border:2px solid #a5b4fc;text-align:left;"><div style="font-weight:900;color:#3730a3;margin-bottom:8px;">🔀 拖曳排序</div><div id="pattern-order-target" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請把單字排成正確句子</div><div style="margin-top:10px;font-size:.85rem;color:#64748b;font-weight:800;">可拖曳，也可點選單字加入答案區；點答案區單字可移回。</div><div id="pattern-order-bank" ondragover="patternAllowDrop(event)" ondrop="patternDropToBank(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:44px;padding:8px;border-radius:12px;background:white;border:1px dashed #818cf8;"></div><div id="pattern-order-answer" ondragover="patternAllowDrop(event)" ondrop="patternDropToAnswer(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:48px;padding:8px;border-radius:12px;background:#f8fafc;border:2px dashed #6366f1;"></div><div class="nav-row" style="margin-top:10px;"><button class="btn btn-outline" onclick="resetPatternOrderQuiz()">重新排序</button><button class="btn btn-success" onclick="checkPatternOrderAnswer()">檢查排序</button></div><div id="pattern-order-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-examples" style="margin-top:12px;width:100%;font-size:.92rem;color:#334155;text-align:left;line-height:1.55;"></div></div><button class="btn btn-primary" onclick="playCurrentPatternAudio()">🔊 播放產生句</button><div class="nav-row"><button class="btn btn-outline" onclick="prevPatternItem()">⬅️ 上一句型</button><button class="btn btn-outline" onclick="nextPatternItem()">下一句型 ➡️</button></div><button class="btn btn-success" onclick="startPatternSpeechRecognition()">🎙️ 跟讀產生句</button><div id="pattern-feedback" class="feedback-box"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 老師後台數據管理模組 -->
+<div class="admin-section-wrapper" id="admin-wrapper">
+  <div class="admin-container">
+    <div class="admin-nav-bar">
+      <div>
+        <strong style="font-size:18px;">南投縣南光國小 - 英語教材數據看板</strong>
+        <span id="teacherBadge" style="margin-left:12px;background:#312e81;padding:4px 12px;border-radius:999px;font-size:13px;">教師</span>
+      </div>
+      <button class="btn btn-outline" style="width:auto;padding:8px 16px;border-radius:999px;" onclick="closeAdminSection()">← 登出並返回學生首頁</button>
+    </div>
+
+    <div class="admin-grid">
+      <div class="admin-stat-card">
+        <small>📝 累計測驗人次</small>
+        <h2 id="statTotalCount">0</h2>
+      </div>
+      <div class="admin-stat-card">
+        <small>🎯 全班平均答對率</small>
+        <h2 id="statAvgScore">0%</h2>
+      </div>
+      <div class="admin-stat-card">
+        <small>⚠️ 常錯單字榜 TOP 1</small>
+        <h2 id="statTopWrong" style="font-size:20px;color:#d97706;">無</h2>
+      </div>
+    </div>
+
+    <div class="admin-control-bar">
+      <label style="font-weight:bold;color:#475569;">班級篩選：</label>
+      <select id="adminFilterClass" onchange="renderAdminFilteredData()"><option value="ALL">全部班級</option></select>
+      <label style="font-weight:bold;color:#475569;margin-left:10px;">題型模式：</label>
+      <select id="adminFilterMode" onchange="renderAdminFilteredData()">
+        <option value="ALL">全部題型</option>
+        <option value="listening">👂 看圖測驗</option>
+        <option value="phonicsQuiz">🔤 辨音測驗</option>
+        <option value="speaking">🎙️ 口說測驗</option>
+      </select>
+      <button class="btn btn-outline" style="width:auto;margin-left:auto;" onclick="fetchAdminRecords()">🔄 重新整理</button>
+      <button class="btn btn-primary" style="width:auto;padding:10px 18px;" onclick="exportAdminCsv()">📥 匯出 Excel (CSV)</button>
+    </div>
+
+    <div class="admin-table-box">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>時間</th>
+            <th>班級</th>
+            <th>座號</th>
+            <th>姓名</th>
+            <th>單元</th>
+            <th>題型</th>
+            <th>成績 (得分/總題數)</th>
+            <th>錯題紀錄</th>
+          </tr>
+        </thead>
+        <tbody id="adminRecordsTbody">
+          <tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:24px;">載入資料中...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <script src="data/sf1-structured-data.js"></script><script src="data/sf3-structured-data.js"></script><script src="data/sf5-structured-data.js"></script><script src="data/sf7-structured-data.js"></script><script src="data/books.js"></script><script src="data/students-map.js"></script><script src="data/pattern-drag-order-ux-patch.js"></script>
 <script>
 const GOOGLE_SCRIPT_URL="https://script.google.com/macros/s/AKfycbw4fLrYwzEVwFnzoLhb2WH-JH6RpFEJH2WlbbRHtYP_TF7t-v-AcyBJxPvhQc3zPOTR2A/exec";
 const loginBtn=document.getElementById('login-btn'), schoolSelect=document.getElementById('school-select'), classSelect=document.getElementById('class-select'), numberInput=document.getElementById('number-input'), nameInput=document.getElementById('name-input'), errorMsg=document.getElementById('error-msg'), loadingText=document.getElementById('loading-text'), dynamicSchoolHeader=document.getElementById('dynamic-school-header'), studentBadge=document.getElementById('student-badge'), bookBadge=document.getElementById('book-badge');
 let loggedInStudent=null,currentClassInfo=null,currentBookId=null,currentBook=null,activeRawUnits={},activeCourseData={},activeWordList=[],currentUnitKey="",currentMode="flashcard",currentIndex=0,currentQuizList=[],quizIndex=0,score=0,wrongWords=[],audioUnlocked=false,audioCache={},playerInitializedBookId=null,activeRecognition=null;
+let currentTeacher=null, allAdminRecords=[];
+
+function maskStudentName(rawName, maskChar = '○') {
+  if (!rawName) return '';
+  const cleanName = String(rawName).replace(/[\[\(（【].*?[\]\)）】]/g, '').replace(/\s+/g, '').trim();
+  const len = cleanName.length;
+  if (len <= 1) return cleanName;
+  if (len === 2) return cleanName[0] + maskChar;
+  if (len === 3) return cleanName[0] + maskChar + cleanName[2];
+  if (len === 4) return cleanName[0] + maskChar + maskChar + cleanName[3];
+  return cleanName[0] + maskChar.repeat(len - 2) + cleanName[len - 1];
+}
 
 loginBtn.addEventListener('click',handleStudentLogin);
 [schoolSelect,classSelect,numberInput,nameInput].forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter')handleStudentLogin();}));
@@ -88,7 +275,8 @@ function handleStudentLogin(){
         studentBadge.textContent=d.studentBadge;
         bookBadge.textContent=d.bookBadge;
       }else{
-        studentBadge.textContent=`${loggedInStudent.name} 同學`;
+        const displayName = typeof maskStudentName === 'function' ? maskStudentName(loggedInStudent.name) : loggedInStudent.name;
+        studentBadge.textContent=`${loggedInStudent.school}｜${loggedInStudent.gradeClass}｜${loggedInStudent.number}號 ${displayName} 同學`;
         bookBadge.textContent=currentBook.title||'Super Fun';
       }
 
@@ -137,9 +325,13 @@ function hasImage(item){return !!(item&&item.image);}
 function buildImageOnlyUnits(units){const output={};Object.entries(units||{}).forEach(([key,items])=>{const imageItems=(items||[]).filter(hasImage);if(imageItems.length>0)output[key]=imageItems;});return output;}
 function safeList(){return activeWordList||[];}
 
+// ------------------------------------------
+// 1. 修改題庫來源 (speaking 模式改用 currentBook.sentenceUnits)
+// ------------------------------------------
 function getUnitsForMode(mode){
   if(!currentBook)return{};
-  if(['flashcard','speaking'].includes(mode))return currentBook.courseData||{};
+  if(mode==='flashcard')return currentBook.courseData||{};
+  if(mode==='speaking')return currentBook.sentenceUnits||{};
   if(mode==='listening')return buildImageOnlyUnits(currentBook.rawUnits||{});
   if(mode==='phonicsQuiz')return currentBook.rawUnits||{};
   if(mode==='sentencePractice')return currentBook.sentenceUnits||{};
@@ -147,6 +339,7 @@ function getUnitsForMode(mode){
   if(mode==='patternPractice')return currentBook.patternUnits||{};
   return currentBook.courseData||{};
 }
+
 function populateUnitSelector(){
   const select=document.getElementById('unitSelect');
   const units=getUnitsForMode(currentMode);
@@ -328,15 +521,18 @@ function restartSpeakingQuiz(){
   document.getElementById('speaking-result-view').style.display='none';
   loadSpeakingQuestion();
 }
+
+// ------------------------------------------
+// 2. 修改口說測驗題目載入 (改為句子模式、隱藏圖片)
+// ------------------------------------------
 function loadSpeakingQuestion(){
   if(quizIndex>=currentQuizList.length){showSimpleResult('speaking');return;}
   const item=currentQuizList[quizIndex];
-  document.getElementById('spk-progress').innerText=`題目 ${quizIndex+1} / ${currentQuizList.length}`;
+  document.getElementById('spk-progress').innerText=`句子 ${quizIndex+1} / ${currentQuizList.length}`;
   const img=document.getElementById('sp-img');
-  const text=getItemText(item);
-  if(hasImage(item)){img.style.display='block';img.src=item.image;}
-  else{img.style.display='none';img.removeAttribute('src');}
-  document.getElementById('sp-word').innerText=text;
+  if(img) img.style.display='none';
+  
+  document.getElementById('sp-word').innerText=getItemText(item);
   document.getElementById('sp-meaning').innerText=getItemMeaning(item);
   document.getElementById('speaking-feedback').className='feedback-box';
   document.getElementById('speaking-feedback').innerHTML='';
@@ -354,11 +550,25 @@ function isSpeakingMatch(ans,cor){
   return cw.filter(w=>aw.includes(w)).length/cw.length>=.6;
 }
 
+// ------------------------------------------
+// 3. 新增：播放示範句音檔
+// ------------------------------------------
+function playSpeakingSentence(){
+  if(!currentQuizList.length)return;
+  playAudio(currentQuizList[quizIndex]);
+}
+
+// ------------------------------------------
+// 4. 修改：語音辨識驗證 (將目標轉為句子比對)
+// ------------------------------------------
 function startSpeechRecognition(){
   if(!currentQuizList.length)return;
-  startGenericRecognition(currentQuizList[quizIndex],'speaking-feedback',passed=>{
-    if(passed)score++;else wrongWords.push(currentQuizList[quizIndex]);
-    setTimeout(()=>{quizIndex++;loadSpeakingQuestion();},passed?1000:2200);
+  const item = currentQuizList[quizIndex];
+  const cleanText = getItemText(item).replace(/[.?!,]/g, '').trim();
+  
+  startGenericRecognition({ word: cleanText, sentence: cleanText, meaning: '' }, 'speaking-feedback', passed => {
+    if(passed) score++; else wrongWords.push(item);
+    setTimeout(()=>{quizIndex++;loadSpeakingQuestion();}, passed ? 1000 : 2200);
   });
 }
 
@@ -620,23 +830,239 @@ function startGenericRecognition(item,feedbackId,onDone){
   rec.start();
 }
 
+/**
+ * 非同步回傳學生測驗紀錄至 Google Apps Script (GAS)
+ */
+function submitQuizRecord(mode, score, total, wrongList = []) {
+  if (!loggedInStudent || !GOOGLE_SCRIPT_URL) return;
+
+  const payload = {
+    action: 'submitScore',
+    school: loggedInStudent.school || '',
+    gradeClass: loggedInStudent.gradeClass || '',
+    number: loggedInStudent.number || '',
+    name: loggedInStudent.name || loggedInStudent.displayName || '',
+    bookId: currentBookId || '',
+    unit: currentUnitKey || '',
+    mode: mode,
+    score: score,
+    total: total,
+    wrongWords: (wrongList || []).map(item => getItemText(item)).filter(Boolean)
+  };
+
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(data => {
+    const tipEl = document.getElementById(`${mode}-upload-tip`);
+    if (tipEl) tipEl.innerHTML = '☁️ <span style="color:#16a34a;font-weight:bold;">成績已自動記錄至後台</span>';
+  })
+  .catch(err => {
+    const tipEl = document.getElementById(`${mode}-upload-tip`);
+    if (tipEl) tipEl.innerHTML = '⚠️ <span style="color:#d97706;">網路不穩，暫未上傳成功</span>';
+  });
+}
+
 function showSimpleResult(type){
-  const text=`完成！分數：${score} / ${currentQuizList.length}`;
+  const total = currentQuizList.length;
+  const text = `完成！分數：${score} / ${total}`;
+  
+  submitQuizRecord(type, score, total, wrongWords);
+
+  const uploadTipHtml = `<div id="${type}-upload-tip" style="margin-top:10px;font-size:0.9rem;color:#64748b;">☁️ 正在同步記錄中...</div>`;
+
   if(type==='listening'){
     document.getElementById('listening-quiz-view').style.display='none';
     document.getElementById('listening-result-view').style.display='block';
-    document.getElementById('listening-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3><button class="btn btn-primary" onclick="restartListeningQuiz()">重新測驗</button></div>`;
+    document.getElementById('listening-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3>${uploadTipHtml}<button class="btn btn-primary" style="margin-top:15px;" onclick="restartListeningQuiz()">重新測驗</button></div>`;
   }
   if(type==='phonics'){
     document.getElementById('phonics-quiz-view').style.display='none';
     document.getElementById('phonics-result-view').style.display='block';
-    document.getElementById('phonics-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3><button class="btn btn-primary" onclick="restartPhonicsQuiz()">重新測驗</button></div>`;
+    document.getElementById('phonics-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3>${uploadTipHtml}<button class="btn btn-primary" style="margin-top:15px;" onclick="restartPhonicsQuiz()">重新測驗</button></div>`;
   }
   if(type==='speaking'){
     document.getElementById('speaking-quiz-view').style.display='none';
     document.getElementById('speaking-result-view').style.display='block';
-    document.getElementById('speaking-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3><button class="btn btn-primary" onclick="restartSpeakingQuiz()">重新測驗</button></div>`;
+    document.getElementById('speaking-result-view').innerHTML=`<div class="card-box"><h3>${text}</h3>${uploadTipHtml}<button class="btn btn-primary" style="margin-top:15px;" onclick="restartSpeakingQuiz()">重新測驗</button></div>`;
   }
+}
+
+// ==========================================
+// 老師後台整合控制邏輯
+// ==========================================
+const modeNames = { listening: '看圖測驗', phonicsQuiz: '辨音測驗', speaking: '口說測驗', patternPractice: '句型操練' };
+
+function openTeacherAuthModal(){
+  document.getElementById('modalPasscode').value='';
+  document.getElementById('modalLoginError').style.display='none';
+  document.getElementById('teacherAuthModal').style.display='flex';
+}
+function closeTeacherAuthModal(){
+  document.getElementById('teacherAuthModal').style.display='none';
+}
+
+function handleTeacherModalLogin(){
+  const passcode = document.getElementById('modalPasscode').value.trim();
+  if(!passcode) return;
+
+  document.getElementById('modalLoginError').style.display='none';
+
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'teacherLogin', passcode: passcode })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if(data.status === 'success'){
+      currentTeacher = data.teacher;
+      currentTeacher.passcode = passcode;
+      closeTeacherAuthModal();
+      document.getElementById('login-wrapper').style.display='none';
+      document.getElementById('main-menu-wrapper').style.display='none';
+      document.getElementById('player-wrapper').style.display='none';
+      document.getElementById('vocab-wrapper').style.display='none';
+      document.getElementById('admin-wrapper').style.display='flex';
+      document.getElementById('teacherBadge').textContent = `${currentTeacher.teacherName}（${currentTeacher.allowedGrade}）`;
+      fetchAdminRecords();
+    } else {
+      document.getElementById('modalLoginError').style.display='block';
+    }
+  })
+  .catch(err => {
+    alert('連線失敗，請檢查網路連線。');
+  });
+}
+
+function closeAdminSection(){
+  currentTeacher = null;
+  document.getElementById('admin-wrapper').style.display='none';
+  document.getElementById('login-wrapper').style.display='flex';
+}
+
+function fetchAdminRecords(){
+  const tbody = document.getElementById('adminRecordsTbody');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;padding:24px;">正在同步學習紀錄...</td></tr>';
+
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'getTeacherReport', passcode: currentTeacher.passcode })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if(data.status === 'success'){
+      allAdminRecords = data.records || [];
+      populateAdminClassFilter(allAdminRecords);
+      renderAdminFilteredData();
+    }
+  });
+}
+
+function populateAdminClassFilter(records){
+  const select = document.getElementById('adminFilterClass');
+  const existingVal = select.value;
+  const classes = [...new Set(records.map(r => r.gradeClass).filter(Boolean))].sort();
+  select.innerHTML = '<option value="ALL">全部班級</option>';
+  classes.forEach(c => {
+    const op = document.createElement('option');
+    op.value = c;
+    op.textContent = c;
+    select.appendChild(op);
+  });
+  if(classes.includes(existingVal)) select.value = existingVal;
+}
+
+function renderAdminFilteredData(){
+  const filterClass = document.getElementById('adminFilterClass').value;
+  const filterMode = document.getElementById('adminFilterMode').value;
+  const tbody = document.getElementById('adminRecordsTbody');
+
+  const filtered = allAdminRecords.filter(r => {
+    if(filterClass !== 'ALL' && r.gradeClass !== filterClass) return false;
+    if(filterMode !== 'ALL' && r.mode !== filterMode) return false;
+    return true;
+  });
+
+  document.getElementById('statTotalCount').textContent = filtered.length;
+  if(filtered.length > 0){
+    let totalScore = 0, totalPossible = 0;
+    const wrongWordCounts = {};
+
+    filtered.forEach(r => {
+      totalScore += Number(r.score) || 0;
+      totalPossible += Number(r.total) || 0;
+
+      let wrongList = [];
+      try {
+        wrongList = JSON.parse(r.wrongDetails);
+      } catch(e){
+        if(r.wrongDetails) wrongList = String(r.wrongDetails).split(',');
+      }
+      (wrongList || []).forEach(w => {
+        const clean = String(w).trim();
+        if(clean) wrongWordCounts[clean] = (wrongWordCounts[clean] || 0) + 1;
+      });
+    });
+
+    const avgRate = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
+    document.getElementById('statAvgScore').textContent = `${avgRate}%`;
+    const topWrong = Object.entries(wrongWordCounts).sort((a,b) => b[1] - a[1])[0];
+    document.getElementById('statTopWrong').textContent = topWrong ? `${topWrong[0]} (${topWrong[1]}次)` : '無';
+  } else {
+    document.getElementById('statAvgScore').textContent = '0%';
+    document.getElementById('statTopWrong').textContent = '無';
+  }
+
+  if(!filtered.length){
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:24px;">尚無符合條件的測驗紀錄</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(r => {
+    const isPass = (Number(r.score) / (Number(r.total) || 1)) >= 0.6;
+    let wrongBadges = '-';
+    try {
+      const arr = JSON.parse(r.wrongDetails);
+      if(Array.isArray(arr) && arr.length > 0){
+        wrongBadges = arr.map(w => `<span style="background:#fef3c7;color:#92400e;padding:3px 7px;border-radius:6px;font-size:12px;margin-right:4px;">${w}</span>`).join('');
+      }
+    } catch(e){
+      if(r.wrongDetails) wrongBadges = `<span style="background:#fef3c7;color:#92400e;padding:3px 7px;border-radius:6px;font-size:12px;">${r.wrongDetails}</span>`;
+    }
+
+    return `
+      <tr>
+        <td style="color:#64748b;font-size:13px;">${r.timestamp || '-'}</td>
+        <td><strong>${r.gradeClass}</strong></td>
+        <td>${r.number} 號</td>
+        <td>${r.name}</td>
+        <td>${r.unit}</td>
+        <td>${modeNames[r.mode] || r.mode}</td>
+        <td><span class="score-tag ${isPass ? 'score-pass' : 'score-fail'}">${r.score} / ${r.total}</span></td>
+        <td>${wrongBadges}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function exportAdminCsv(){
+  if(!allAdminRecords.length){ alert('目前無資料可匯出！'); return; }
+  let csvContent = "\uFEFF時間,學校,班級,座號,姓名,冊別,單元,題型模式,得分,總題數,錯題清單\n";
+  allAdminRecords.forEach(r => {
+    csvContent += `"${r.timestamp}","${r.school}","${r.gradeClass}","${r.number}","${r.name}","${r.bookId}","${r.unit}","${modeNames[r.mode]||r.mode}","${r.score}","${r.total}","${String(r.wrongDetails).replace(/"/g, '""')}"\n`;
+  });
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute("download", `南光國小英語學習成果_${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 </script>
 <script>

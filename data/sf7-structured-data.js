@@ -1,6 +1,6 @@
 // data/sf7-structured-data.js
-const sf7StructuredData = {
-  "bookId": "sf7",
+
+const sf7StructuredData = {  "bookId": "sf7",
   "title": "Super Fun 7",
   "grade": "六年級",
   "semester": "上學期",
@@ -1205,7 +1205,554 @@ const sf7StructuredData = {
     ]
   },
   "dailyTalkUnits": {},
-  "storyUnits": {},
+  "storyUnits": {
+    "Topic 1 Story Time": [
+      {
+        "kind": "story",
+        "no": 1,
+        "word": "Mom! Next Friday is our Family Sharing Day.",
+        "sentence": "Mom! Next Friday is our Family Sharing Day.",
+        "meaning": "媽媽！下週五是我們的家庭分享日。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_01.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 2,
+        "word": "What can we do?",
+        "sentence": "What can we do?",
+        "meaning": "我們可以做什麼？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_02.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 3,
+        "word": "How about singing and dancing?",
+        "sentence": "How about singing and dancing?",
+        "meaning": "唱歌和跳舞如何？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_03.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 4,
+        "word": "This is the best spring roll.",
+        "sentence": "This is the best spring roll.",
+        "meaning": "這是最棒的春捲。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_04.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 5,
+        "word": "I have an idea.",
+        "sentence": "I have an idea.",
+        "meaning": "我有個好主意。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_05.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 6,
+        "word": "Hi, I’m Wendy’s mom. I’m from Vietnam.",
+        "sentence": "Hi, I’m Wendy’s mom. I’m from Vietnam.",
+        "meaning": "嗨，我是 Wendy 的媽媽。我來自越南。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_06.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 7,
+        "word": "Vietnam? Where is it?",
+        "sentence": "Vietnam? Where is it?",
+        "meaning": "越南？它在哪裡？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_07.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 8,
+        "word": "Vietnam is right here.",
+        "sentence": "Vietnam is right here.",
+        "meaning": "越南就在這裡。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_08.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 9,
+        "word": "The weather is sunny and hot, just like Taiwan.",
+        "sentence": "The weather is sunny and hot, just like Taiwan.",
+        "meaning": "那裡的天氣晴朗炎熱，就像台灣一樣。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_09.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 10,
+        "word": "Where are you from?",
+        "sentence": "Where are you from?",
+        "meaning": "你來自哪裡？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_10.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 11,
+        "word": "I’m from the UK. My name is Ken.",
+        "sentence": "I’m from the UK. My name is Ken.",
+        "meaning": "我來自英國。我的名字叫做Ken。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_11.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 12,
+        "word": "I’m from Japan.",
+        "sentence": "I’m from Japan.",
+        "meaning": "我來自日本。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_12.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 13,
+        "word": "How about the girl next to Wendy? Is she from the UK, too?",
+        "sentence": "How about the girl next to Wendy? Is she from the UK, too?",
+        "meaning": "在Wendy旁邊的女孩呢？她也來自英國嗎？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_13.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 14,
+        "word": "No, she isn’t. Emma is from the USA.",
+        "sentence": "No, she isn’t. Emma is from the USA.",
+        "meaning": "不，她不是。Emma來自美國。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_14.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 15,
+        "word": "Today, we're going to make spring rolls.",
+        "sentence": "Today, we're going to make spring rolls.",
+        "meaning": "今天我們要做春捲。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_15.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 16,
+        "word": "First, spray some water on the rice paper.",
+        "sentence": "First, spray some water on the rice paper.",
+        "meaning": "首先，灑點水在米紙上。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_16.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 17,
+        "word": "Then, wrap anything you like in the roll.",
+        "sentence": "Then, wrap anything you like in the roll.",
+        "meaning": "然後，把你喜歡的東西都包進去。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_17.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 18,
+        "word": "Good job, Ken. Do you like to cook?",
+        "sentence": "Good job, Ken. Do you like to cook?",
+        "meaning": "做得好，Ken。你喜歡煮東西嗎？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_18.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 19,
+        "word": "Yes, I do. I also like to watch TV in my free time.",
+        "sentence": "Yes, I do. I also like to watch TV in my free time.",
+        "meaning": "是的，我喜歡。我有空時還喜歡看電視。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_19.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 20,
+        "word": "What about you, Wendy? What do you like to do in your free time?",
+        "sentence": "What about you, Wendy? What do you like to do in your free time?",
+        "meaning": "那妳呢，Wendy？妳有空時喜歡做什麼？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_20.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 21,
+        "word": "I like to go camping with my family.",
+        "sentence": "I like to go camping with my family.",
+        "meaning": "我喜歡和家人去露營。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_21.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 22,
+        "word": "What does your mom like to do?",
+        "sentence": "What does your mom like to do?",
+        "meaning": "妳媽媽喜歡做什麼？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_22.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 23,
+        "word": "She likes to dance and go shopping.",
+        "sentence": "She likes to dance and go shopping.",
+        "meaning": "她喜歡跳舞和逛街購物。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_23.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 24,
+        "word": "Say cheese and show me your spring rolls.",
+        "sentence": "Say cheese and show me your spring rolls.",
+        "meaning": "說「起司」然後把春捲拿起來給我看。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_24.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 25,
+        "word": "Can we learn other dishes from your mom.",
+        "sentence": "Can we learn other dishes from your mom.",
+        "meaning": "我可以和妳媽媽學其他料理嗎？",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_25.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 26,
+        "word": "Sure! Anytime.",
+        "sentence": "Sure! Anytime.",
+        "meaning": "當然！隨時歡迎。",
+        "sourceUnit": "Topic 1 Story Time",
+        "audio": "sf7_t1_story_26.mp3"
+      }
+    ],
+    "Topic 2 Story Time": [
+      {
+        "kind": "story",
+        "no": 1,
+        "word": "Oh, I'm late.",
+        "sentence": "Oh, I'm late.",
+        "meaning": "喔，我遲到了。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_01.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 2,
+        "word": "Everyone is already working at the farm.",
+        "sentence": "Everyone is already working at the farm.",
+        "meaning": "大家都已經在農場工作了。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_02.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 3,
+        "word": "Are you OK, Mike?",
+        "sentence": "Are you OK, Mike?",
+        "meaning": "你還好嗎，Mike？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_03.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 4,
+        "word": "Sorry, I'm just hungry. I have no time for breakfast.",
+        "sentence": "Sorry, I'm just hungry. I have no time for breakfast.",
+        "meaning": "抱歉，我只是肚子餓了。我沒時間吃早餐。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_04.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 5,
+        "word": "What would you like for breakfast, Mike?",
+        "sentence": "What would you like for breakfast, Mike?",
+        "meaning": "你早餐想吃什麼，Mike？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_05.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 6,
+        "word": "I would like some cake and juice.",
+        "sentence": "I would like some cake and juice.",
+        "meaning": "我想吃蛋糕和果汁。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_06.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 7,
+        "word": "There’s too much sugar in your breakfast.",
+        "sentence": "There’s too much sugar in your breakfast.",
+        "meaning": "你的早餐有太多糖了。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_07.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 8,
+        "word": "Would you like some bread, eggs, and fruits for breakfast?",
+        "sentence": "Would you like some bread, eggs, and fruits for breakfast?",
+        "meaning": "你想吃麵包、雞蛋和水果當早餐嗎？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_08.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 9,
+        "word": "Yes, please. It looks heathy.",
+        "sentence": "Yes, please. It looks heathy.",
+        "meaning": "好的。這看起來很健康。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_09.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 10,
+        "word": "How much are the strawberries, Alan?",
+        "sentence": "How much are the strawberries, Alan?",
+        "meaning": "草莓多少錢，Alan？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_10.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 11,
+        "word": "They're 120 dollars.",
+        "sentence": "They're 120 dollars.",
+        "meaning": "它們是120元。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_11.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 12,
+        "word": "I need some eggs for making sandwiches.",
+        "sentence": "I need some eggs for making sandwiches.",
+        "meaning": "我做三明治需要一些蛋。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_12.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 13,
+        "word": "Mom, how many eggs do you need?",
+        "sentence": "Mom, how many eggs do you need?",
+        "meaning": "媽媽，你需要幾顆蛋？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_13.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 14,
+        "word": "I need 20 eggs.",
+        "sentence": "I need 20 eggs.",
+        "meaning": "我需要20顆蛋。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_14.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 15,
+        "word": "Excuse me. How much are they?",
+        "sentence": "Excuse me. How much are they?",
+        "meaning": "不好意思。它們多少錢？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_15.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 16,
+        "word": "They're 200 dollars.",
+        "sentence": "They're 200 dollars.",
+        "meaning": "它們是200元。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_16.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 17,
+        "word": "A watermelon! We can buy one and make juice at home.",
+        "sentence": "A watermelon! We can buy one and make juice at home.",
+        "meaning": "西瓜！我們可以買一顆回家打果汁。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_17.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 18,
+        "word": "How much is it, Alan?",
+        "sentence": "How much is it, Alan?",
+        "meaning": "它多少錢，Alan？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_18.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 19,
+        "word": "It's 80 dollars. It's on sale.",
+        "sentence": "It's 80 dollars. It's on sale.",
+        "meaning": "它是80元。它正在特價。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_19.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 20,
+        "word": "Please try some juice. I love this juice. It's good for breakfast.",
+        "sentence": "Please try some juice. I love this juice. It's good for breakfast.",
+        "meaning": "請試喝果汁。我好愛這個果汁。它很適合當早餐。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_20.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 21,
+        "word": "Green zone foods are healthy. We can eat more.",
+        "sentence": "Green zone foods are healthy. We can eat more.",
+        "meaning": "綠燈區的食物很健康。我們可以多吃。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_21.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 22,
+        "word": "I would like some juice. How much is it?",
+        "sentence": "I would like some juice. How much is it?",
+        "meaning": "我想喝果汁。它多少錢？",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_22.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 23,
+        "word": "It’s 50 dollars.",
+        "sentence": "It’s 50 dollars.",
+        "meaning": "它是50元。",
+        "sourceUnit": "Topic 2 Story Time",
+        "audio": "sf7_t2_story_23.mp3"
+      }
+    ],
+    "Culture & Festival Moon Festival - Story": [
+      {
+        "kind": "story",
+        "no": 1,
+        "word": "What can we do on Moon Festival?",
+        "sentence": "What can we do on Moon Festival?",
+        "meaning": "我們中秋節可以做什麼？",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_01.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 2,
+        "word": "How about having a barbecue?",
+        "sentence": "How about having a barbecue?",
+        "meaning": "烤肉如何？",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_02.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 3,
+        "word": "But it's not good for the earth.",
+        "sentence": "But it's not good for the earth.",
+        "meaning": "但是這對地球不太好。",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_03.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 4,
+        "word": "What can we do?",
+        "sentence": "What can we do?",
+        "meaning": "我們可以做什麼？",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_04.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 5,
+        "word": "We can have a green Moon Festival.",
+        "sentence": "We can have a green Moon Festival.",
+        "meaning": "我們可以過綠色中秋節。",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_05.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 6,
+        "word": "Alan, would you like some mooncakes?",
+        "sentence": "Alan, would you like some mooncakes?",
+        "meaning": "Alan，你想吃月餅嗎？",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_06.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 7,
+        "word": "Yes, please.",
+        "sentence": "Yes, please.",
+        "meaning": "是的。",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_07.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 8,
+        "word": "Vegetables are healthy.",
+        "sentence": "Vegetables are healthy.",
+        "meaning": "蔬菜很健康。",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_08.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 9,
+        "word": "Pomelos are great, too.",
+        "sentence": "Pomelos are great, too.",
+        "meaning": "柚子也很棒。",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_09.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 10,
+        "word": "We can use the peel for cleaning.",
+        "sentence": "We can use the peel for cleaning.",
+        "meaning": "我們可以用柚子皮來清潔。",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_10.mp3"
+      },
+      {
+        "kind": "story",
+        "no": 11,
+        "word": "Happy Green Moon Festival!",
+        "sentence": "Happy Green Moon Festival!",
+        "meaning": "綠色中秋節快樂！",
+        "sourceUnit": "Culture & Festival Moon Festival - Story",
+        "audio": "sf7_mf_story_11.mp3"
+      }
+    ]
+  },
   "patternUnits": {
     "Topic 1 Family Sharing Day - Lesson 1 Pattern": [
       {
