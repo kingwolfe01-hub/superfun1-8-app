@@ -21,10 +21,10 @@
     <select id="school-select"><option value="南光國小" selected>南投縣南光國小</option></select>
     <select id="class-select">
       <option value="" disabled selected>-- 請選擇班級 --</option>
-      <option value="三年一班">三年一班</option><option value="三年二班">三年二班</option><option value="三年三班">三年三班</option><option value="三年四班">三年四班</option><option value="三年五班">三年五班</option><option value="三年六班">三年六班</option><option value="三年七班">三年七班</option><option value="三年八班">三年八班</option>
-      <option value="四年一班">四年一班</option><option value="四年二班">四年二班</option><option value="四年三班">四年三班</option><option value="四年四班">四年四班</option><option value="四年五班">四年五班</option><option value="四年六班">四年六班</option><option value="四年七班">四年七班</option><option value="四年八班">四年八班</option>
-      <option value="五年一班">五年一班</option><option value="五年二班">五年二班</option><option value="五年三班">五年三班</option><option value="五年四班">五年四班</option><option value="五年五班">五年五班</option><option value="五年六班">五年六班</option><option value="五年七班">五年七班</option><option value="五年八班">五年八班</option>
-      <option value="六年一班">六年一班</option><option value="六年二班">六年二班</option><option value="六年三班">六年三班</option><option value="六年四班">六年四班</option><option value="六年五班">六年五班</option><option value="六年六班">六年六班</option><option value="六年七班">六年七班</option><option value="六年八班">六年八班</option>
+      <option value="三年一班">三年一班</option><option value="三年二班">三年二班</option><option value="三年三班">三年三班</option><option value="三年四班">三年四班</option><option value="三年五班">三年五班</option><option value="三年六班">三年六班</option><option value="三年七班">三年七班</option><option value="三年八班">三年八班</option><option value="三年九班">三年九班</option><option value="三年十班">三年十班</option>
+      <option value="四年一班">四年一班</option><option value="四年二班">四年二班</option><option value="四年三班">四年三班</option><option value="四年四班">四年四班</option><option value="四年五班">四年五班</option><option value="四年六班">四年六班</option><option value="四年七班">四年七班</option><option value="四年八班">四年八班</option><option value="四年九班">四年九班</option><option value="四年十班">四年十班</option>
+      <option value="五年一班">五年一班</option><option value="五年二班">五年二班</option><option value="五年三班">五年三班</option><option value="五年四班">五年四班</option><option value="五年五班">五年五班</option><option value="五年六班">五年六班</option><option value="五年七班">五年七班</option><option value="五年八班">五年八班</option><option value="五年九班">五年九班</option><option value="五年十班">五年十班</option>
+      <option value="六年一班">六年一班</option><option value="六年二班">六年二班</option><option value="六年三班">六年三班</option><option value="六年四班">六年四班</option><option value="六年五班">六年五班</option><option value="六年六班">六年六班</option><option value="六年七班">六年七班</option><option value="六年八班">六年八班</option><option value="六年九班">六年九班</option><option value="六年十班">六年十班</option>
     </select>
     <input type="number" id="number-input" placeholder="請輸入座號">
     <input type="text" id="name-input" placeholder="請輸入姓名">
@@ -111,7 +111,7 @@
       <div id="listening-mode" class="mode-section"><div id="listening-quiz-view"><span class="progress-badge" id="list-progress">題目 1 / 1</span><div class="card-box" style="min-height:160px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playQuizAudio()">🔊 點擊聽題目</button><p style="font-weight:800;color:#64748b;">請選出正確答案：</p></div><div class="option-grid" id="quiz-options"></div><div id="listening-feedback" class="feedback-box"></div></div><div id="listening-result-view" style="display:none;"></div></div>
       <div id="phonicsQuiz-mode" class="mode-section"><div id="phonics-quiz-view"><span class="progress-badge" id="phonics-progress">題目 1 / 1</span><div class="card-box" style="min-height:150px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playPhonicsQuizAudio()">🔊 點擊聽單字發音</button><p style="font-weight:800;color:#64748b;">請選出拼寫正確的英文：</p></div><div class="option-grid" id="phonics-quiz-options"></div><div id="phonics-feedback" class="feedback-box"></div></div><div id="phonics-result-view" style="display:none;"></div></div>
       
-      <!-- 已修改的 Speaking Mode 區塊 -->
+      <!-- 口說測驗 (Speaking Mode) 區塊 -->
       <div id="speaking-mode" class="mode-section">
         <div id="speaking-quiz-view">
           <span class="progress-badge" id="spk-progress">句子 1 / 1</span>
@@ -325,9 +325,6 @@ function hasImage(item){return !!(item && item.image && typeof item.image === 's
 function buildImageOnlyUnits(units){const output={};Object.entries(units||{}).forEach(([key,items])=>{const imageItems=(items||[]).filter(hasImage);if(imageItems.length>0)output[key]=imageItems;});return output;}
 function safeList(){return activeWordList||[];}
 
-// ------------------------------------------
-// 1. 修改題庫來源 (speaking 模式改用 currentBook.sentenceUnits)
-// ------------------------------------------
 function getUnitsForMode(mode){
   if(!currentBook)return{};
   if(mode==='flashcard')return currentBook.courseData||{};
@@ -522,9 +519,6 @@ function restartSpeakingQuiz(){
   loadSpeakingQuestion();
 }
 
-// ------------------------------------------
-// 2. 修改口說測驗題目載入 (改為句子模式、隱藏圖片)
-// ------------------------------------------
 function loadSpeakingQuestion(){
   if(quizIndex>=currentQuizList.length){showSimpleResult('speaking');return;}
   const item=currentQuizList[quizIndex];
@@ -540,7 +534,6 @@ function loadSpeakingQuestion(){
 
 const speechAliasMap={one:['one','1','won'],two:['two','2','to','too'],three:['three','3'],four:['four','4','for'],five:['five','5'],six:['six','6'],seven:['seven','7'],eight:['eight','8','ate'],nine:['nine','9'],ten:['ten','10']};
 
-// 新增縮寫展開函式 (強化口說容錯)
 function expandContractions(text) {
   return String(text)
     .replace(/i['’]m/gi, 'i am')
@@ -558,7 +551,6 @@ function expandContractions(text) {
 function canonicalSpeechToken(t){const n=normalizeText(t);for(const [w,a] of Object.entries(speechAliasMap))if(a.includes(n))return w;return n;}
 function canonicalSpeechText(t){return normalizeText(t).split(' ').map(canonicalSpeechToken).join(' ').trim();}
 
-// 在比對前先展開雙方的縮寫
 function isSpeakingMatch(ans,cor){
   const a=canonicalSpeechText(expandContractions(ans)),c=canonicalSpeechText(expandContractions(cor));
   if(!a||!c)return false;
@@ -568,17 +560,11 @@ function isSpeakingMatch(ans,cor){
   return cw.filter(w=>aw.includes(w)).length/cw.length>=.6;
 }
 
-// ------------------------------------------
-// 3. 新增：播放示範句音檔
-// ------------------------------------------
 function playSpeakingSentence(){
   if(!currentQuizList.length)return;
   playAudio(currentQuizList[quizIndex]);
 }
 
-// ------------------------------------------
-// 4. 修改：語音辨識驗證 (將目標轉為句子比對)
-// ------------------------------------------
 function startSpeechRecognition(){
   if(!currentQuizList.length)return;
   const item = currentQuizList[quizIndex];
@@ -848,9 +834,6 @@ function startGenericRecognition(item,feedbackId,onDone){
   rec.start();
 }
 
-/**
- * 非同步回傳學生測驗紀錄至 Google Apps Script (GAS)
- */
 function submitQuizRecord(mode, score, total, wrongList = []) {
   if (!loggedInStudent || !GOOGLE_SCRIPT_URL) return;
 
