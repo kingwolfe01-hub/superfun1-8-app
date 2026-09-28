@@ -35,7 +35,9 @@
     <div class="error-msg" id="error-msg"></div>
     <div class="loading-text" id="loading-text">資料驗證中，請稍候...</div>
     <button class="login-btn" id="login-btn">驗證身分並開始上課</button>
-    <button class="teacher-btn-link" onclick="openTeacherAuthModal()">🔒 老師查閱管理專區</button>
+    <!-- 學生說明書入口（登入頁面） -->
+    <button type="button" class="teacher-btn-link" style="color:#059669;margin-top:12px;" onclick="openStudentGuideModal()">📖 學生使用說明與題型指引</button>
+    <button class="teacher-btn-link" style="margin-top:8px;" onclick="openTeacherAuthModal()">🔒 老師查閱管理專區</button>
   </div>
 </div>
 
@@ -66,6 +68,8 @@
     </button>
     
     <button class="module-choice vocab" onclick="showModule('vocab')">📚 學習與測驗<small>第一層選功能，第二層選單元</small></button>
+    <!-- 學生說明書入口（首頁內部） -->
+    <button class="btn btn-outline" style="margin-top:14px;font-size:0.9rem;" onclick="openStudentGuideModal()">📖 學習玩法與操作說明</button>
   </div>
 </div>
 
@@ -153,6 +157,8 @@
         <span id="teacherBadge" style="margin-left:12px;background:#312e81;padding:4px 12px;border-radius:999px;font-size:13px;">教師</span>
       </div>
       <div class="flex items-center gap-3">
+        <!-- 教師操作手冊按鈕 -->
+        <button class="px-3 py-2 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition" onclick="openTeacherGuideModal()">📑 教師手冊</button>
         <button id="tabBtnDashboard" class="px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg" onclick="switchAdminTab('dashboard')">📊 數據看板</button>
         <button id="tabBtnStudents" class="px-4 py-2 bg-white text-indigo-900 font-bold rounded-lg border border-indigo-200" onclick="switchAdminTab('students')">🧑‍🎓 名單管理</button>
         <button class="btn btn-outline ml-4" style="width:auto;padding:8px 16px;border-radius:999px;" onclick="closeAdminSection()">← 登出</button>
@@ -347,9 +353,116 @@
   </div>
 </div>
 
+<!-- ================== 學生使用說明彈窗（中山國小專屬，含麥克風排除） ================== -->
+<div class="admin-modal-wrapper" id="studentGuideModal" style="display:none;z-index:2500;padding:16px;">
+  <div style="background:#fff;width:100%;max-width:760px;max-height:88vh;border-radius:20px;display:flex;flex-direction:column;box-shadow:0 25px 50px rgba(0,0,0,0.25);overflow:hidden;">
+    <div style="padding:16px 20px;background:#f0fdf4;border-bottom:1px solid #bbf7d0;display:flex;justify-content:space-between;align-items:center;">
+      <strong style="font-size:17px;color:#166534;">📖 中山國小 學生英語自學與測驗指南</strong>
+      <button style="border:none;background:none;font-size:22px;cursor:pointer;color:#64748b;font-weight:bold;line-height:1;" onclick="closeStudentGuideModal()">✕</button>
+    </div>
+    <div style="padding:20px;overflow-y:auto;font-size:13.5px;color:#334155;line-height:1.65;">
+      <h4 style="margin:0 0 8px 0;color:#0f172a;font-size:15px;font-weight:800;">三步驟快速自主學習：</h4>
+      <ol style="margin:0 0 16px 0;padding-left:20px;">
+        <li><strong>驗證登入</strong>：選取自己的班級（三年級至六年十一班），輸入座號與中文姓名，按「驗證身分並開始上課」。</li>
+        <li><strong>進入學習</strong>：點擊「📚 學習與測驗」進入互動題庫練習單字、發音、口說與句型（CD播放器為學校保護鎖定功能）。</li>
+        <li><strong>挑選單元進度</strong>：第一層選學習題型，第二層選當週要複習的課次單元。</li>
+      </ol>
+
+      <h4 style="margin:16px 0 8px 0;color:#0f172a;font-size:15px;font-weight:800;">各題型玩法與操作要訣：</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:16px;">
+        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
+          <strong style="color:#0f172a;">⚡ 閃示卡</strong><br>
+          <span style="font-size:12.5px;color:#64748b;">看圖認字、中英對照，按「🔊 播放」聽外師正確發音。</span>
+        </div>
+        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
+          <strong style="color:#0f172a;">👂 看圖測驗</strong><br>
+          <span style="font-size:12.5px;color:#64748b;">聽英文題目音檔，在 4 張圖片中選出正確代表圖。</span>
+        </div>
+        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
+          <strong style="color:#0f172a;">🔤 辨音測驗</strong><br>
+          <span style="font-size:12.5px;color:#64748b;">仔細聆聽發音，從選項中找出拼寫完全正確的單字。</span>
+        </div>
+        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
+          <strong style="color:#0f172a;">🎙️ 口說測驗</strong><br>
+          <span style="font-size:12.5px;color:#64748b;">聽完示範句後按「按下開始唸」對麥克風朗讀，AI 自動評分。</span>
+        </div>
+        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
+          <strong style="color:#0f172a;">📘 句子/故事跟讀</strong><br>
+          <span style="font-size:12.5px;color:#64748b;">跟讀課本句型與 Story Time 對話，強化語調與口說流暢度。</span>
+        </div>
+        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
+          <strong style="color:#0f172a;">🧩 句型操練</strong><br>
+          <span style="font-size:12.5px;color:#64748b;">支援欄位換詞組句、填空選答，以及單字方塊拖曳排序造句。</span>
+        </div>
+      </div>
+
+      <!-- 口說測驗麥克風錯誤排除說明 -->
+      <div style="background:#fff7ed;padding:14px;border-radius:12px;border:1.5px solid #fdba74;margin-bottom:14px;">
+        <strong style="color:#c2410c;font-size:14px;display:flex;align-items:center;gap:6px;">
+          🛠️ 口說測驗・麥克風沒聲音／無法辨識排除步驟：
+        </strong>
+        <ul style="margin:6px 0 0 0;padding-left:20px;font-size:12.5px;color:#7c2d12;line-height:1.6;">
+          <li><strong>檢查權限</strong>：初次使用請務必點選「允許使用麥克風」。若曾點到封鎖，請點擊瀏覽器網址列最左側的<strong>「鎖頭」或「圖示」</strong>，將麥克風改為<strong>「允許」</strong>後重新整理頁面。</li>
+          <li><strong>建議瀏覽器</strong>：口說辨識功能採用最新網頁標準，請優先使用 <strong>Google Chrome</strong> 或 <strong>Microsoft Edge</strong> 瀏覽器。</li>
+          <li><strong>耳機插孔與開關</strong>：如果在電腦教室，請確認耳機麥克風插頭已牢固插入音訊孔，並檢查耳機線上是否有<strong>實體靜音開關</strong>被關閉。</li>
+          <li><strong>環境與音量</strong>：朗讀時請靠近麥克風、咬字清晰，並盡量在安靜環境中作答，避免環境噪音干擾 AI 辨識。</li>
+        </ul>
+      </div>
+
+      <div style="background:#eff6ff;padding:10px 14px;border-radius:10px;border-left:4px solid #3b82f6;font-size:12.5px;color:#1e40af;">
+        💡 <strong>系統提醒</strong>：完成看圖、辨音或口說測驗後，系統會自動將成績回傳至後台資料庫，不需截圖給老師！若要重新挑戰高分，直接點選「重新測驗」即可。
+      </div>
+    </div>
+    <div style="padding:12px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;text-align:right;">
+      <button class="btn btn-outline" style="width:auto;padding:8px 24px;" onclick="closeStudentGuideModal()">關閉說明</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================== 教師操作手冊彈窗（中山國小專屬，含麥克風排除） ================== -->
+<div class="admin-modal-wrapper" id="teacherGuideModal" style="display:none;z-index:2500;padding:16px;">
+  <div style="background:#fff;width:100%;max-width:850px;max-height:88vh;border-radius:20px;display:flex;flex-direction:column;box-shadow:0 25px 50px rgba(0,0,0,0.25);overflow:hidden;">
+    <div style="padding:16px 20px;background:#1e1b4b;color:white;display:flex;justify-content:space-between;align-items:center;">
+      <strong style="font-size:17px;">📑 中山國小 教師後台管理指南與數據解讀手冊</strong>
+      <button style="border:none;background:none;font-size:22px;cursor:pointer;color:#94a3b8;font-weight:bold;line-height:1;" onclick="closeTeacherGuideModal()">✕</button>
+    </div>
+    <div style="padding:20px;overflow-y:auto;font-size:13.5px;color:#334155;line-height:1.65;">
+      <h4 style="margin:0 0 8px 0;color:#1e1b4b;font-size:15px;font-weight:800;">📊 數據看板四大核心模組解讀：</h4>
+      <ul style="margin:0 0 16px 0;padding-left:20px;">
+        <li><strong>高頻錯題排行 TOP 8</strong>：統計學生答錯頻率最高的單字，上課前可直接帶領全班加強盲點。</li>
+        <li><strong>優先關懷輔導名單</strong>：列出答對率偏低之學生，掌握需補救教學名單並安排課後輔導。</li>
+        <li><strong>自學練習量榜 & 高分精熟榜</strong>：激勵學生自主複習，可結合平時成績加分或課堂表揚。</li>
+        <li><strong>📥 匯出 Excel (CSV)</strong>：將測驗時間、班級、姓名、得分、總題數及錯題清單匯出留存。</li>
+      </ul>
+
+      <h4 style="margin:16px 0 8px 0;color:#1e1b4b;font-size:15px;font-weight:800;">🧑‍🎓 學生名冊建置與冊別設定：</h4>
+      <ol style="margin:0 0 16px 0;padding-left:20px;">
+        <li><strong>單筆建立</strong>：遇到轉學生時，直接至「名單管理」上方填寫班級、座號、姓名與冊別快速新增。</li>
+        <li><strong>批次匯入</strong>：點擊「下載 CSV 範例檔」，第一列標題保持：<code>學校, 班級, 座號, 姓名或遮罩, 冊別 ID</code>。</li>
+        <li><strong>冊別對應參考</strong>：三年級填 <code>sf1</code>/<code>sf5</code>，四年級填 <code>sf2</code>/<code>sf6</code>，五年級填 <code>sf5</code>，六年級（支援至六年十一班）填 <code>sf7</code>。</li>
+        <li>將填好的 CSV 拖曳至後台上傳，系統自動解析前 100 筆預覽，確認後點擊「確認無誤並匯入」寫入雲端。</li>
+      </ol>
+
+      <h4 style="margin:16px 0 8px 0;color:#1e1b4b;font-size:15px;font-weight:800;">🛠️ 常見課堂技術與口說設備排除：</h4>
+      <ul style="margin:0 0 16px 0;padding-left:20px;">
+        <li><strong>學生麥克風辨識無反應</strong>：請引導學生檢查瀏覽器網址列鎖頭中的麥克風權限是否被封鎖，並確認使用的瀏覽器為 Chrome 或 Edge。</li>
+        <li><strong>電腦教室設備排查</strong>：若全班部分電腦無法收音，可點擊 Windows 工作列右下角音效圖示 ➜ 錄音裝置，確認耳機麥克風是否被設為「預設裝置」並有收音波動。</li>
+        <li><strong>學生姓名驗證失敗</strong>：多數為輸入姓名時後方多按了空格，或名冊中有錯別字，老師可直接在後台即時更新或單筆覆蓋該學生資料。</li>
+      </ul>
+
+      <div style="background:#fff7ed;padding:10px 14px;border-radius:10px;border-left:4px solid #f97316;font-size:12.5px;color:#9a3412;">
+        🔒 <strong>CD 播放器鎖定說明</strong>：中山國小專屬版本已依教學規劃鎖定線上 CD 播放器，學生登入後專注於互動題庫練習。
+      </div>
+    </div>
+    <div style="padding:12px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;text-align:right;">
+      <button class="btn btn-primary" style="width:auto;padding:8px 24px;" onclick="closeTeacherGuideModal()">關閉手冊</button>
+    </div>
+  </div>
+</div>
+
 <script src="data/sf1-structured-data.js"></script><script src="data/sf3-structured-data.js"></script><script src="data/sf5-structured-data.js"></script><script src="data/sf7-structured-data.js"></script><script src="data/books.js"></script><script src="data/students-map.js"></script><script src="data/pattern-drag-order-ux-patch.js"></script>
 <script>
-// 若中山國小使用獨立 Google 試算表，在此替換 URL 即可
+// 中山國小專屬 Google 試算表後端 URL
 const GOOGLE_SCRIPT_URL="https://script.google.com/macros/s/AKfycbzmZ3jyeQdYvzmd2vjTFsCWXfg1r9c04qJ1v6t_XJcFKfWNdihjkZ4UQDzqCOt5Ji3v/exec";
 
 const loginBtn=document.getElementById('login-btn'), schoolSelect=document.getElementById('school-select'), classSelect=document.getElementById('class-select'), numberInput=document.getElementById('number-input'), nameInput=document.getElementById('name-input'), errorMsg=document.getElementById('error-msg'), loadingText=document.getElementById('loading-text'), dynamicSchoolHeader=document.getElementById('dynamic-school-header'), studentBadge=document.getElementById('student-badge'), bookBadge=document.getElementById('book-badge');
@@ -1444,6 +1557,20 @@ function sendStudentData(payload, msgEl, onSuccess, onError) {
     msgEl.className = 'mt-3 text-sm font-bold block';
     if(onError) onError();
   });
+}
+
+// ---------------- 彈窗開關控制邏輯 ----------------
+function openStudentGuideModal() {
+  document.getElementById('studentGuideModal').style.display = 'flex';
+}
+function closeStudentGuideModal() {
+  document.getElementById('studentGuideModal').style.display = 'none';
+}
+function openTeacherGuideModal() {
+  document.getElementById('teacherGuideModal').style.display = 'flex';
+}
+function closeTeacherGuideModal() {
+  document.getElementById('teacherGuideModal').style.display = 'none';
 }
 </script>
 <script>
