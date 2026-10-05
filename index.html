@@ -72,11 +72,11 @@
     <div class="student-badge" id="student-badge">已完成身分驗證</div><br>
     <div class="book-badge" id="book-badge">目前教材</div>
 
-    <!-- 🔔 期中/期末口說定期測驗通知橫幅 -->
+    <!-- 🔔 期中/期末定期測驗通知橫幅 -->
     <div id="student-exam-banner" style="display:none;margin:12px 0 16px;background:#fef2f2;border:2px solid #ef4444;border-radius:18px;padding:16px;text-align:center;">
       <span id="exam-banner-tag" style="background:#dc2626;color:white;font-size:0.75rem;font-weight:900;padding:3px 8px;border-radius:6px;">🔔 正式定期評量</span>
-      <h3 id="exam-banner-title" style="margin:8px 0 4px;color:#991b1b;font-size:1.15rem;font-weight:900;">期中口說定期測驗</h3>
-      <p id="exam-banner-desc" style="font-size:0.84rem;color:#7f1d1d;margin:0 0 12px;line-height:1.5;">老師已指派口說測驗（含 Phonics 與句型），請在安靜環境下點擊開始作答。</p>
+      <h3 id="exam-banner-title" style="margin:8px 0 4px;color:#991b1b;font-size:1.15rem;font-weight:900;">英語定期測驗</h3>
+      <p id="exam-banner-desc" style="font-size:0.84rem;color:#7f1d1d;margin:0 0 12px;line-height:1.5;">老師已指派英語定期測驗（含聽力與口說評量），請在安靜環境下點擊開始作答。</p>
       <button class="btn btn-primary" id="exam-start-action-btn" style="background:linear-gradient(135deg,#dc2626 0%,#ef4444 100%);box-shadow:0 8px 16px rgba(220,38,38,0.25);" onclick="startOfficialExam()">
         🎯 開始進入定期考作答
       </button>
@@ -89,33 +89,82 @@
   </div>
 </div>
 
-<!-- ================== 正式口說定期考模組 ================== -->
+<!-- ================== 正式定期考模組（步驟一實施：加入聽力作答介面） ================== -->
 <div class="module-wrapper" id="exam-wrapper" style="display:none;min-height:100vh;flex-direction:column;align-items:center;padding:12px;">
   <div class="app-viewport" style="max-width:440px;height:calc(100vh - 40px);max-height:900px;border-radius:24px;border:4px solid #b91c1c;">
     <div class="app-header" style="background:linear-gradient(135deg,#991b1b 0%,#dc2626 100%);">
-      <h1 class="app-title" id="exam-view-title" style="font-size:1.15rem;">期中口說定期評量</h1>
+      <h1 class="app-title" id="exam-view-title" style="font-size:1.15rem;">英語定期評量</h1>
       <span class="progress-badge" id="exam-progress-badge" style="background:white;color:#dc2626;font-size:0.85rem;">第 1 / 10 題</span>
     </div>
 
     <div class="content-area" style="padding:16px;">
       <div id="exam-quiz-view" style="display:flex;flex-direction:column;height:100%;justify-content:space-between;">
+        
+        <!-- 步驟一升級：題型標籤與題型說明導引卡 -->
         <div style="text-align:center;margin-bottom:8px;">
-          <span id="exam-section-tag" style="background:#fee2e2;color:#991b1b;font-weight:900;padding:4px 12px;border-radius:999px;font-size:0.85rem;">第一部分：🔤 Phonics 發音</span>
+          <span id="exam-section-tag" style="background:#fee2e2;color:#991b1b;font-weight:900;padding:4px 12px;border-radius:999px;font-size:0.85rem;">
+            第一部分：🔤 Phonics 發音
+          </span>
+          <div id="exam-instruction-box" style="margin-top:8px;background:#eff6ff;color:#1e40af;padding:8px 12px;border-radius:12px;font-size:0.85rem;font-weight:800;border:1px solid #bfdbfe;line-height:1.4;">
+            🎧 題型說明：請仔細聽題目發音，選出正確答案。
+          </div>
         </div>
 
         <div class="card-box" id="exam-card-box" style="flex:1;min-height:220px;justify-content:center;position:relative;">
-          <!-- 3-2-1 預備倒數全覆蓋層 -->
+          <!-- 3-2-1 預備倒數全覆蓋層 (口說題專用) -->
           <div id="exam-countdown-overlay" style="display:none;position:absolute;inset:0;background:rgba(255,255,255,0.92);border-radius:24px;z-index:20;flex-direction:column;justify-content:center;align-items:center;">
             <div id="exam-countdown-number" style="font-size:4.5rem;font-weight:900;color:#dc2626;line-height:1;">3</div>
             <div id="exam-countdown-text" style="font-size:1.1rem;font-weight:800;color:#475569;margin-top:10px;">請預備開口朗讀</div>
           </div>
 
+          <!-- 步驟一升級：情境題與是非題圖片容器 -->
+          <img id="exam-target-img" src="" alt="情境圖" style="display:none;width:150px;height:150px;object-fit:contain;border-radius:14px;margin-bottom:10px;background:#f8fafc;border:1px solid #e2e8f0;">
+
           <div class="word-text" id="exam-target-text" style="font-size:1.85rem;color:#0f172a;line-height:1.3;">-</div>
           <div class="meaning-text" id="exam-target-meaning" style="font-size:1.1rem;color:#64748b;margin-top:10px;">-</div>
         </div>
 
+        <!-- 作答控制區塊 -->
         <div style="width:100%;">
-          <!-- 🔊 聆聽示範音按鈕（若考卷設定為關閉示範音時會自動隱藏） -->
+          
+          <!-- 步驟一升級：聽力測驗專用操作面板（口說題時自動隱藏） -->
+          <div id="exam-listening-panel" style="display:none;width:100%;margin-bottom:8px;">
+            <!-- 聽力播放按鈕（含剩餘次數提示） -->
+            <button class="btn btn-primary" id="exam-play-audio-btn" style="margin-bottom:10px;width:100%;" onclick="playCurrentExamAudio()">
+              🔊 點擊聆聽題目 (剩餘 <span id="exam-audio-plays-left">2</span> 次)
+            </button>
+
+            <!-- 1. 多元選項按鈕區 (用於：單字選圖、情境應答、克漏字) -->
+            <div id="exam-options-grid" class="option-grid" style="display:none;margin-top:8px;"></div>
+
+            <!-- 2. 是非判斷專用雙按鈕 (用於：聽音是非題) -->
+            <div id="exam-tf-group" style="display:none;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+              <button class="btn btn-success" style="font-size:1.5rem;padding:14px;" onclick="checkExamAnswer(true)">⭕ 正確</button>
+              <button class="btn btn-warning" style="background:#ef4444;font-size:1.5rem;padding:14px;" onclick="checkExamAnswer(false)">❌ 錯誤</button>
+            </div>
+
+            <!-- 3. 單字積木排序專用區 (用於：聽音重組造句) -->
+            <div id="exam-order-group" style="display:none;margin-top:8px;background:#f8fafc;padding:14px;border-radius:16px;border:1px solid #cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.03);">
+              <!-- 上方：作答放置區（答案欄位） -->
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;font-weight:800;color:#3730a3;margin-bottom:6px;">
+                <span>📝 你的答案欄位（點擊單字可退回）：</span>
+                <span id="exam-order-count" style="font-size:0.75rem;color:#64748b;">已排 0 個字</span>
+              </div>
+              <div id="exam-order-answer" style="display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:10px 12px;background:#eef2ff;border-radius:14px;border:2px dashed #6366f1;margin-bottom:12px;align-items:center;"></div>
+
+              <!-- 下方：待選單字庫 -->
+              <div style="font-size:0.85rem;font-weight:800;color:#475569;margin-bottom:6px;">🔤 待選單字（點擊加入上方答案區）：</div>
+              <div id="exam-order-bank" style="display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:10px 12px;background:white;border-radius:14px;border:1.5px solid #cbd5e1;margin-bottom:12px;align-items:center;"></div>
+
+              <!-- 控制按鈕 -->
+              <div class="nav-row" style="display:flex;gap:10px;">
+                <button type="button" class="btn btn-outline" style="flex:1;padding:10px;border-radius:12px;font-weight:800;" onclick="resetExamOrderTokens()">🔄 重新排列</button>
+                <button type="button" class="btn btn-success" style="flex:2;padding:10px;border-radius:12px;font-weight:800;" onclick="submitExamOrderAnswer()">✅ 確認送出答案</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 原有口說題保留控制元件 -->
           <button class="btn btn-primary" id="exam-listen-btn" style="margin-bottom:8px;" onclick="playExamTargetAudio()">🔊 聆聽示範音</button>
           
           <!-- 錄音倒數進度條容器 -->
@@ -130,7 +179,7 @@
 
       <div id="exam-result-view" style="display:none;height:100%;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
         <div class="card-box" style="width:100%;padding:28px 16px;">
-          <h2 style="color:#16a34a;margin-top:0;font-size:1.4rem;">🎉 定期口說測驗已交卷</h2>
+          <h2 style="color:#16a34a;margin-top:0;font-size:1.4rem;">🎉 定期測驗已交卷</h2>
           <p style="color:#64748b;font-size:0.9rem;margin-bottom:12px;">成績已自動覆蓋登記至雲端資料庫：</p>
           <div style="font-size:3.2rem;font-weight:900;color:#0f172a;margin:10px 0;" id="exam-final-score">0 分</div>
           <div id="exam-score-details" style="font-size:0.95rem;color:#475569;line-height:1.8;background:#f8fafc;padding:12px;border-radius:14px;width:100%;"></div>
@@ -178,7 +227,7 @@
         <option value="flashcard">⚡ 閃示卡</option>
         <option value="listening">👂 看圖測驗</option>
         <option value="phonicsQuiz">🔤 辨音測驗</option>
-        <option value="speaking">🎙️️ 口說測驗</option>
+        <option value="speaking">🎙 口說測驗</option>
         <option value="sentencePractice">📘 句子跟讀</option>
         <option value="storyPractice">📖 Story Time 跟讀</option>
         <option value="patternPractice">🧩 句型操練</option>
@@ -424,7 +473,7 @@
     <div id="adminTabExams" style="display:none; width: 100%; padding-top: 20px;">
       <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6">
         <div class="flex justify-between items-center mb-3">
-          <h3 class="text-lg font-bold text-slate-800">📢 建立口說考卷（期中／期末定期考）</h3>
+          <h3 class="text-lg font-bold text-slate-800">📢 建立考卷（期中／期末定期考）</h3>
           <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-1 rounded">單次鎖定・支援個別解鎖</span>
         </div>
 
@@ -435,7 +484,7 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-600 mb-1">測驗標題</label>
-            <input type="text" id="adminExamTitle" class="w-full p-2 border border-slate-300 rounded-lg text-sm" placeholder="例如: 114學年度 六年級英語期中口說定期測驗">
+            <input type="text" id="adminExamTitle" class="w-full p-2 border border-slate-300 rounded-lg text-sm" placeholder="例如: 114學年度 六年級英語期中定期評量">
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-600 mb-1">考試類型</label>
@@ -459,7 +508,7 @@
         <div class="mb-4 bg-amber-50 p-3 rounded-lg border border-amber-200">
           <label class="flex items-center gap-2 font-bold text-amber-900 text-sm cursor-pointer">
             <input type="checkbox" id="adminDisableAudio" class="w-4 h-4 text-indigo-600 rounded">
-            <span>🔇 關閉聆聽示範音（純口說考核，不提供示範發音，學生直接看題朗讀）</span>
+            <span>🔇 關閉口說示範音（純口說考核，不提供示範發音，學生直接看題朗讀）</span>
           </label>
         </div>
 
@@ -468,19 +517,30 @@
           <div id="adminExamClassBoxes" class="flex flex-wrap gap-2 p-3 border border-slate-200 rounded-lg bg-slate-50 max-h-32 overflow-y-auto"></div>
         </div>
 
-        <!-- 題庫按「單元」結構化呈現 -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+        <!-- 題庫按「單元」結構化呈現：聽力題庫 + 口說題庫 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+          <!-- 聽力題庫欄 -->
           <div class="border border-slate-200 rounded-xl p-4">
             <div class="flex justify-between items-center mb-2">
-              <strong class="text-sm text-indigo-700">🔤 題型一：Phonics 發音單元</strong>
+              <strong class="text-sm text-blue-700">👂 題型一：多元聽力測驗</strong>
+              <span id="adminListeningCount" class="text-xs text-slate-500 font-bold">已選 0 題</span>
+            </div>
+            <div id="adminListeningListContainer" class="max-h-80 overflow-y-auto space-y-3 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs"></div>
+          </div>
+
+          <!-- Phonics 口說欄 -->
+          <div class="border border-slate-200 rounded-xl p-4">
+            <div class="flex justify-between items-center mb-2">
+              <strong class="text-sm text-indigo-700">🔤 題型二：Phonics 發音 (口說)</strong>
               <span id="adminPhonicsCount" class="text-xs text-slate-500 font-bold">已選 0 題</span>
             </div>
             <div id="adminPhonicsListContainer" class="max-h-80 overflow-y-auto space-y-3 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs"></div>
           </div>
 
+          <!-- Lesson 句型口說欄 -->
           <div class="border border-slate-200 rounded-xl p-4">
             <div class="flex justify-between items-center mb-2">
-              <strong class="text-sm text-emerald-700">🧩 題型二：Lesson 課本句型單元</strong>
+              <strong class="text-sm text-emerald-700">🧩 題型三：課本句型 (口說)</strong>
               <span id="adminSentenceCount" class="text-xs text-slate-500 font-bold">已選 0 題</span>
             </div>
             <div id="adminSentenceListContainer" class="max-h-80 overflow-y-auto space-y-3 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs"></div>
@@ -516,6 +576,7 @@
                 <th class="p-2.5 text-center">座號</th>
                 <th class="p-2.5">姓名</th>
                 <th class="p-2.5 text-right font-black">總成績</th>
+                <th class="p-2.5 text-center text-blue-700">聽力</th>
                 <th class="p-2.5 text-center">Phonics</th>
                 <th class="p-2.5 text-center">句型</th>
                 <th class="p-2.5">未通過題目</th>
@@ -523,7 +584,7 @@
               </tr>
             </thead>
             <tbody id="adminExamRecordsTbody">
-              <tr><td colspan="9" class="text-center text-slate-400 py-6">請選擇考卷與班級開始查閱</td></tr>
+              <tr><td colspan="10" class="text-center text-slate-400 py-6">請選擇考卷與班級開始查閱</td></tr>
             </tbody>
           </table>
         </div>
@@ -542,41 +603,41 @@
     <div style="padding:20px;overflow-y:auto;font-size:13.5px;color:#334155;line-height:1.65;">
       <h4 style="margin:0 0 8px 0;color:#0f172a;font-size:15px;font-weight:800;">三步驟快速自主學習：</h4>
       <ol style="margin:0 0 16px 0;padding-left:20px;">
-        <li><strong>驗證登入</strong>：選取自己的班級，輸入座號與完整姓名，按「驗證身分並開始上課」[cite: 3]。</li>
+        <li><strong>驗證登入</strong>：選取自己的班級，輸入座號與完整姓名，按「驗證身分並開始上課」。</li>
         <li><strong>選擇功能</strong>：
           <ul>
-            <li><strong>🎧 教學音檔播放器</strong>：線上收聽課本 CD 音檔，支援上一首、下一首與進度調整[cite: 3]。</li>
-            <li><strong>📚 學習與測驗</strong>：進入七大互動題庫練習單字、發音、口說與句型[cite: 3]。若老師有指派定期考，首頁將直接顯示紅色作答按鈕！</li>
+            <li><strong>🎧 教學音檔播放器</strong>：線上收聽課本 CD 音檔，支援上一首、下一首與進度調整。</li>
+            <li><strong>📚 學習與測驗</strong>：進入七大互動題庫練習單字、發音、口說與句型。若老師有指派定期考，首頁將直接顯示紅色作答按鈕！</li>
           </ul>
         </li>
-        <li><strong>挑選單元進度</strong>：第一層選學習題型，第二層選當週要複習的課次單元[cite: 3]。</li>
+        <li><strong>挑選單元進度</strong>：第一層選學習題型，第二層選當週要複習的課次單元。</li>
       </ol>
 
       <h4 style="margin:16px 0 8px 0;color:#0f172a;font-size:15px;font-weight:800;">各題型玩法與操作要訣：</h4>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:16px;">
         <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
           <strong style="color:#0f172a;">⚡ 閃示卡</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">看圖認字、中英對照，按「🔊 播放」聽外師正確發音[cite: 3]。</span>
+          <span style="font-size:12.5px;color:#64748b;">看圖認字、中英對照，按「🔊 播放」聽外師正確發音。</span>
         </div>
         <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
           <strong style="color:#0f172a;">👂 看圖測驗</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">聽英文題目音檔，在 4 張圖片中選出正確代表圖[cite: 3]。</span>
+          <span style="font-size:12.5px;color:#64748b;">聽英文題目音檔，在 4 張圖片中選出正確代表圖。</span>
         </div>
         <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
           <strong style="color:#0f172a;">🔤 辨音測驗</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">仔細聆聽發音，從選項中找出拼寫完全正確的單字[cite: 3]。</span>
+          <span style="font-size:12.5px;color:#64748b;">仔細聆聽發音，從選項中找出拼寫完全正確的單字。</span>
         </div>
         <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
           <strong style="color:#0f172a;">🎙️ 口說測驗</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">聽完示範句後按「按下開始唸」對麥克風朗讀，AI 自動評分[cite: 3]。</span>
+          <span style="font-size:12.5px;color:#64748b;">聽完示範句後按「按下開始唸」對麥克風朗讀，AI 自動評分。</span>
         </div>
         <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
           <strong style="color:#0f172a;">📘 句子/故事跟讀</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">跟讀課本句型與 Story Time 對話，強化語調與口說流暢度[cite: 3]。</span>
+          <span style="font-size:12.5px;color:#64748b;">跟讀課本句型與 Story Time 對話，強化語調與口說流暢度。</span>
         </div>
         <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
           <strong style="color:#0f172a;">🧩 句型操練</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">支援欄位換詞組句、填空選答，以及單字方塊拖曳排序造句[cite: 3]。</span>
+          <span style="font-size:12.5px;color:#64748b;">支援欄位換詞組句、填空選答，以及單字方塊拖曳排序造句。</span>
         </div>
       </div>
 
@@ -586,15 +647,15 @@
           🛠️ 口說測驗・麥克風沒聲音／無法辨識排除步驟：
         </strong>
         <ul style="margin:6px 0 0 0;padding-left:20px;font-size:12.5px;color:#7c2d12;line-height:1.6;">
-          <li><strong>檢查權限</strong>：初次使用請務必點選「允許使用麥克風」[cite: 3]。若曾點到封鎖，請點擊瀏覽器網址列最左側的<strong>「鎖頭」或「圖示」</strong>，將麥克風改為<strong>「允許」</strong>後重新整理頁面[cite: 3]。</li>
-          <li><strong>建議瀏覽器</strong>：口說辨識功能採用最新網頁標準，請優先使用 <strong>Google Chrome</strong> 或 <strong>Microsoft Edge</strong> 瀏覽器[cite: 3]。</li>
-          <li><strong>耳機插孔與開關</strong>：如果在電腦教室，請確認耳機麥克風插頭已牢固插入音訊孔，並檢查耳機線上是否有<strong>實體靜音開關</strong>被關閉[cite: 3]。</li>
-          <li><strong>環境與音量</strong>：朗讀時請靠近麥克風、咬字清晰，並盡量在安靜環境中作答，避免環境噪音干擾 AI 辨識[cite: 3]。</li>
+          <li><strong>檢查權限</strong>：初次使用請務必點選「允許使用麥克風」。若曾點到封鎖，請點擊瀏覽器網址列最左側的<strong>「鎖頭」或「圖示」</strong>，將麥克風改為<strong>「允許」</strong>後重新整理頁面。</li>
+          <li><strong>建議瀏覽器</strong>：口說辨識功能採用最新網頁標準，請優先使用 <strong>Google Chrome</strong> 或 <strong>Microsoft Edge</strong> 瀏覽器。</li>
+          <li><strong>耳機插孔與開關</strong>：如果在電腦教室，請確認耳機麥克風插頭已牢固插入音訊孔，並檢查耳機線上是否有<strong>實體靜音開關</strong>被關閉。</li>
+          <li><strong>環境與音量</strong>：朗讀時請靠近麥克風、咬字清晰，並盡量在安靜環境中作答，避免環境噪音干擾 AI 辨識。</li>
         </ul>
       </div>
 
       <div style="background:#eff6ff;padding:10px 14px;border-radius:10px;border-left:4px solid #3b82f6;font-size:12.5px;color:#1e40af;">
-        💡 <strong>系統提醒</strong>：完成看圖、辨音或口說測驗後，系統會自動將成績回傳至後台資料庫，不需截圖給老師[cite: 3]！定期口說考交卷後將自動鎖定，重考需由老師解鎖。
+        💡 <strong>系統提醒</strong>：完成看圖、辨音或口說測驗後，系統會自動將成績回傳至後台資料庫，不需截圖給老師！定期考交卷後將自動鎖定，重考需由老師解鎖。
       </div>
     </div>
     <div style="padding:12px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;text-align:right;">
@@ -622,14 +683,14 @@
 
       <h4 style="margin:16px 0 8px 0;color:#1e1b4b;font-size:15px;font-weight:800;">📊 數據看板核心解讀：</h4>
       <ul style="margin:0 0 16px 0;padding-left:20px;">
-        <li><strong>高頻錯題排行 TOP 8</strong>：統計學生答錯頻率最高的單字，上課前可直接帶領全班加強盲點[cite: 3]。</li>
-        <li><strong>優先關懷輔導名單</strong>：列出答對率偏低之學生，掌握需補救教學名單並安排課後輔導[cite: 3]。</li>
-        <li><strong>自學練習量榜 & 高分精熟榜</strong>：激勵學生自主複習，可結合平時成績加分或課堂表揚[cite: 3]。</li>
-        <li><strong>📥 匯出 Excel (CSV)</strong>：將測驗時間、班級、姓名、得分、總題數及錯題清單匯出留存[cite: 3]。</li>
+        <li><strong>高頻錯題排行 TOP 8</strong>：統計學生答錯頻率最高的單字，上課前可直接帶領全班加強盲點。</li>
+        <li><strong>優先關懷輔導名單</strong>：列出答對率偏低之學生，掌握需補救教學名單並安排課後輔導。</li>
+        <li><strong>自學練習量榜 & 高分精熟榜</strong>：激勵學生自主複習，可結合平時成績加分或課堂表揚。</li>
+        <li><strong>📥 匯出 Excel (CSV)</strong>：將測驗時間、班級、姓名、得分、總題數及錯題清單匯出留存。</li>
       </ul>
 
       <div style="background:#ecfdf5;padding:10px 14px;border-radius:10px;border-left:4px solid #10b981;font-size:12.5px;color:#065f46;">
-        🎧 <strong>CD 音檔播放器管理</strong>：南光國小完整開放線上 CD 音檔播放功能，學生登入後可依冊別載入各單元曲目自學聆聽[cite: 3]。
+        🎧 <strong>CD 音檔播放器管理</strong>：南光國小完整開放線上 CD 音檔播放功能，學生登入後可依冊別載入各單元曲目自學聆聽。
       </div>
     </div>
     <div style="padding:12px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;text-align:right;">
@@ -784,7 +845,7 @@ function unlockAudio(){audioUnlocked=true;}
 function normalizeText(t){return String(t||'').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,' ').trim();}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
 function escapeHtml(text){return String(text).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
-function getItemText(item){return item?.word||item?.sentence||'';}
+function getItemText(item){return item?.word||item?.sentence||item?.text||'';}
 function getItemMeaning(item){return item?.meaning||'';}
 function hasImage(item){return !!(item && item.image && typeof item.image === 'string' && item.image.trim() !== '' && item.image !== 'null');}
 function buildImageOnlyUnits(units){const output={};Object.entries(units||{}).forEach(([key,items])=>{const imageItems=(items||[]).filter(hasImage);if(imageItems.length>0)output[key]=imageItems;});return output;}
@@ -1381,7 +1442,7 @@ function submitQuizRecord(mode, score, total, wrongList = []) {
   .then(res => res.json())
   .then(data => {
     const tipEl = document.getElementById(`${mode}-upload-tip`);
-    if (tipEl) tipEl.innerHTML = '☁️️ <span style="color:#16a34a;font-weight:bold;">成績已自動記錄至後台</span>';
+    if (tipEl) tipEl.innerHTML = '☁ <span style="color:#16a34a;font-weight:bold;">成績已自動記錄至後台</span>';
   })
   .catch(err => {
     const tipEl = document.getElementById(`${mode}-upload-tip`);
@@ -1484,6 +1545,25 @@ function switchAdminTab(tabName) {
   }
 }
 
+// 判斷班級是否屬於該老師負責的年級
+function isClassAllowedForTeacher(gradeClass, teacher) {
+  if (!teacher || !teacher.allowedGrade) return true;
+  const allowed = String(teacher.allowedGrade).trim();
+  if (['ALL', '全校', '全部', '管理員', 'admin'].includes(allowed) || allowed === '') return true;
+
+  const targetClass = String(gradeClass || '').trim();
+  if (!targetClass) return false;
+
+  const allowedList = allowed.split(/[,，、/ ]+/).filter(Boolean);
+  const numMap = { '1': '一', '2': '二', '3': '三', '4': '四', '5': '五', '6': '六', '7': '七', '8': '八', '9': '九' };
+
+  return allowedList.some(item => {
+    let clean = item.trim().replace(/年級|年/g, '');
+    let chineseGrade = numMap[clean] || clean;
+    return targetClass.includes(chineseGrade + '年') || targetClass.includes(item);
+  });
+}
+
 function fetchAdminRecords(){
   const tbody = document.getElementById('adminRecordsTbody');
   tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;padding:24px;">正在同步學習紀錄...</td></tr>';
@@ -1496,7 +1576,9 @@ function fetchAdminRecords(){
   .then(r => r.json())
   .then(data => {
     if(data.status === 'success'){
-      allAdminRecords = data.records || [];
+      const rawRecords = data.records || [];
+      // 依教師年級進行資料過濾
+      allAdminRecords = rawRecords.filter(r => isClassAllowedForTeacher(r.gradeClass, currentTeacher));
       populateAdminClassFilter(allAdminRecords);
       renderAdminFilteredData();
     }
@@ -1820,17 +1902,20 @@ function closeTeacherGuideModal() {
 }
 
 // ========================================================
-// 🏆 期中期末口說測驗：核心驅動與作答導引
+// 🏆 定期考評量（整合 5 大聽力 + 2 大口說評量驅動引擎）
 // ========================================================
 let studentAssignedExam = null;
 let examQuestionsQueue = [];
 let examCurrentIdx = 0;
-let examScoreState = { phonicsOk: 0, phonicsTotal: 0, sentOk: 0, sentTotal: 0 };
+let examScoreState = { listenOk: 0, listenTotal: 0, phonicsOk: 0, phonicsTotal: 0, sentOk: 0, sentTotal: 0 };
 let examWrongDetails = [];
 let allPublishedExams = [];
 let examQuestionAttempts = 0;
 let examCountdownTimer = null;
 let examProgressInterval = null;
+let examAudioPlaysLeft = 2; // 每題最多可聽 2 次
+let examCurrentOrderTokens = [];
+let examSelectedOrderTokens = [];
 
 // 1. 學生端：確認是否有指定考試（並依交卷紀錄進行鎖定判斷）
 function checkActiveStudentExam(gradeClass, number) {
@@ -1880,7 +1965,7 @@ function checkActiveStudentExam(gradeClass, number) {
 
         titleEl.style.color = '#991b1b';
         descEl.style.color = '#7f1d1d';
-        descEl.textContent = '老師已指派口說測驗（含 Phonics 與句型），請在安靜環境下點擊開始作答。';
+        descEl.textContent = '老師已指派英語定期測驗（含聽力與口說評量），請在安靜環境下點擊開始作答。';
 
         startBtn.disabled = false;
         startBtn.style.background = 'linear-gradient(135deg,#dc2626 0%,#ef4444 100%)';
@@ -1896,7 +1981,7 @@ function checkActiveStudentExam(gradeClass, number) {
   .catch(() => {});
 }
 
-// 2. 學生端：進入考試
+// 2. 學生端：進入考試（佇列順序：聽力題 -> 發音口說 -> 句型口說）
 function startOfficialExam() {
   if (!studentAssignedExam) return;
   if (studentAssignedExam.hasSubmitted) {
@@ -1904,17 +1989,59 @@ function startOfficialExam() {
     return;
   }
 
-  const pList = (studentAssignedExam.phonicsQuestions || []).map(q => ({ ...q, qType: 'phonics' }));
-  const sList = (studentAssignedExam.sentenceQuestions || []).map(q => ({ ...q, qType: 'sentence' }));
-  examQuestionsQueue = [...pList, ...sList];
+  // 雙向相容解析：同時相容 Google Sheet 的 phonicsList/sentenceList 欄位與獨立 listeningQuestions 格式
+  const rawP = studentAssignedExam.phonicsList || studentAssignedExam.phonicsQuestions || [];
+  const rawS = studentAssignedExam.sentenceList || studentAssignedExam.sentenceQuestions || [];
+  const rawL = studentAssignedExam.listeningList || studentAssignedExam.listeningQuestions || [];
+
+  let lList = Array.isArray(rawL) ? [...rawL] : [];
+  let pList = [];
+  (rawP || []).forEach(q => {
+    if (q.isListening || (q.qType && q.qType.startsWith('listen_'))) {
+      lList.push(q);
+    } else {
+      pList.push({ ...q, qType: 'phonics' });
+    }
+  });
+
+  let sList = [];
+  (rawS || []).forEach(q => {
+    if (q.isListening || (q.qType && q.qType.startsWith('listen_'))) {
+      lList.push(q);
+    } else {
+      sList.push({ ...q, qType: 'sentence' });
+    }
+  });
+
+  // 去除重複聽力題目 (依 qType + 文字)
+  const seenL = new Set();
+  const uniqueLList = [];
+  lList.forEach(q => {
+    const textVal = q.text || q.word || q.sentence || '';
+    const key = `${q.qType || 'listen'}_${textVal}`;
+    if (!seenL.has(key)) {
+      seenL.add(key);
+      uniqueLList.push({
+        ...q,
+        qType: q.qType || 'listen_image',
+        text: textVal,
+        word: textVal,
+        sentence: textVal
+      });
+    }
+  });
+
+  // 測驗施測順序：聽力測驗題 -> Phonics 口說 -> 句型口說
+  examQuestionsQueue = [...uniqueLList, ...pList, ...sList];
 
   if (!examQuestionsQueue.length) {
-    alert('老師尚未在此考卷中配置題目！');
+    alert('老師尚未在此考卷中配置題目！請通知任課老師勾選題目後點擊「發布／更新此考試」。');
     return;
   }
 
   examCurrentIdx = 0;
   examScoreState = {
+    listenOk: 0, listenTotal: uniqueLList.length,
     phonicsOk: 0, phonicsTotal: pList.length,
     sentOk: 0, sentTotal: sList.length
   };
@@ -1925,13 +2052,6 @@ function startOfficialExam() {
   document.getElementById('exam-quiz-view').style.display = 'flex';
   document.getElementById('exam-result-view').style.display = 'none';
   document.getElementById('exam-view-title').textContent = studentAssignedExam.title;
-
-  const listenBtn = document.getElementById('exam-listen-btn');
-  if (studentAssignedExam.disableAudio) {
-    listenBtn.style.display = 'none';
-  } else {
-    listenBtn.style.display = 'block';
-  }
 
   renderExamQuestion();
 }
@@ -1948,33 +2068,344 @@ function renderExamQuestion() {
   document.getElementById('exam-progress-badge').textContent = `第 ${examCurrentIdx + 1} / ${examQuestionsQueue.length} 題`;
 
   const tag = document.getElementById('exam-section-tag');
+  const instructionBox = document.getElementById('exam-instruction-box');
+  const listenPanel = document.getElementById('exam-listening-panel');
+  const targetImg = document.getElementById('exam-target-img');
+  const targetText = document.getElementById('exam-target-text');
+  const targetMeaning = document.getElementById('exam-target-meaning');
+  const listenBtn = document.getElementById('exam-listen-btn');
+  const recordBtn = document.getElementById('exam-record-btn');
+  const timerBarContainer = document.getElementById('exam-timer-bar-container');
+  const cardBox = document.getElementById('exam-card-box');
+
+  cardBox.classList.remove('recording-active');
+  document.getElementById('exam-countdown-overlay').style.display = 'none';
+  if (timerBarContainer) timerBarContainer.style.display = 'none';
+  targetImg.style.display = 'none';
+  targetImg.removeAttribute('src');
+
+  // ==================== 情況 A：聽力題型 (5 種) ====================
+  if (q.qType && q.qType.startsWith('listen_')) {
+    // 隱藏口說專用按鈕
+    if (listenBtn) listenBtn.style.display = 'none';
+    if (recordBtn) recordBtn.style.display = 'none';
+    listenPanel.style.display = 'block';
+
+    // 重置重播次數限制
+    examAudioPlaysLeft = 2;
+    document.getElementById('exam-audio-plays-left').textContent = examAudioPlaysLeft;
+    const playBtn = document.getElementById('exam-play-audio-btn');
+    playBtn.disabled = false;
+    playBtn.innerHTML = `🔊 點擊聆聽題目 (剩餘 <span id="exam-audio-plays-left">${examAudioPlaysLeft}</span> 次)`;
+
+    targetText.textContent = '🎧 請專心聆聽題目...';
+    targetMeaning.textContent = '';
+    const fb = document.getElementById('exam-feedback-box');
+    fb.className = 'feedback-box';
+    fb.innerHTML = '請聆聽發音後，點選下方正確選項';
+
+    setupListeningComponents(q, tag, instructionBox);
+    setTimeout(playCurrentExamAudio, 400);
+    return;
+  }
+
+  // ==================== 情況 B：原有口說題型 (保留原邏輯) ====================
+  listenPanel.style.display = 'none';
+  if (recordBtn) recordBtn.style.display = 'flex';
+  
+  if (studentAssignedExam.disableAudio) {
+    if (listenBtn) listenBtn.style.display = 'none';
+  } else {
+    if (listenBtn) listenBtn.style.display = 'flex';
+  }
+
   if (q.qType === 'phonics') {
     tag.textContent = '第一部分：🔤 Phonics 發音題';
     tag.style.background = '#fee2e2';
     tag.style.color = '#991b1b';
-    document.getElementById('exam-target-text').textContent = q.word || '-';
-    document.getElementById('exam-target-meaning').textContent = q.meaning || '';
+    instructionBox.textContent = '🎙️ 題型說明：請聽 3-2-1 嗶聲後，對著麥克風大聲朗讀單字。';
+    targetText.textContent = q.word || '-';
+    targetMeaning.textContent = q.meaning || '';
   } else {
     tag.textContent = '第二部分：🧩 核心句型朗讀題';
     tag.style.background = '#ecfdf5';
     tag.style.color = '#065f46';
-    document.getElementById('exam-target-text').textContent = q.sentence || '-';
-    document.getElementById('exam-target-meaning').textContent = q.meaning || '';
+    instructionBox.textContent = '🎙️ 題型說明：請聽 3-2-1 嗶聲後，對著麥克風完整朗讀句子。';
+    targetText.textContent = q.sentence || '-';
+    targetMeaning.textContent = q.meaning || '';
   }
 
   const fb = document.getElementById('exam-feedback-box');
   fb.className = 'feedback-box';
   fb.innerHTML = '請點擊「🎙 按下開始朗讀」進行評量（每題有 2 次機會）';
 
-  const recordBtn = document.getElementById('exam-record-btn');
   recordBtn.disabled = false;
   recordBtn.classList.remove('opacity-50');
   recordBtn.style.background = 'linear-gradient(135deg,#10b981 0%,#059669 100%)';
   recordBtn.innerHTML = '🎙️ 按下開始朗讀';
+}
 
-  document.getElementById('exam-card-box').classList.remove('recording-active');
-  document.getElementById('exam-countdown-overlay').style.display = 'none';
-  document.getElementById('exam-timer-bar-container').style.display = 'none';
+// 聽力題組件動態配置
+function setupListeningComponents(q, tag, instructionBox) {
+  const optionsGrid = document.getElementById('exam-options-grid');
+  const tfGroup = document.getElementById('exam-tf-group');
+  const orderGroup = document.getElementById('exam-order-group');
+  const targetImg = document.getElementById('exam-target-img');
+  const targetText = document.getElementById('exam-target-text');
+
+  optionsGrid.style.display = 'none';
+  tfGroup.style.display = 'none';
+  orderGroup.style.display = 'none';
+
+  // 1. 單字聽音選圖
+  if (q.qType === 'listen_image') {
+    tag.textContent = '👂 聽力測驗：看圖選答案';
+    tag.style.background = '#e0e7ff';
+    tag.style.color = '#3730a3';
+    instructionBox.textContent = '🎧 題型說明：仔細聽單字發音，在下方選出正確的代表圖片！';
+
+    optionsGrid.style.display = 'grid';
+    optionsGrid.innerHTML = '';
+
+    const allImgs = Object.values(currentBook?.rawUnits || {}).flat().filter(hasImage);
+    const opts = [q];
+    while (opts.length < Math.min(4, allImgs.length)) {
+      const r = allImgs[Math.floor(Math.random() * allImgs.length)];
+      if (!opts.some(o => normalizeText(getItemText(o)) === normalizeText(getItemText(r)))) {
+        opts.push({ text: r.word, image: r.image });
+      }
+    }
+
+    shuffle(opts).forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-img-btn';
+      const safeText = escapeHtml(getItemText(opt) || '圖片');
+      btn.innerHTML = `<img src="${opt.image}" alt="${safeText}" style="width:100%;height:100px;object-fit:contain;" onerror="this.onerror=null;this.src='https://placehold.co/120x100/e0e7ff/3730a3?text='+encodeURIComponent('${safeText}');">`;
+      btn.onclick = () => checkExamAnswer(normalizeText(getItemText(opt)) === normalizeText(getItemText(q)));
+      optionsGrid.appendChild(btn);
+    });
+  }
+
+  // 2. 聽音情境應答
+  else if (q.qType === 'listen_response') {
+    tag.textContent = '💬 聽力測驗：情境應答';
+    tag.style.background = '#e0f2fe';
+    tag.style.color = '#0369a1';
+    instructionBox.textContent = '🎧 題型說明：仔細聽外師說的一句話，選出最適合回應的句子！';
+
+    optionsGrid.style.display = 'grid';
+    optionsGrid.innerHTML = '';
+
+    const allSentences = Object.values(currentBook?.sentenceUnits || {}).flat();
+    const correctAns = q.meaning || getItemText(q);
+    const opts = [correctAns];
+    while (opts.length < Math.min(3, allSentences.length)) {
+      const r = allSentences[Math.floor(Math.random() * allSentences.length)];
+      const candidate = r.meaning || getItemText(r);
+      if (candidate && !opts.includes(candidate)) opts.push(candidate);
+    }
+
+    shuffle(opts).forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-outline';
+      btn.style.cssText = 'padding:14px;font-size:0.95rem;text-align:left;line-height:1.4;';
+      btn.textContent = '💬 ' + opt;
+      btn.onclick = () => checkExamAnswer(opt === correctAns);
+      optionsGrid.appendChild(btn);
+    });
+  }
+
+  // 3. 聽音克漏填空
+  else if (q.qType === 'listen_blank') {
+    tag.textContent = '🧩 聽力測驗：克漏字填空';
+    tag.style.background = '#fef3c7';
+    tag.style.color = '#92400e';
+    instructionBox.textContent = '🎧 題型說明：仔細聽整句朗讀，選出空格中聽到的單字！';
+
+    const fullSentence = getItemText(q);
+    const words = fullSentence.replace(/[^a-zA-Z0-9\s]/g, '').split(/\s+/).filter(Boolean);
+    const targetWord = words[Math.floor(Math.random() * words.length)] || words[0] || 'English';
+    targetText.textContent = fullSentence.replace(new RegExp(`\\b${targetWord}\\b`, 'i'), '______');
+
+    optionsGrid.style.display = 'grid';
+    optionsGrid.innerHTML = '';
+
+    const opts = [targetWord];
+    const candidatePool = ['do', 'does', 'is', 'are', 'have', 'has', 'like', 'likes', 'on', 'at', 'today', 'Friday'];
+    while (opts.length < 4 && candidatePool.length > opts.length) {
+      const r = candidatePool[Math.floor(Math.random() * candidatePool.length)];
+      if (!opts.includes(r)) opts.push(r);
+    }
+
+    shuffle(opts).forEach(w => {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-outline';
+      btn.textContent = w;
+      btn.onclick = () => checkExamAnswer(normalizeText(w) === normalizeText(targetWord));
+      optionsGrid.appendChild(btn);
+    });
+  }
+
+  // 4. 聽音重組造句
+  else if (q.qType === 'listen_order') {
+    tag.textContent = '🔀 聽力測驗：重組造句';
+    tag.style.background = '#f3e8ff';
+    tag.style.color = '#6b21a8';
+    instructionBox.textContent = '🎧 題型說明：仔細聽句子朗讀，將下方單字方塊依序排成正確句子！';
+
+    orderGroup.style.display = 'block';
+    targetText.textContent = '請把聽到的單字排成正確句子';
+    renderExamOrderTokens(getItemText(q));
+  }
+
+  // 5. 聽音是非題
+  else if (q.qType === 'listen_tf') {
+    tag.textContent = '🎯 聽力測驗：是非判斷';
+    tag.style.background = '#fee2e2';
+    tag.style.color = '#991b1b';
+    instructionBox.textContent = '🎧 題型說明：看著圖片並仔細聽描述，判斷內容是 ⭕ 還是 ❌！';
+
+    tfGroup.style.display = 'grid';
+    if (q.image) {
+      targetImg.src = q.image;
+      targetImg.style.display = 'block';
+    }
+  }
+}
+
+// 聽力音檔播放與次數限制
+function playCurrentExamAudio() {
+  const q = examQuestionsQueue[examCurrentIdx];
+  if (!q || examAudioPlaysLeft <= 0) return;
+
+  examAudioPlaysLeft--;
+  const counterEl = document.getElementById('exam-audio-plays-left');
+  if (counterEl) counterEl.textContent = examAudioPlaysLeft;
+
+  const playBtn = document.getElementById('exam-play-audio-btn');
+  playBtn.disabled = true;
+  playBtn.textContent = '🔊 音檔播放中...';
+
+  speakText(getItemText(q));
+
+  setTimeout(() => {
+    if (examAudioPlaysLeft > 0) {
+      playBtn.disabled = false;
+      playBtn.innerHTML = `🔊 點擊聆聽題目 (剩餘 <span id="exam-audio-plays-left">${examAudioPlaysLeft}</span> 次)`;
+    } else {
+      playBtn.disabled = true;
+      playBtn.textContent = '🔇 本題播放次數已達上限';
+    }
+  }, 1800);
+}
+
+// 聽力答案判定
+function checkExamAnswer(isCorrect) {
+  document.querySelectorAll('#exam-listening-panel button').forEach(b => b.disabled = true);
+  const fb = document.getElementById('exam-feedback-box');
+  const q = examQuestionsQueue[examCurrentIdx];
+
+  if (isCorrect) {
+    examScoreState.listenOk++;
+    playTone(659.25, 'sine', 0.15); // E5
+    fb.className = 'feedback-box correct';
+    fb.innerHTML = '🎉 答對了！';
+    setTimeout(() => {
+      examCurrentIdx++;
+      renderExamQuestion();
+    }, 900);
+  } else {
+    examWrongDetails.push(getItemText(q) || q.meaning || '聽力題');
+    playTone(329.63, 'sawtooth', 0.25); // E4
+    fb.className = 'feedback-box incorrect';
+    fb.innerHTML = `答案未吻合。<br>標準句：<strong>${escapeHtml(getItemText(q) || q.meaning || '')}</strong>`;
+    setTimeout(() => {
+      examCurrentIdx++;
+      renderExamQuestion();
+    }, 1800);
+  }
+}
+
+// 聽音重組輔助函式 (強化：上方為答案欄位、下方為單字庫，獨立膠囊晶片樣式)
+function renderExamOrderTokens(sentence) {
+  const tokens = String(sentence || '').trim().split(/\s+/).filter(Boolean);
+  examCurrentOrderTokens = (typeof patternShuffle === 'function') ? patternShuffle([...tokens]) : [...tokens].sort(() => Math.random() - 0.5);
+  examSelectedOrderTokens = [];
+  renderExamOrderDOM(sentence);
+}
+
+function renderExamOrderDOM(sentence) {
+  const bank = document.getElementById('exam-order-bank');
+  const answer = document.getElementById('exam-order-answer');
+  const countEl = document.getElementById('exam-order-count');
+
+  if (countEl) {
+    const totalCount = examSelectedOrderTokens.length + examCurrentOrderTokens.length;
+    countEl.textContent = `已排 ${examSelectedOrderTokens.length} / ${totalCount} 個字`;
+  }
+
+  // 上方：答案欄位 (點選可退回下方單字庫)
+  if (!examSelectedOrderTokens || examSelectedOrderTokens.length === 0) {
+    answer.innerHTML = '<span style="color:#818cf8;font-size:0.85rem;font-weight:bold;padding:6px 4px;">（請點選下方單字依序填入此答案區）</span>';
+  } else {
+    answer.innerHTML = examSelectedOrderTokens.map((t, idx) => 
+      `<button type="button" class="exam-order-token-chip" style="display:inline-flex;align-items:center;width:auto!important;padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:white;font-size:1rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 3px 8px rgba(79,70,229,0.3);margin:2px;" onclick="removeExamOrderToken(${idx})">${escapeHtml(t)} <span style="font-size:0.75rem;margin-left:6px;opacity:0.8;">✕</span></button>`
+    ).join('');
+  }
+
+  // 下方：待選單字庫 (點選加入上方答案欄)
+  if (!examCurrentOrderTokens || examCurrentOrderTokens.length === 0) {
+    bank.innerHTML = '<span style="color:#10b981;font-size:0.85rem;font-weight:bold;padding:6px 4px;">✓ 所有單字已排入上方答案區</span>';
+  } else {
+    bank.innerHTML = examCurrentOrderTokens.map((t, idx) => 
+      `<button type="button" class="exam-order-token-chip" style="display:inline-flex;align-items:center;width:auto!important;padding:8px 16px;border-radius:999px;background:white;color:#1e293b;font-size:1rem;font-weight:900;border:2px solid #cbd5e1;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.06);margin:2px;" onclick="addExamOrderToken(${idx})">${escapeHtml(t)}</button>`
+    ).join('');
+  }
+}
+
+function addExamOrderToken(idx) {
+  if (idx < 0 || idx >= examCurrentOrderTokens.length) return;
+  const t = examCurrentOrderTokens.splice(idx, 1)[0];
+  examSelectedOrderTokens.push(t);
+  const q = examQuestionsQueue[examCurrentIdx];
+  renderExamOrderDOM(getItemText(q));
+}
+
+function removeExamOrderToken(idx) {
+  if (idx < 0 || idx >= examSelectedOrderTokens.length) return;
+  const t = examSelectedOrderTokens.splice(idx, 1)[0];
+  examCurrentOrderTokens.push(t);
+  const q = examQuestionsQueue[examCurrentIdx];
+  renderExamOrderDOM(getItemText(q));
+}
+
+function resetExamOrderTokens() {
+  const q = examQuestionsQueue[examCurrentIdx];
+  renderExamOrderTokens(getItemText(q));
+}
+
+function submitExamOrderAnswer() {
+  const fb = document.getElementById('exam-feedback-box');
+  if (!examSelectedOrderTokens || examSelectedOrderTokens.length === 0) {
+    if (fb) {
+      fb.className = 'feedback-box incorrect';
+      fb.innerHTML = '⚠️ 請先點選下方單字排入上方「答案欄位」再確認送出！';
+    } else {
+      alert('請先點選單字完成句子再送出答案！');
+    }
+    return;
+  }
+
+  const q = examQuestionsQueue[examCurrentIdx];
+  // 優先使用 patternOrderNormalize 嚴格忽略大小寫與句尾標點符號差異
+  const target = (typeof patternOrderNormalize === 'function') 
+    ? patternOrderNormalize(getItemText(q)) 
+    : normalizeText(getItemText(q));
+  const user = (typeof patternOrderNormalize === 'function') 
+    ? patternOrderNormalize(examSelectedOrderTokens.join(' ')) 
+    : normalizeText(examSelectedOrderTokens.join(' '));
+
+  checkExamAnswer(user === target);
 }
 
 function playExamTargetAudio() {
@@ -2013,7 +2444,7 @@ function stopExamProgressTimer() {
   if (container) container.style.display = 'none';
 }
 
-// 💡 3-2-1 倒數 + 嗶聲開麥 + 10 秒計時條作答核心
+// 3-2-1 倒數 + 嗶聲開麥 + 10 秒計時條作答核心 (保留原有口說機制)
 function startExamRecognition() {
   const q = examQuestionsQueue[examCurrentIdx];
   if (!q) return;
@@ -2110,13 +2541,14 @@ function submitOfficialExam() {
   document.getElementById('exam-result-view').style.display = 'flex';
 
   const total = examQuestionsQueue.length;
-  const passedTotal = examScoreState.phonicsOk + examScoreState.sentOk;
+  const passedTotal = examScoreState.listenOk + examScoreState.phonicsOk + examScoreState.sentOk;
   const finalScore = Math.round((passedTotal / Math.max(1, total)) * 100);
 
   document.getElementById('exam-final-score').textContent = `${finalScore} 分`;
   document.getElementById('exam-score-details').innerHTML = `
-    <strong>Phonics 答對：</strong> ${examScoreState.phonicsOk} / ${examScoreState.phonicsTotal}<br>
-    <strong>句型答對：</strong> ${examScoreState.sentOk} / ${examScoreState.sentTotal}<br>
+    <strong>👂 聽力測驗得分：</strong> ${examScoreState.listenOk} / ${examScoreState.listenTotal}<br>
+    <strong>🔤 Phonics 答對：</strong> ${examScoreState.phonicsOk} / ${examScoreState.phonicsTotal}<br>
+    <strong>🧩 核心句型答對：</strong> ${examScoreState.sentOk} / ${examScoreState.sentTotal}<br>
     <span class="text-xs text-slate-500">（本次作答成績已完成登記並已上傳鎖定）</span>
   `;
 
@@ -2137,6 +2569,7 @@ function submitOfficialExam() {
       number: loggedInStudent.number,
       name: loggedInStudent.name,
       score: finalScore,
+      listenScore: `${examScoreState.listenOk}/${examScoreState.listenTotal}`,
       phonicsScore: `${examScoreState.phonicsOk}/${examScoreState.phonicsTotal}`,
       sentenceScore: `${examScoreState.sentOk}/${examScoreState.sentTotal}`,
       wrongWords: examWrongDetails
@@ -2156,17 +2589,33 @@ function backToMenuFromExam() {
 function initNewExamForm() {
   const ts = new Date().getTime();
   document.getElementById('adminExamId').value = 'exam_' + ts;
-  document.getElementById('adminExamTitle').value = '114學年度英語口說定期評量';
+  document.getElementById('adminExamTitle').value = '114學年度英語定期評量';
   document.getElementById('adminDisableAudio').checked = false;
   document.getElementById('adminExamSaveMsg').textContent = '';
+
+  // 依教師年級自動連動冊別
+  if (currentTeacher && currentTeacher.allowedGrade) {
+    const g = String(currentTeacher.allowedGrade);
+    const bookSelect = document.getElementById('adminExamBookSelect');
+    if ((g.includes('三') || g.includes('3')) && bookSelect) bookSelect.value = 'sf1';
+    else if ((g.includes('四') || g.includes('4')) && bookSelect) bookSelect.value = 'sf3';
+    else if ((g.includes('五') || g.includes('5')) && bookSelect) bookSelect.value = 'sf5';
+    else if ((g.includes('六') || g.includes('6')) && bookSelect) bookSelect.value = 'sf7';
+  }
+
   renderClassCheckboxes();
   populateQuestionPools();
 }
 
 function renderClassCheckboxes() {
   const container = document.getElementById('adminExamClassBoxes');
-  const classList = Array.from(document.querySelectorAll('#class-select option'))
+  let classList = Array.from(document.querySelectorAll('#class-select option'))
     .map(o => o.value).filter(Boolean);
+
+  // 僅顯示該任課老師所屬年級的班級
+  if (currentTeacher && currentTeacher.allowedGrade) {
+    classList = classList.filter(c => isClassAllowedForTeacher(c, currentTeacher));
+  }
 
   container.innerHTML = `
     <label class="inline-flex items-center gap-1 font-bold text-xs bg-indigo-50 px-2 py-1 rounded">
@@ -2202,13 +2651,16 @@ function populateQuestionPools() {
   const targetBookId = document.getElementById('adminExamBookSelect').value;
   const phonicsBox = document.getElementById('adminPhonicsListContainer');
   const sentenceBox = document.getElementById('adminSentenceListContainer');
+  const listenBox = document.getElementById('adminListeningListContainer');
 
-  phonicsBox.innerHTML = '';
-  sentenceBox.innerHTML = '';
+  if (phonicsBox) phonicsBox.innerHTML = '';
+  if (sentenceBox) sentenceBox.innerHTML = '';
+  if (listenBox) listenBox.innerHTML = '';
 
   if (typeof bookData === 'undefined' || !bookData[targetBookId]) {
-    phonicsBox.innerHTML = '<div class="text-slate-400 p-2">此冊別尚未載入題庫</div>';
-    sentenceBox.innerHTML = '<div class="text-slate-400 p-2">此冊別尚未載入題庫</div>';
+    if (phonicsBox) phonicsBox.innerHTML = '<div class="text-slate-400 p-2">此冊別尚未載入題庫</div>';
+    if (sentenceBox) sentenceBox.innerHTML = '<div class="text-slate-400 p-2">此冊別尚未載入題庫</div>';
+    if (listenBox) listenBox.innerHTML = '<div class="text-slate-400 p-2">此冊別尚未載入題庫</div>';
     return;
   }
 
@@ -2216,7 +2668,112 @@ function populateQuestionPools() {
   const rawUnits = currentTargetBook.rawUnits || {};
   const sentenceUnits = currentTargetBook.sentenceUnits || {};
 
-  // 1. Phonics 發音單元
+  // ================= 1. 多元聽力測驗題庫 (5種題型) =================
+  let listenHtml = '';
+
+  // 1-A. 單字聽音選圖 (listen_image)
+  let imgCount = 0;
+  let imgHtml = '';
+  Object.entries(rawUnits).forEach(([uName, items]) => {
+    const imgItems = (items || []).filter(hasImage);
+    if (!imgItems.length) return;
+    imgCount += imgItems.length;
+    imgHtml += `<div class="mb-2"><strong class="text-indigo-800 text-[11px]">📁 ${escapeHtml(uName)}</strong><div class="grid grid-cols-2 gap-1 mt-1">`;
+    imgItems.forEach(it => {
+      imgHtml += `
+        <label class="flex items-center gap-1 hover:bg-blue-50 p-1 rounded cursor-pointer border border-slate-100">
+          <input type="checkbox" class="exam-l-chk" data-qtype="listen_image" data-text="${escapeHtml(it.word)}" data-meaning="${escapeHtml(it.meaning||'')}" data-img="${escapeHtml(it.image||'')}" onchange="updateSelectedCount()">
+          <span class="font-bold text-slate-700">${escapeHtml(it.word)}</span>
+        </label>
+      `;
+    });
+    imgHtml += `</div></div>`;
+  });
+  if (imgCount > 0) {
+    listenHtml += `
+      <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs mb-2.5">
+        <div class="flex items-center justify-between pb-1 border-b border-slate-100 mb-1.5">
+          <span class="font-black text-blue-900">🖼️ 1. 單字聽音選圖</span>
+          <span class="text-[11px] text-blue-600 font-bold">${imgCount} 題</span>
+        </div>
+        ${imgHtml}
+      </div>
+    `;
+  }
+
+  // 1-B. 句型聽音應答 (listen_response)、重組 (listen_order)、克漏字 (listen_blank)
+  let sentListenCount = 0;
+  let sentListenHtml = '';
+  Object.entries(sentenceUnits).forEach(([uName, items]) => {
+    if (!items || !items.length) return;
+    sentListenCount += items.length;
+    sentListenHtml += `
+      <div class="mb-2">
+        <strong class="text-emerald-800 text-[11px]">📁 ${escapeHtml(uName)}</strong>
+        <div class="space-y-1.5 mt-1">
+    `;
+    items.forEach(it => {
+      const s = it.sentence || it.word;
+      sentListenHtml += `
+        <div class="p-1.5 bg-slate-50 rounded border border-slate-200 hover:bg-blue-50/60">
+          <div class="font-bold text-slate-800">${escapeHtml(s)}</div>
+          <div class="text-[11px] text-slate-400 mb-1">(${escapeHtml(it.meaning||'')})</div>
+          <div class="flex flex-wrap gap-2 text-[11px]">
+            <label class="inline-flex items-center gap-1 cursor-pointer font-bold text-indigo-700">
+              <input type="checkbox" class="exam-l-chk" data-qtype="listen_response" data-text="${escapeHtml(s)}" data-meaning="${escapeHtml(it.meaning||'')}" onchange="updateSelectedCount()"> 💬 應答題
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer font-bold text-emerald-700">
+              <input type="checkbox" class="exam-l-chk" data-qtype="listen_order" data-text="${escapeHtml(s)}" data-meaning="${escapeHtml(it.meaning||'')}" onchange="updateSelectedCount()"> 🔀 重組題
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer font-bold text-amber-700">
+              <input type="checkbox" class="exam-l-chk" data-qtype="listen_blank" data-text="${escapeHtml(s)}" data-meaning="${escapeHtml(it.meaning||'')}" onchange="updateSelectedCount()"> 🧩 克漏題
+            </label>
+          </div>
+        </div>
+      `;
+    });
+    sentListenHtml += `</div></div>`;
+  });
+
+  if (sentListenCount > 0) {
+    listenHtml += `
+      <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs mb-2.5">
+        <div class="flex items-center justify-between pb-1 border-b border-slate-100 mb-1.5">
+          <span class="font-black text-indigo-900">💬 2. 句型聽音 (應答／重組／克漏)</span>
+          <span class="text-[11px] text-indigo-600 font-bold">${sentListenCount} 句型</span>
+        </div>
+        ${sentListenHtml}
+      </div>
+    `;
+  }
+
+  // 1-C. 聽音是非題 (listen_tf) - 運用有圖項目
+  if (imgCount > 0) {
+    listenHtml += `
+      <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs mb-2">
+        <div class="flex items-center justify-between pb-1 border-b border-slate-100 mb-1.5">
+          <span class="font-black text-rose-900">🎯 3. 聽音是非判斷 (⭕/❌)</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1">
+    `;
+    Object.entries(rawUnits).forEach(([uName, items]) => {
+      (items || []).filter(hasImage).forEach(it => {
+        listenHtml += `
+          <label class="flex items-center gap-1 hover:bg-rose-50 p-1 rounded cursor-pointer border border-slate-100">
+            <input type="checkbox" class="exam-l-chk" data-qtype="listen_tf" data-text="${escapeHtml(it.word)}" data-meaning="${escapeHtml(it.meaning||'')}" data-img="${escapeHtml(it.image||'')}" onchange="updateSelectedCount()">
+            <span class="font-bold text-slate-700">${escapeHtml(it.word)}</span>
+          </label>
+        `;
+      });
+    });
+    listenHtml += `</div></div>`;
+  }
+
+  if (listenBox) {
+    listenBox.innerHTML = listenHtml || '<div class="text-slate-400 p-2">此冊別尚未設定聽力素材</div>';
+  }
+
+  // ================= 2. Phonics 發音單元 (口說) =================
   let pUnitCount = 0;
   Object.entries(rawUnits).forEach(([unitName, items]) => {
     const isPhonicsUnit = unitName.toLowerCase().includes('phonics') || (items || []).some(x => x.category === 'phonics');
@@ -2251,14 +2808,14 @@ function populateQuestionPools() {
 
     html += `</div>`;
     unitCard.innerHTML = html;
-    phonicsBox.appendChild(unitCard);
+    if (phonicsBox) phonicsBox.appendChild(unitCard);
   });
 
-  if (pUnitCount === 0) {
+  if (pUnitCount === 0 && phonicsBox) {
     phonicsBox.innerHTML = '<div class="text-slate-400 p-2">此冊別無專屬 Phonics 單元</div>';
   }
 
-  // 2. Sentence 句型單元
+  // ================= 3. Sentence 句型單元 (口說) =================
   let sUnitCount = 0;
   Object.entries(sentenceUnits).forEach(([unitName, items]) => {
     sUnitCount++;
@@ -2290,10 +2847,10 @@ function populateQuestionPools() {
 
     html += `</div>`;
     unitCard.innerHTML = html;
-    sentenceBox.appendChild(unitCard);
+    if (sentenceBox) sentenceBox.appendChild(unitCard);
   });
 
-  if (sUnitCount === 0) {
+  if (sUnitCount === 0 && sentenceBox) {
     sentenceBox.innerHTML = '<div class="text-slate-400 p-2">此冊別無專屬句型單元</div>';
   }
 
@@ -2311,8 +2868,11 @@ function toggleUnitGroup(master) {
 }
 
 function updateSelectedCount() {
+  const lCount = document.querySelectorAll('.exam-l-chk:checked').length;
   const pCount = document.querySelectorAll('.exam-p-chk:checked').length;
   const sCount = document.querySelectorAll('.exam-s-chk:checked').length;
+  const lEl = document.getElementById('adminListeningCount');
+  if (lEl) lEl.textContent = `已選 ${lCount} 題`;
   document.getElementById('adminPhonicsCount').textContent = `已選 ${pCount} 題`;
   document.getElementById('adminSentenceCount').textContent = `已選 ${sCount} 題`;
 }
@@ -2324,6 +2884,16 @@ function saveAdminExamConfig() {
   const disableAudio = document.getElementById('adminDisableAudio').checked;
   const selectedClasses = Array.from(document.querySelectorAll('.exam-cls-chk:checked')).map(c => c.value);
 
+  const listeningQuestions = Array.from(document.querySelectorAll('.exam-l-chk:checked')).map(c => ({
+    qType: c.dataset.qtype,
+    text: c.dataset.text,
+    word: c.dataset.text,
+    sentence: c.dataset.text,
+    meaning: c.dataset.meaning || '',
+    image: c.dataset.img || '',
+    isListening: true
+  }));
+
   const phonicsQuestions = Array.from(document.querySelectorAll('.exam-p-chk:checked')).map(c => ({
     word: c.dataset.word, meaning: c.dataset.meaning
   }));
@@ -2331,10 +2901,17 @@ function saveAdminExamConfig() {
     sentence: c.dataset.sentence, meaning: c.dataset.meaning
   }));
 
-  if (!title || !selectedClasses.length || (!phonicsQuestions.length && !sentenceQuestions.length)) {
-    alert('請填寫標題、勾選至少一個班級，並挑選考試題目！');
+  if (!title || !selectedClasses.length || (!listeningQuestions.length && !phonicsQuestions.length && !sentenceQuestions.length)) {
+    alert('請填寫標題、勾選至少一個班級，並挑選考試題目（聽力或口說至少一題）！');
     return;
   }
+
+  // 關鍵相容機制：Google Sheets 試算表原本只具備 phonicsList (E欄) 與 sentenceList (F欄)，
+  // 將聽力題一併裝載入 phonicsList 中儲存，試算表即可完整寫入，學生端亦能無縫解析還原！
+  const combinedPhonics = [
+    ...phonicsQuestions,
+    ...listeningQuestions
+  ];
 
   const payload = {
     action: 'saveExamConfig',
@@ -2342,7 +2919,12 @@ function saveAdminExamConfig() {
     exam: {
       examId, title, examType,
       targetClasses: selectedClasses,
-      phonicsQuestions, sentenceQuestions,
+      listeningQuestions: listeningQuestions,
+      listeningList: listeningQuestions,
+      phonicsQuestions: combinedPhonics,
+      phonicsList: combinedPhonics,
+      sentenceQuestions: sentenceQuestions,
+      sentenceList: sentenceQuestions,
       disableAudio: disableAudio,
       isActive: true
     }
@@ -2381,7 +2963,11 @@ function loadExamsForTeacher() {
       allPublishedExams.map(ex => `<option value="${ex.examId}">${ex.title}</option>`).join('');
 
     const classSel = document.getElementById('examFilterClass');
-    const classList = Array.from(document.querySelectorAll('#class-select option')).map(o => o.value).filter(Boolean);
+    let classList = Array.from(document.querySelectorAll('#class-select option')).map(o => o.value).filter(Boolean);
+    // 僅顯示該任課老師所屬年級的班級
+    if (currentTeacher && currentTeacher.allowedGrade) {
+      classList = classList.filter(c => isClassAllowedForTeacher(c, currentTeacher));
+    }
     classSel.innerHTML = '<option value="ALL">全部班級</option>' + classList.map(c => `<option value="${c}">${c}</option>`).join('');
   });
 }
@@ -2405,9 +2991,14 @@ function fetchAdminExamRecords() {
   })
   .then(r => r.json())
   .then(data => {
-    const list = data.records || [];
+    let list = data.records || [];
+    // 依教師年級進行雙重過濾防護
+    if (currentTeacher && currentTeacher.allowedGrade) {
+      list = list.filter(r => isClassAllowedForTeacher(r.gradeClass, currentTeacher));
+    }
+
     if (!list.length) {
-      tbody.innerHTML = '<tr><td colspan="9" class="text-center text-slate-400 py-6">尚無此班級交卷資料</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" class="text-center text-slate-400 py-6">尚無此班級交卷資料</td></tr>';
       return;
     }
 
@@ -2418,8 +3009,9 @@ function fetchAdminExamRecords() {
         <td class="p-2.5 text-center">${r.number} 號</td>
         <td class="p-2.5 font-bold">${r.name}</td>
         <td class="p-2.5 text-right font-black text-emerald-600">${r.score} 分</td>
-        <td class="p-2.5 text-center">${r.phonicsScore}</td>
-        <td class="p-2.5 text-center">${r.sentenceScore}</td>
+        <td class="p-2.5 text-center font-bold text-blue-700">${r.listenScore || r.listeningScore || '-'}</td>
+        <td class="p-2.5 text-center">${r.phonicsScore || '-'}</td>
+        <td class="p-2.5 text-center">${r.sentenceScore || '-'}</td>
         <td class="p-2.5 text-rose-600 font-semibold">${r.wrongDetails || '-'}</td>
         <td class="p-2.5 text-center">
           <button class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded font-bold text-xs"
@@ -2513,18 +3105,18 @@ function exportExamRecordsCsv() {
     return;
   }
 
-  let csv = "\uFEFF時間,班級,座號,姓名,總成績,Phonics得分,句型得分,未通過題目\n";
+  let csv = "\uFEFF時間,班級,座號,姓名,總成績,聽力得分,Phonics得分,句型得分,未通過題目\n";
   rows.forEach(tr => {
     const cols = Array.from(tr.querySelectorAll('td')).map(td => `"${td.innerText.replace(/"/g, '""')}"`);
-    if (cols.length >= 8) {
-      csv += cols.slice(0, 8).join(',') + "\n";
+    if (cols.length >= 9) {
+      csv += cols.slice(0, 9).join(',') + "\n";
     }
   });
 
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `南光國小_口說定期考成績_${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `南光國小_定期考成績_${new Date().toISOString().slice(0,10)}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
