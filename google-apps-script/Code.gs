@@ -52,7 +52,7 @@ function handleLoginRequest_(params) {
     if (normalizeText_(row.gradeClass) !== gradeClass) return false;
 
     // If the sheet has a seat number, it must match exactly after normalization.
-    if (row.number) {
+    if (row.number !== "" && row.number !== null && row.number !== undefined) {
       if (normalizeSeatNo_(row.number) !== number) return false;
     }
 
@@ -118,6 +118,12 @@ function jsonOutput_(obj) {
 }
 
 function getStudentRows_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get("STUDENTS_ROWS_CACHE");
+  if (cached) {
+    try { return JSON.parse(cached); } catch (e) {}
+  }
+
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
   if (!sheet) throw new Error("找不到工作表：" + SHEET_NAME);
 
@@ -126,13 +132,22 @@ function getStudentRows_() {
 
   const headers = values[0].map(h => String(h).trim());
 
-  return values.slice(1).map(row => {
+  const rows = values.slice(1).map(row => {
     const obj = {};
     headers.forEach((key, index) => {
       obj[key] = row[index];
     });
     return obj;
   });
+
+  try {
+    const serialized = JSON.stringify(rows);
+    if (serialized.length < 95000) {
+      cache.put("STUDENTS_ROWS_CACHE", serialized, 300);
+    }
+  } catch (e) {}
+
+  return rows;
 }
 
 function isEnabled_(value) {
@@ -145,14 +160,14 @@ function normalizeText_(text) {
 }
 
 function normalizeSeatNo_(value) {
-  return String(value || "").normalize("NFKC").trim().replace(/^0+/, "");
+  return String(value || "").normalize("NFKC").trim().replace(/^0+(?=\d)/, "");
 }
 
 function normalizeMaskedNameText_(text) {
   return String(text || "")
     .normalize("NFKC")
     .trim()
-    .replace(/Ｘ|ｘ|X/g, "x")
+    .replace(/Ｘ|ｘ|X|○/g, "x")
     .replace(/‧|･|·/g, "・")
     .replace(/\s+/g, " ");
 }
@@ -218,7 +233,9 @@ function maskInputForLog_(name) {
 function logLogin_(code, school, gradeClass, number, maskedInputName, bookId) {
   if (!ENABLE_LOGIN_LOG) return;
 
+  const lock = LockService.getScriptLock();
   try {
+    lock.waitLock(10000);
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName(LOG_SHEET_NAME);
     if (!sheet) {
@@ -237,6 +254,8 @@ function logLogin_(code, school, gradeClass, number, maskedInputName, bookId) {
     ]);
   } catch (err) {
     // Avoid blocking login because logging failed.
+  } finally {
+    try { lock.releaseLock(); } catch (e) {}
   }
 }
 

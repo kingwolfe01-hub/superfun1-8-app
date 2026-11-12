@@ -1,47 +1,36 @@
 // data/students-map.js
-const schoolClassBookMap = {
-  "南光國小": {
-    // 三年級 (Super Fun 1)
-    "三年一班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
-    "三年二班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
-    "三年三班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
-    "三年四班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
-    "三年五班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
-    "三年六班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
-    "三年七班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
-    "三年八班": { grade: "三年級", semester: "上學期", bookId: "sf1" },
+// 依據 data/schools-config.js 自動產生各校班級對應冊別表，無需手動重複維護每校 32 個班級。
 
-    // 四年級 (Super Fun 3)
-    "四年一班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
-    "四年二班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
-    "四年三班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
-    "四年四班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
-    "四年五班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
-    "四年六班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
-    "四年七班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
-    "四年八班": { grade: "四年級", semester: "上學期", bookId: "sf3" },
+function buildStandardClassBookMap(classCountPerGrade = 8) {
+  const numWords = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
+  const grades = [
+    { prefix: "三", grade: "三年級", bookId: "sf1" },
+    { prefix: "四", grade: "四年級", bookId: "sf3" },
+    { prefix: "五", grade: "五年級", bookId: "sf5" },
+    { prefix: "六", grade: "六年級", bookId: "sf7" }
+  ];
+  const map = {};
+  const count = Math.min(Math.max(1, Number(classCountPerGrade) || 8), numWords.length);
+  grades.forEach(g => {
+    for (let i = 0; i < count; i++) {
+      map[`${g.prefix}年${numWords[i]}班`] = {
+        grade: g.grade,
+        semester: "上學期",
+        bookId: g.bookId
+      };
+    }
+  });
+  return map;
+}
 
-    // 五年級 (Super Fun 5)
-    "五年一班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-    "五年二班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-    "五年三班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-    "五年四班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-    "五年五班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-    "五年六班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-    "五年七班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-    "五年八班": { grade: "五年級", semester: "上學期", bookId: "sf5" },
-
-    // 六年級 (Super Fun 7)
-    "六年一班": { grade: "六年級", semester: "上學期", bookId: "sf7" },
-    "六年二班": { grade: "六年級", semester: "上學期", bookId: "sf7" },
-    "六年三班": { grade: "六年級", semester: "上學期", bookId: "sf7" },
-    "六年四班": { grade: "六年級", semester: "上學期", bookId: "sf7" },
-    "六年五班": { grade: "六年級", semester: "上學期", bookId: "sf7" },
-    "六年六班": { grade: "六年級", semester: "上學期", bookId: "sf7" },
-    "六年七班": { grade: "六年級", semester: "上學期", bookId: "sf7" },
-    "六年八班": { grade: "六年級", semester: "上學期", bookId: "sf7" }
-  }
-};
+const schoolClassBookMap = {};
+if (typeof SCHOOLS_CONFIG !== "undefined") {
+  Object.values(SCHOOLS_CONFIG).forEach(cfg => {
+    if (cfg && cfg.schoolName) {
+      schoolClassBookMap[cfg.schoolName] = cfg.customClassBookMap || buildStandardClassBookMap(cfg.classCountPerGrade || 8);
+    }
+  });
+}
 
 function getClassBookInfo(school, gradeClass) {
   return schoolClassBookMap?.[school]?.[gradeClass] || null;
@@ -77,27 +66,23 @@ function resolveBookForStudent(school, gradeClass) {
  */
 function maskStudentName(rawName, maskChar = '○') {
   if (!rawName) return '';
-  
-  // 1. 去除註記文字（如 [名字只有兩個字]、(4個字) 等）與所有空格
   const cleanName = String(rawName)
     .replace(/[\[\(（【].*?[\]\)）】]/g, '')
     .replace(/\s+/g, '')
     .trim();
 
   const len = cleanName.length;
-
-  // 2. 動態字數遮罩規則
   if (len <= 1) return cleanName;
   if (len === 2) return cleanName[0] + maskChar;
   if (len === 3) return cleanName[0] + maskChar + cleanName[2];
   if (len === 4) return cleanName[0] + maskChar + maskChar + cleanName[3];
-  
-  // 5 個字以上：保留首尾，中間全遮
   return cleanName[0] + maskChar.repeat(len - 2) + cleanName[len - 1];
 }
 
 function buildStudentDisplayText(student, classInfo, book) {
-  const maskedName = maskStudentName(student?.name || student?.displayName || "");
+  const rawDisplay = student?.displayName || student?.name || "";
+  const isAlreadyMasked = /[xXｘＸ○?*＊]/.test(rawDisplay);
+  const maskedName = isAlreadyMasked ? rawDisplay : maskStudentName(rawDisplay);
   return {
     studentBadge: `${student?.school || ""}｜${student?.gradeClass || ""}｜${student?.number || ""}號 ${maskedName} 同學`,
     bookBadge: `${classInfo?.grade || ""}${classInfo?.semester || ""}｜${book?.title || ""}`
