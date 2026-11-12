@@ -201,7 +201,7 @@ function startGenericRecognition(item, feedbackId, onDone) {
   const fb = document.getElementById(feedbackId);
   if (!SR) {
     fb.className = 'feedback-box incorrect';
-    fb.innerHTML = '此瀏覽器不支援語音辨識，建議使用 Chrome。';
+    fb.innerHTML = '此瀏覽器不支援語音辨識，建議使用 Chrome 或最新版 Safari。';
     if (onDone) onDone(false, 'unsupported');
     return;
   }
@@ -213,66 +213,123 @@ function startGenericRecognition(item, feedbackId, onDone) {
   const rec = new SR();
   activeRecognition = rec;
   rec.lang = 'en-US';
-  rec.interimResults = false;
-  rec.maxAlternatives = 1;
+  rec.interimResults = true;
+  rec.maxAlternatives = 3;
 
   let hasEnded = false;
+  let speechEndTimer = null;
+  let lastBestTranscript = '';
+  const target = getItemText(item);
+
   fb.className = 'feedback-box';
   fb.innerHTML = '🎧 正在聆聽，請對著麥克風清晰朗讀...';
 
-  // 10 秒防死結超時保險
-  const timeoutId = setTimeout(() => {
-    if (!hasEnded) {
-      hasEnded = true;
-      try { rec.abort(); } catch (e) {}
-      activeRecognition = null;
-      if (onDone) onDone(false, 'timeout');
-    }
-  }, 10000);
-
-  rec.onresult = (e) => {
+  function finishRecognition(passed, transcript, reason) {
     if (hasEnded) return;
     hasEnded = true;
     clearTimeout(timeoutId);
+    if (speechEndTimer) clearTimeout(speechEndTimer);
+    try { rec.stop(); } catch (e) {}
     activeRecognition = null;
-
-    const transcript = e.results[0][0].transcript;
-    const target = getItemText(item);
-    const passed = isSpeakingMatch(transcript, target);
 
     if (passed) {
       fb.className = 'feedback-box correct';
       fb.innerHTML = `🎉 朗讀正確！我聽到：<strong>${escapeHtml(transcript)}</strong>`;
+    } else if (reason === 'timeout' || reason === 'no-speech') {
+      fb.className = 'feedback-box incorrect';
+      fb.innerHTML = '⚠️ 未偵測到清楚的語音，請靠近麥克風再試一次！';
     } else {
       fb.className = 'feedback-box incorrect';
       fb.innerHTML = `辨識未完全吻合。<br>標準：<strong>${escapeHtml(target)}</strong><br>我聽到：${escapeHtml(transcript || '未辨識到')}`;
     }
 
-    if (onDone) onDone(passed, 'result');
+    if (onDone) onDone(passed, reason);
+  }
+
+  // 10 秒防死結超時保險
+  const timeoutId = setTimeout(() => {
+    const passed = lastBestTranscript ? isSpeakingMatch(lastBestTranscript, target) : false;
+    finishRecognition(passed, lastBestTranscript, passed ? 'result' : 'timeout');
+  }, 10000);
+
+  rec.onspeechend = () => {
+    if (hasEnded) return;
+    if (speechEndTimer) clearTimeout(speechEndTimer);
+    speechEndTimer = setTimeout(() => {
+      if (!hasEnded) {
+        const passed = lastBestTranscript ? isSpeakingMatch(lastBestTranscript, target) : false;
+        finishRecognition(passed, lastBestTranscript, lastBestTranscript ? 'result' : 'no-speech');
+      }
+    }, 1400);
+  };
+
+  rec.onresult = (e) => {
+    if (hasEnded) return;
+    let combinedInterim = '';
+    let hasFinal = false;
+
+    for (let i = 0; i < e.results.length; i++) {
+      const res = e.results[i];
+      if (res.isFinal) hasFinal = true;
+      combinedInterim += (res[0]?.transcript || '') + ' ';
+      for (let j = 0; j < res.length; j++) {
+        const alt = (res[j]?.transcript || '').trim();
+        if (alt) {
+          lastBestTranscript = alt;
+          if (isSpeakingMatch(alt, target)) {
+            finishRecognition(true, alt, 'result');
+            return;
+          }
+        }
+      }
+    }
+
+    const trimmedCombined = combinedInterim.trim();
+    if (trimmedCombined) {
+      lastBestTranscript = trimmedCombined;
+      if (isSpeakingMatch(trimmedCombined, target)) {
+        finishRecognition(true, trimmedCombined, 'result');
+        return;
+      }
+      fb.innerHTML = `🎧 聆聽中：<span style="color:#475569;">${escapeHtml(trimmedCombined)}</span>`;
+    }
+
+    if (hasFinal && e.results[e.results.length - 1].isFinal) {
+      finishRecognition(false, lastBestTranscript, 'result');
+    }
   };
 
   rec.onerror = (err) => {
     if (hasEnded) return;
-    hasEnded = true;
-    clearTimeout(timeoutId);
-    activeRecognition = null;
-    if (onDone) onDone(false, 'error');
+    const errCode = (err && err.error) ? err.error : 'error';
+    if (errCode === 'no-speech') {
+      finishRecognition(false, '', 'no-speech');
+    } else {
+      hasEnded = true;
+      clearTimeout(timeoutId);
+      if (speechEndTimer) clearTimeout(speechEndTimer);
+      activeRecognition = null;
+      fb.className = 'feedback-box incorrect';
+      fb.innerHTML = `⚠️ 語音辨識發生錯誤（${escapeHtml(errCode)}），請確認麥克風權限後重試。`;
+      if (onDone) onDone(false, errCode);
+    }
   };
 
   rec.onend = () => {
     if (!hasEnded) {
-      hasEnded = true;
-      clearTimeout(timeoutId);
-      activeRecognition = null;
-      if (onDone) onDone(false, 'no-speech');
+      const passed = lastBestTranscript ? isSpeakingMatch(lastBestTranscript, target) : false;
+      finishRecognition(passed, lastBestTranscript, lastBestTranscript ? 'result' : 'no-speech');
     }
   };
 
   try {
     rec.start();
   } catch (e) {
+    hasEnded = true;
     clearTimeout(timeoutId);
     activeRecognition = null;
+    fb.className = 'feedback-box incorrect';
+    fb.innerHTML = '⚠️ 無法啟動麥克風，請重新點擊再試一次。';
     if (onDone) onDone(false, 'start-failed');
   }
 }

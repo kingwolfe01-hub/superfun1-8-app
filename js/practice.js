@@ -273,7 +273,7 @@ function startSpeechRecognition(){
   
   startGenericRecognition({ word: cleanText, sentence: cleanText, meaning: '' }, 'speaking-feedback', passed => {
     if(passed) score++; else wrongWords.push(item);
-    setTimeout(()=>{quizIndex++;loadSpeakingQuestion();}, passed ? 1000 : 2200);
+    setTimeout(()=>{quizIndex++;loadSpeakingQuestion();}, passed ? 550 : 1500);
   });
 }
 

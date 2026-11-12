@@ -594,7 +594,7 @@ function startExamRecognition() {
   recordBtn.classList.add('opacity-50');
 
   // 1. 啟動 3-2-1 預備倒數
-  let count = 3;
+  let count = 2;
   overlay.style.display = 'flex';
   countNum.textContent = count;
   countText.textContent = '請預備開口朗讀...';
@@ -635,7 +635,7 @@ function startExamRecognition() {
           setTimeout(() => {
             examCurrentIdx++;
             renderExamQuestion();
-          }, 1200);
+          }, 700);
 
         } else {
           if (examQuestionAttempts < 2) {
