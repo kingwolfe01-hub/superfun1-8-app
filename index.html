@@ -1,732 +1,679 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<link rel="icon" href="data:,">
-<title>Super Fun 教材整合平台 - 南光國小專屬</title>
-<link rel="stylesheet" href="css/style.css">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config = { corePlugins: { preflight: false } };</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Super Fun 教材整合平台 - 3D 環遊英語島</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/renderers/CSS2DRenderer.js"></script>
 </head>
 <body>
 
-<!-- 學生登入區 -->
-<div class="login-wrapper" id="login-wrapper">
-  <div class="login-box">
-    <h3 id="login-school-title">🏫 英語學習平台</h3>
-    <p id="login-school-subtitle">專屬教材，請驗證身分後開始使用。</p>
-    <select id="school-select"><option value="南光國小" selected>南投縣南光國小</option></select>
-    <select id="class-select">
-      <option value="" disabled selected>-- 請選擇班級 --</option>
-      <option value="三年一班">三年一班</option><option value="三年二班">三年二班</option><option value="三年三班">三年三班</option><option value="三年四班">三年四班</option><option value="三年五班">三年五班</option><option value="三年六班">三年六班</option><option value="三年七班">三年七班</option><option value="三年八班">三年八班</option><option value="三年九班">三年九班</option><option value="三年十班">三年十班</option>
-      <option value="四年一班">四年一班</option><option value="四年二班">四年二班</option><option value="四年三班">四年三班</option><option value="四年四班">四年四班</option><option value="四年五班">四年五班</option><option value="四年六班">四年六班</option><option value="四年七班">四年七班</option><option value="四年八班">四年八班</option><option value="四年九班">四年九班</option><option value="四年十班">四年十班</option>
-      <option value="五年一班">五年一班</option><option value="五年二班">五年二班</option><option value="五年三班">五年三班</option><option value="五年四班">五年四班</option><option value="五年五班">五年五班</option><option value="五年六班">五年六班</option><option value="五年七班">五年七班</option><option value="五年八班">五年八班</option><option value="五年九班">五年九班</option><option value="五年十班">五年十班</option>
-      <option value="六年一班">六年一班</option><option value="六年二班">六年二班</option><option value="六年三班">六年三班</option><option value="六年四班">六年四班</option><option value="六年五班">六年五班</option><option value="六年六班">六年六班</option><option value="六年七班">六年七班</option><option value="六年八班">六年八班</option><option value="六年九班">六年九班</option><option value="六年十班">六年十班</option>
-    </select>
-    <input type="number" id="number-input" placeholder="請輸入座號">
-    <input type="text" id="name-input" placeholder="請輸入姓名">
-    <div class="error-msg" id="error-msg"></div>
-    <div class="loading-text" id="loading-text">資料驗證中，請稍候...</div>
-    <button class="login-btn" id="login-btn">驗證身分並開始上課</button>
-    <!-- 學生說明書入口（登入頁面） -->
-    <button type="button" class="teacher-btn-link" style="color:#059669;margin-top:12px;" onclick="openStudentGuideModal()">📖 學生使用說明與題型指引</button>
-    <button class="teacher-btn-link" style="margin-top:8px;" onclick="openTeacherAuthModal()">🔒 老師查閱管理專區</button>
+  <!-- 1. 登入畫面：小小探險家護照申辦處 -->
+  <div id="login-wrapper" class="login-wrapper">
+    <div class="login-box">
+      <div class="login-passport-emblem">🛂</div>
+      <h3 id="login-school-title">🏫 南投縣南光國小 英語學習平台</h3>
+      <p id="login-school-subtitle">領取你的 3D 環遊英語島學習護照，驗證身分後立即出發！</p>
+      <select id="school-select"><option value="南光國小">南投縣南光國小</option></select>
+      <select id="class-select"><option value="">-- 請選擇班級 --</option></select>
+      <input type="number" id="number-input" placeholder="請輸入座號 (例如: 5)" min="1" max="50" />
+      <input type="text" id="name-input" placeholder="請輸入完整姓名 (例如: 王小明)" />
+      <div id="error-msg" class="error-msg"></div>
+      <div id="loading-text" class="loading-text">🛂 護照核發驗證中，請稍候...</div>
+      <button id="login-btn" class="login-btn">✈️ 領取護照並登島冒險</button>
+      <button type="button" class="teacher-btn-link" onclick="openStudentGuideModal()">📖 學生使用說明與題型指引</button>
+      <button type="button" class="teacher-btn-link" onclick="openTeacherAuthModal()">🔒 老師查閱管理專區</button>
+    </div>
   </div>
-</div>
 
-<!-- 老師通行碼驗證彈窗 -->
-<div class="admin-modal-wrapper" id="teacherAuthModal">
-  <div class="login-box" style="max-width:350px;">
-    <h3>🔒 老師身分驗證</h3>
-    <p>請輸入教師專屬通行密碼</p>
-    <input type="password" id="modalPasscode" placeholder="請輸入通行密碼" onkeydown="if(event.key==='Enter')handleTeacherModalLogin()">
-    <div id="modalLoginError" style="color:#dc2626;font-size:13px;font-weight:bold;margin-bottom:12px;display:none;">密碼錯誤，請重新輸入</div>
-    <button class="btn btn-primary" onclick="handleTeacherModalLogin()">進入成績後台</button>
-    <button class="btn btn-outline" style="margin-top:8px;" onclick="closeTeacherAuthModal()">取消</button>
-  </div>
-</div>
+  <!-- 2. 3D 環遊英語島主大廳（全螢幕 3D 海洋畫布 + 三端自適應懸浮 HUD） -->
+  <div id="main-menu-wrapper" class="main-menu-wrapper world-3d-shell">
+    <!-- 3D WebGL 畫布與漂浮 HTML 名牌層 -->
+    <div id="world-3d-viewport" class="world-3d-viewport">
+      <canvas id="world-3d-canvas"></canvas>
+      <div id="world-3d-labels" class="world-3d-labels"></div>
+    </div>
 
-<!-- 學生主功能首頁 -->
-<div class="main-menu-wrapper" id="main-menu-wrapper">
-  <div class="main-menu-card">
-    <h1>Super Fun 教材中心</h1>
-    <p>請選擇今天要使用的學習功能。</p>
-    <div class="student-badge" id="student-badge">已完成身分驗證</div><br>
-    <div class="book-badge" id="book-badge">目前教材</div>
+    <!-- 頂部懸浮航海導覽列 -->
+    <header class="world-topbar hud-glass">
+      <div class="world-topbar-inner">
+        <div class="world-brand">
+          <span class="world-brand-icon">🏝️</span>
+          <div>
+            <div class="leading-tight">Super Fun 3D 英語島</div>
+            <div id="dynamic-school-header" class="text-[11px] font-bold text-sky-700">已完成身分驗證</div>
+          </div>
+        </div>
+        <div class="world-status-pills">
+          <span id="total-stamp-badge" class="stamp-counter-pill">🛂 0 枚印章</span>
+          <button type="button" class="logout-mini-btn" onclick="logoutStudent()">登出</button>
+        </div>
+      </div>
+    </header>
 
-    <!-- 🔔 期中/期末定期測驗通知橫幅 -->
-    <div id="student-exam-banner" style="display:none;margin:12px 0 16px;background:#fef2f2;border:2px solid #ef4444;border-radius:18px;padding:16px;text-align:center;">
-      <span id="exam-banner-tag" style="background:#dc2626;color:white;font-size:0.75rem;font-weight:900;padding:3px 8px;border-radius:6px;">🔔 正式定期評量</span>
-      <h3 id="exam-banner-title" style="margin:8px 0 4px;color:#991b1b;font-size:1.15rem;font-weight:900;">英語定期測驗</h3>
-      <p id="exam-banner-desc" style="font-size:0.84rem;color:#7f1d1d;margin:0 0 12px;line-height:1.5;">老師已指派英語定期測驗（含聽力與口說評量），請在安靜環境下點擊開始作答。</p>
-      <button class="btn btn-primary" id="exam-start-action-btn" style="background:linear-gradient(135deg,#dc2626 0%,#ef4444 100%);box-shadow:0 8px 16px rgba(220,38,38,0.25);" onclick="startOfficialExam()">
-        🎯 開始進入定期考作答
+    <!-- 手機／平板懸浮定期考提醒橫幅 -->
+    <div id="mobile-exam-banner" class="mobile-exam-banner" style="display:none;">
+      <div class="flex items-center justify-between gap-2">
+        <div class="text-left">
+          <div class="text-xs font-black text-red-700">🔔 老師已指派正式定期評量</div>
+          <div id="mobile-exam-title" class="text-sm font-black text-slate-900">英語定期測驗</div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button type="button" onclick="refreshStudentExamStatus(this)" title="重新檢查重測或派卷狀態" class="px-2.5 py-2 bg-white text-slate-700 border border-slate-300 text-xs font-black rounded-full shadow-xs">🔄</button>
+          <button type="button" onclick="startOfficialExam()" class="px-3.5 py-2 bg-red-600 text-white text-xs font-black rounded-full shadow">🎯 開始作答</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 電腦版左側固定「小探險家旅遊護照」側邊欄 -->
+    <aside class="passport-sidebar desktop-only-hud">
+      <div class="passport-card hud-glass">
+        <div class="passport-profile">
+          <div class="passport-avatar">🧑‍🚀</div>
+          <div>
+            <span id="student-badge" class="student-badge">小探險家</span>
+            <span id="book-badge" class="book-badge">目前教材</span>
+          </div>
+        </div>
+
+        <!-- 紅色緊急登機證（教師指派定期評量） -->
+        <div id="student-exam-banner" style="display:none;">
+          <div class="flex items-center justify-between gap-1 mb-1">
+            <span id="exam-banner-tag" class="inline-block bg-red-600 text-white text-xs font-black px-2.5 py-0.5 rounded-full">🔔 正式定期評量</span>
+            <button type="button" onclick="refreshStudentExamStatus(this)" class="px-2 py-0.5 bg-white/90 hover:bg-white text-slate-700 border border-slate-300 rounded-full text-[11px] font-black cursor-pointer">🔄 更新狀態</button>
+          </div>
+          <h4 id="exam-banner-title" class="text-sm font-black text-red-900 m-0">英語定期測驗</h4>
+          <p id="exam-banner-desc" class="text-xs font-bold text-red-800 my-1.5 leading-snug">老師已指派英語定期測驗（含聽力與口說評量），請在安靜環境下點擊開始作答。</p>
+          <button id="exam-start-action-btn" type="button" class="w-full py-2.5 rounded-full text-white font-black text-sm cursor-pointer border-0" style="background:linear-gradient(135deg,#dc2626 0%,#ef4444 100%);" onclick="startOfficialExam()">🎯 開始進入定期考作答</button>
+        </div>
+
+        <!-- 24 小時日夜光影滑桿 -->
+        <div class="bg-sky-50/90 border border-sky-200 rounded-2xl p-3 mb-3">
+          <div class="flex items-center justify-between text-xs font-black text-sky-900 mb-1">
+            <span>☀️ 島嶼日夜時光</span>
+            <span id="time-display-label">11:30 晴空</span>
+          </div>
+          <input type="range" id="day-night-slider" min="0" max="24" step="0.5" value="11.5" class="w-full accent-sky-600 cursor-pointer" oninput="window.set3DTimeOfDay && window.set3DTimeOfDay(parseFloat(this.value))" />
+        </div>
+
+        <div class="passport-actions">
+          <button id="menu-player-btn" type="button" class="module-choice player" onclick="showModule('player')">
+            🎧 教學音檔播放器
+            <small>依目前冊別載入 CD 音檔</small>
+          </button>
+          <button type="button" class="btn btn-outline text-sm py-2.5" onclick="openStudentGuideModal()">
+            📖 環遊冒險操作說明
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 兩段式登島預覽抽屜卡（點擊 3D 島嶼後滑出，防誤觸） -->
+    <div id="station-preview-drawer" class="station-preview-drawer hud-glass" style="display:none;">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div>
+          <span id="preview-cat-tag" class="station-cat-pill">🏝️ 學習探索站</span>
+          <h3 id="preview-station-title" class="text-lg font-black text-slate-900 m-0 leading-snug">單元名稱</h3>
+        </div>
+        <button type="button" onclick="window.closeStationPreview && window.closeStationPreview()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-black border-0 cursor-pointer">✕</button>
+      </div>
+      <p id="preview-station-meta" class="text-xs font-bold text-slate-600 mb-3">包含單字與句型任務</p>
+      <div id="preview-mission-pills" class="flex flex-wrap gap-1.5 mb-3"></div>
+      <button id="preview-enter-btn" type="button" class="login-btn py-3 text-base shadow-md">
+        🚀 登島開始挑戰
       </button>
     </div>
 
-    <button id="module-player-btn" class="module-choice player" onclick="showModule('player')">🎧 教學音檔播放器<small>依目前冊別載入 CD 音檔</small></button>
-    <button class="module-choice vocab" onclick="showModule('vocab')">📚 學習與測驗<small>第一層選功能，第二層選單元</small></button>
-    <!-- 學生說明書入口（首頁內部） -->
-    <button class="btn btn-outline" style="margin-top:14px;font-size:0.9rem;" onclick="openStudentGuideModal()">📖 學習玩法與操作說明</button>
-  </div>
-</div>
+    <!-- 底部小學生零迷航控制塢（分類篩選 + 上一座/回全景/下一座輪盤 + 手機快捷天氣/CD鍵） -->
+    <div class="world-bottom-dock">
+      <div class="world-filter-bar hud-glass">
+        <button type="button" id="filter-btn-all" class="world-filter-tab active" onclick="filterWorldStations('all', this)">🗺️ 全部</button>
+        <button type="button" id="filter-btn-numbers" class="world-filter-tab" onclick="filterWorldStations('numbers', this)">🔢 Numbers</button>
+        <select id="filter-sel-phonics" class="world-filter-select" onchange="handleWorldSelectFilter('phonics', this)">
+          <option value="">🎈 發音 ▾</option>
+        </select>
+        <select id="filter-sel-lesson" class="world-filter-select" onchange="handleWorldSelectFilter('lesson', this)">
+          <option value="">📖 Lesson ▾</option>
+          <option value="lesson_all">全部 Lesson</option>
+          <option value="lesson1">1️⃣ Lesson 1</option>
+          <option value="lesson2">2️⃣ Lesson 2</option>
+          <option value="lesson3">3️⃣ Lesson 3</option>
+          <option value="lesson4">4️⃣ Lesson 4</option>
+        </select>
+        <select id="filter-sel-story" class="world-filter-select" onchange="handleWorldSelectFilter('story', this)">
+          <option value="">🏮 Story Time ▾</option>
+          <option value="story_all">全部故事</option>
+          <option value="topic1_story">🏮 Topic 1 Story</option>
+          <option value="topic2_story">🏰 Topic 2 Story</option>
+        </select>
+        <button type="button" id="filter-btn-dailytalk" class="world-filter-tab" onclick="filterWorldStations('dailytalk', this)">☕ 日常／課室對話</button>
+        <button type="button" id="filter-btn-festival" class="world-filter-tab" onclick="filterWorldStations('festival', this)">🎡 節慶</button>
+      </div>
 
-<!-- ================== 正式定期考模組（步驟一實施：加入聽力作答介面） ================== -->
-<div class="module-wrapper" id="exam-wrapper" style="display:none;min-height:100vh;flex-direction:column;align-items:center;padding:12px;">
-  <div class="app-viewport" style="max-width:440px;height:calc(100vh - 40px);max-height:900px;border-radius:24px;border:4px solid #b91c1c;">
-    <div class="app-header" style="background:linear-gradient(135deg,#991b1b 0%,#dc2626 100%);">
-      <h1 class="app-title" id="exam-view-title" style="font-size:1.15rem;">英語定期評量</h1>
-      <span class="progress-badge" id="exam-progress-badge" style="background:white;color:#dc2626;font-size:0.85rem;">第 1 / 10 題</span>
+      <div class="nav-wheel-bar hud-glass">
+        <button type="button" class="wheel-nav-btn" onclick="window.navigate3DIsland && window.navigate3DIsland(-1)">◀ 上一座</button>
+        <button type="button" class="wheel-center-btn" onclick="window.reset3DCameraView && window.reset3DCameraView()">🧭 全景</button>
+        <button type="button" class="wheel-nav-btn" onclick="window.navigate3DIsland && window.navigate3DIsland(1)">下一座 ▶</button>
+        <button type="button" data-weather="sunny" onclick="window.set3DWeather && window.set3DWeather('sunny', '手動切換')" class="weather-mode-btn mobile-only-btn px-2.5 py-1.5 rounded-full text-xs font-black border border-sky-200 bg-white">☀️</button>
+        <button type="button" data-weather="cloudy" onclick="window.set3DWeather && window.set3DWeather('cloudy', '手動切換')" class="weather-mode-btn mobile-only-btn px-2.5 py-1.5 rounded-full text-xs font-black border border-sky-200 bg-white">☁️</button>
+        <button type="button" data-weather="rainy" onclick="window.set3DWeather && window.set3DWeather('rainy', '手動切換')" class="weather-mode-btn mobile-only-btn px-2.5 py-1.5 rounded-full text-xs font-black border border-sky-200 bg-white">🌧️</button>
+        <button id="mobile-cd-btn" type="button" class="wheel-cd-btn mobile-only-btn" onclick="showModule('player')">🎧 CD</button>
+      </div>
     </div>
+  </div>
 
-    <div class="content-area" style="padding:16px;">
-      <div id="exam-quiz-view" style="display:flex;flex-direction:column;height:100%;justify-content:space-between;">
-        
-        <!-- 步驟一升級：題型標籤與題型說明導引卡 -->
-        <div style="text-align:center;margin-bottom:8px;">
-          <span id="exam-section-tag" style="background:#fee2e2;color:#991b1b;font-weight:900;padding:4px 12px;border-radius:999px;font-size:0.85rem;">
-            第一部分：🔤 Phonics 發音
-          </span>
-          <div id="exam-instruction-box" style="margin-top:8px;background:#eff6ff;color:#1e40af;padding:8px 12px;border-radius:12px;font-size:0.85rem;font-weight:800;border:1px solid #bfdbfe;line-height:1.4;">
-            🎧 題型說明：請仔細聽題目發音，選出正確答案。
+  <!-- 3. 正式定期評量考場視圖 -->
+  <div id="exam-wrapper" class="module-wrapper" style="display:none;flex-direction:column;">
+    <div class="app-viewport">
+      <div class="app-header" style="background:linear-gradient(135deg,#dc2626 0%,#ef4444 100%);">
+        <h2 id="exam-view-title" class="app-title">英語定期評量</h2>
+        <span id="exam-progress-badge" class="progress-badge" style="background:rgba(255,255,255,0.2);color:#fff;border-color:#fff;">第 1 / 10 題</span>
+      </div>
+      <div id="exam-quiz-view" class="content-area" style="justify-content:space-between;">
+        <div id="exam-card-box" class="card-box">
+          <div id="exam-countdown-overlay" style="display:none;position:absolute;inset:0;background:rgba(15,23,42,0.82);border-radius:24px;z-index:20;flex-direction:column;align-items:center;justify-content:center;color:white;">
+            <div id="exam-countdown-number" style="font-size:4rem;font-weight:900;color:#fde047;">3</div>
+            <div id="exam-countdown-text" style="font-size:1rem;font-weight:800;">請預備開口朗讀</div>
           </div>
-        </div>
+          <span id="exam-section-tag" class="station-cat-pill" style="background:#fee2e2;color:#991b1b;">第一部分：🔤 Phonics 發音</span>
+          <p id="exam-instruction-box" class="text-sm font-bold text-slate-600 text-center my-2">🎧 題型說明：請仔細聽題目發音，選出正確答案。</p>
+          <img id="exam-target-img" class="word-img" style="display:none;" alt="題目圖片" />
+          <div id="exam-target-text" class="word-text">-</div>
+          <div id="exam-target-meaning" class="meaning-text">-</div>
 
-        <div class="card-box" id="exam-card-box" style="flex:1;min-height:220px;justify-content:center;position:relative;">
-          <!-- 3-2-1 預備倒數全覆蓋層 (口說題專用) -->
-          <div id="exam-countdown-overlay" style="display:none;position:absolute;inset:0;background:rgba(255,255,255,0.92);border-radius:24px;z-index:20;flex-direction:column;justify-content:center;align-items:center;">
-            <div id="exam-countdown-number" style="font-size:4.5rem;font-weight:900;color:#dc2626;line-height:1;">3</div>
-            <div id="exam-countdown-text" style="font-size:1.1rem;font-weight:800;color:#475569;margin-top:10px;">請預備開口朗讀</div>
-          </div>
-
-          <!-- 步驟一升級：情境題與是非題圖片容器 -->
-          <img id="exam-target-img" src="" alt="情境圖" style="display:none;width:150px;height:150px;object-fit:contain;border-radius:14px;margin-bottom:10px;background:#f8fafc;border:1px solid #e2e8f0;">
-
-          <div class="word-text" id="exam-target-text" style="font-size:1.85rem;color:#0f172a;line-height:1.3;">-</div>
-          <div class="meaning-text" id="exam-target-meaning" style="font-size:1.1rem;color:#64748b;margin-top:10px;">-</div>
-        </div>
-
-        <!-- 作答控制區塊 -->
-        <div style="width:100%;">
-          
-          <!-- 步驟一升級：聽力測驗專用操作面板（口說題時自動隱藏） -->
-          <div id="exam-listening-panel" style="display:none;width:100%;margin-bottom:8px;">
-            <!-- 聽力播放按鈕（含剩餘次數提示） -->
-            <button class="btn btn-primary" id="exam-play-audio-btn" style="margin-bottom:10px;width:100%;" onclick="playCurrentExamAudio()">
+          <div id="exam-listening-panel" style="display:none;width:100%;margin-top:14px;">
+            <button id="exam-play-audio-btn" type="button" class="btn btn-primary mb-3" onclick="playCurrentExamAudio()">
               🔊 點擊聆聽題目 (剩餘 <span id="exam-audio-plays-left">2</span> 次)
             </button>
-
-            <!-- 1. 多元選項按鈕區 (用於：單字選圖、情境應答、克漏字) -->
-            <div id="exam-options-grid" class="option-grid" style="display:none;margin-top:8px;"></div>
-
-            <!-- 2. 是非判斷專用雙按鈕 (用於：聽音是非題) -->
-            <div id="exam-tf-group" style="display:none;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
-              <button class="btn btn-success" style="font-size:1.5rem;padding:14px;" onclick="checkExamAnswer(true)">⭕ 正確</button>
-              <button class="btn btn-warning" style="background:#ef4444;font-size:1.5rem;padding:14px;" onclick="checkExamAnswer(false)">❌ 錯誤</button>
+            <div id="exam-options-grid" class="option-grid" style="display:none;"></div>
+            <div id="exam-tf-group" class="option-grid" style="display:none;">
+              <button type="button" class="option-text-btn" style="border-color:#10b981;color:#047857;">⭕ 正確</button>
+              <button type="button" class="option-text-btn" style="border-color:#ef4444;color:#b91c1c;">❌ 錯誤</button>
             </div>
-
-            <!-- 3. 單字積木排序專用區 (用於：聽音重組造句) -->
-            <div id="exam-order-group" style="display:none;margin-top:8px;background:#f8fafc;padding:14px;border-radius:16px;border:1px solid #cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.03);">
-              <!-- 上方：作答放置區（答案欄位） -->
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;font-weight:800;color:#3730a3;margin-bottom:6px;">
-                <span>📝 你的答案欄位（點擊單字可退回）：</span>
-                <span id="exam-order-count" style="font-size:0.75rem;color:#64748b;">已排 0 個字</span>
-              </div>
-              <div id="exam-order-answer" style="display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:10px 12px;background:#eef2ff;border-radius:14px;border:2px dashed #6366f1;margin-bottom:12px;align-items:center;"></div>
-
-              <!-- 下方：待選單字庫 -->
-              <div style="font-size:0.85rem;font-weight:800;color:#475569;margin-bottom:6px;">🔤 待選單字（點擊加入上方答案區）：</div>
-              <div id="exam-order-bank" style="display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:10px 12px;background:white;border-radius:14px;border:1.5px solid #cbd5e1;margin-bottom:12px;align-items:center;"></div>
-
-              <!-- 控制按鈕 -->
-              <div class="nav-row" style="display:flex;gap:10px;">
-                <button type="button" class="btn btn-outline" style="flex:1;padding:10px;border-radius:12px;font-weight:800;" onclick="resetExamOrderTokens()">🔄 重新排列</button>
-                <button type="button" class="btn btn-success" style="flex:2;padding:10px;border-radius:12px;font-weight:800;" onclick="submitExamOrderAnswer()">✅ 確認送出答案</button>
+            <div id="exam-order-group" style="display:none;width:100%;">
+              <div class="text-xs font-black text-slate-500 mb-1">📝 你的答案欄位（點擊單字可退回）： <span id="exam-order-count">已排 0 個字</span></div>
+              <div id="exam-order-answer" class="min-h-[54px] p-2.5 bg-sky-50 border-2 border-dashed border-sky-300 rounded-2xl flex flex-wrap gap-2 mb-3 items-center justify-center font-bold text-sm text-slate-500"></div>
+              <div class="text-xs font-black text-slate-500 mb-1">🔤 待選單字（點擊加入上方答案區）：</div>
+              <div id="exam-order-bank" class="p-2.5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-wrap gap-2 mb-3 justify-center"></div>
+              <div class="nav-row">
+                <button type="button" class="btn btn-outline" onclick="resetExamOrderTokens()">🔄 重新排列</button>
+                <button type="button" class="btn btn-success" onclick="submitExamOrderAnswer()">✅ 確認送出答案</button>
               </div>
             </div>
           </div>
 
-          <!-- 原有口說題保留控制元件 -->
-          <button class="btn btn-primary" id="exam-listen-btn" style="margin-bottom:8px;" onclick="playExamTargetAudio()">🔊 聆聽示範音</button>
-          
-          <!-- 錄音倒數進度條容器 -->
-          <div id="exam-timer-bar-container" style="display:none;width:100%;background:#e2e8f0;height:8px;border-radius:999px;overflow:hidden;margin-bottom:8px;">
-            <div id="exam-timer-bar" style="background:linear-gradient(90deg,#ef4444,#dc2626);height:100%;width:100%;transition:width 0.1s linear;"></div>
+          <div id="exam-timer-bar-container" style="display:none;width:100%;height:8px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-top:12px;">
+            <div id="exam-timer-bar" style="width:100%;height:100%;background:#ef4444;transition:width 0.1s linear;"></div>
           </div>
-
-          <button class="btn btn-success" id="exam-record-btn" onclick="startExamRecognition()">🎙️ 按下開始朗讀</button>
-          <div id="exam-feedback-box" class="feedback-box" style="margin-top:10px;">請點擊按鈕後對著麥克風朗讀</div>
+          <div id="exam-feedback-box" class="feedback-box"></div>
+        </div>
+        <div class="btn-group">
+          <button id="exam-listen-btn" type="button" class="btn btn-primary" onclick="playExamTargetAudio()">🔊 聆聽示範音</button>
+          <button id="exam-record-btn" type="button" class="btn btn-success" onclick="startExamRecognition()">🎙️ 按下開始朗讀</button>
         </div>
       </div>
 
-      <div id="exam-result-view" style="display:none;height:100%;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
-        <div class="card-box" style="width:100%;padding:28px 16px;">
-          <h2 style="color:#16a34a;margin-top:0;font-size:1.4rem;">🎉 定期測驗已交卷</h2>
-          <p style="color:#64748b;font-size:0.9rem;margin-bottom:12px;">成績已自動覆蓋登記至雲端資料庫：</p>
-          <div style="font-size:3.2rem;font-weight:900;color:#0f172a;margin:10px 0;" id="exam-final-score">0 分</div>
-          <div id="exam-score-details" style="font-size:0.95rem;color:#475569;line-height:1.8;background:#f8fafc;padding:12px;border-radius:14px;width:100%;"></div>
-          <button class="btn btn-primary" style="margin-top:20px;" onclick="backToMenuFromExam()">返回功能首頁</button>
+      <div id="exam-result-view" class="content-area" style="display:none;align-items:center;justify-content:center;text-align:center;">
+        <div class="card-box w-full">
+          <div class="text-5xl mb-2">🎉</div>
+          <h3 class="text-2xl font-black text-slate-900 m-0">定期測驗已交卷</h3>
+          <p class="text-sm font-bold text-slate-500 my-2">成績已自動覆蓋登記至雲端資料庫：</p>
+          <div id="exam-final-score" class="text-4xl font-black text-emerald-600 my-2">0 分</div>
+          <div id="exam-score-details" class="text-sm font-bold text-slate-700 leading-relaxed my-3"></div>
+          <button type="button" class="btn btn-primary mt-4" onclick="backToMenuFromExam()">返回 3D 英語島</button>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- CD 播放器模組 -->
-<div class="album-player module-wrapper" id="player-wrapper">
-  <div class="player-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div>
-  <div class="copyright-banner">⚠️ 版權宣告：本音檔僅限於學校教學使用，不可外傳</div>
-  <div class="school-header" id="dynamic-school-header">教學音檔播放器</div>
-  <div class="now-playing">
-    <h3 class="track-title" id="display-title">請選擇曲目</h3>
-    <audio id="main-audio"></audio>
-    <div class="controls">
-      <button class="player-btn player-btn-side" id="prev-btn">上一首</button>
-      <button class="player-btn" id="play-btn">播放</button>
-      <button class="player-btn player-btn-side" id="next-btn">下一首</button>
+  <!-- 4. CD 教學音檔播放器視圖 -->
+  <div id="player-wrapper" class="module-wrapper album-player" style="display:none;">
+    <div class="player-topbar">
+      <button type="button" class="top-back-btn" onclick="backToMenu()">← 返回 3D 英語島</button>
     </div>
-    <div class="progress-container">
-      <span id="current-time">0:00</span>
-      <div class="progress-area" id="progress-area"><div class="progress-bar" id="progress-bar"></div></div>
-      <span id="total-time">0:00</span>
+    <div class="copyright-banner">⚠️ 版權宣告：本音檔僅限於學校教學使用，不可外傳</div>
+    <div class="school-header">🎧 教學音檔播放器</div>
+    <div class="now-playing">
+      <h4 id="display-title" class="track-title">請選擇曲目</h4>
+      <div id="player-status-msg" class="player-status-msg" style="display:none;"></div>
+      <div class="controls">
+        <button id="prev-btn" type="button" class="player-btn player-btn-side">上一首</button>
+        <button id="play-btn" type="button" class="player-btn">播放</button>
+        <button id="next-btn" type="button" class="player-btn player-btn-side">下一首</button>
+      </div>
+      <div class="progress-container">
+        <span id="current-time">0:00</span>
+        <div id="progress-area" class="progress-area"><div id="progress-bar" class="progress-bar"></div></div>
+        <span id="total-time">0:00</span>
+      </div>
+      <audio id="main-audio"></audio>
+    </div>
+    <div class="player-tab-container">
+      <button id="btn-CD1" type="button" class="player-tab-btn active" onclick="switchPlayerTab('CD1')">CD 1</button>
+      <button id="btn-CD2" type="button" class="player-tab-btn" onclick="switchPlayerTab('CD2')">CD 2</button>
+    </div>
+    <div class="playlist-wrapper">
+      <ul id="playlist-container" class="playlist"></ul>
     </div>
   </div>
-  <div class="player-tab-container">
-    <button class="player-tab-btn active" id="btn-CD1" onclick="switchPlayerTab('CD1')">CD 1</button>
-    <button class="player-tab-btn" id="btn-CD2" onclick="switchPlayerTab('CD2')">CD 2</button>
-  </div>
-  <div class="playlist-wrapper"><ul class="playlist" id="playlist-container"></ul></div>
-</div>
 
-<!-- 學習與測驗模組 -->
-<div class="module-wrapper" id="vocab-wrapper">
-  <div class="vocab-topbar"><button class="top-back-btn" onclick="backToMenu()">← 返回功能首頁</button></div>
-  <div class="app-viewport">
-    <div class="app-header">
-      <h1 class="app-title">Super Fun 教材學習方程式</h1>
-      <label class="select-label" style="color:white;">第一層：學習功能</label>
-      <select id="modeSelect" class="select-input" onchange="switchMode(this.value)">
-        <option value="flashcard">⚡ 閃示卡</option>
-        <option value="listening">👂 看圖測驗</option>
-        <option value="phonicsQuiz">🔤 辨音測驗</option>
-        <option value="speaking">🎙 口說測驗</option>
-        <option value="sentencePractice">📘 句子跟讀</option>
-        <option value="storyPractice">📖 Story Time 跟讀</option>
-        <option value="patternPractice">🧩 句型操練</option>
-      </select>
+  <!-- 5. 登島學習與測驗工作台（三端 RWD 雙欄工作台） -->
+  <div id="vocab-wrapper" class="module-wrapper" style="display:none;">
+    <div class="vocab-topbar">
+      <button id="vocab-smart-back-btn" type="button" class="top-back-btn" onclick="handleVocabTopBack()">← 返回 3D 英語島</button>
+      <span id="vocab-breadcrumb" class="progress-badge">站點任務</span>
     </div>
-    <div class="control-panel">
-      <select id="unitSelect" class="unit-select" onchange="onUnitChange()" style="display:none;"></select>
-      <div class="unit-banner-card">
-        <button type="button" class="unit-banner-main" onclick="openUnitDrawer()">
-          <span class="unit-banner-label">📚 第二層：目前學習單元</span>
-          <span id="active-unit-title" class="unit-banner-title">載入中...</span>
-        </button>
-        <div class="unit-banner-actions">
-          <button type="button" class="unit-step-btn" title="上一單元" onclick="stepUnit(-1)">◀</button>
-          <button type="button" class="unit-step-btn" title="下一單元" onclick="stepUnit(1)">▶</button>
-          <button type="button" class="unit-switch-btn" onclick="openUnitDrawer()">換單元 ▾</button>
+    <div class="app-viewport">
+      <div class="app-header">
+        <h2 id="vocab-header-title" class="app-title">🏝️ 站點學習任務</h2>
+        <div id="vocab-header-subtitle" class="text-xs font-bold opacity-90">請選擇要挑戰的關卡</div>
+      </div>
+
+      <div id="stage-workspace" class="stage-workspace">
+        <!-- 左側／手機第一層：關卡任務選單 -->
+        <div id="unit-menu-view" class="content-area mode-section active">
+          <div>
+            <div class="unit-mission-header">
+              <h3 id="selected-unit-title" class="unit-mission-title">單元標題</h3>
+              <p id="selected-unit-subtitle" class="unit-mission-sub">完成任務即可在 3D 島嶼升起通關金旗！</p>
+            </div>
+            <div id="unit-mission-list" class="mission-list"></div>
+          </div>
+        </div>
+
+        <!-- 右側互動大畫布 -->
+        <div id="stage-content-area" class="content-area">
+          <!-- 關卡 1：閃示卡 -->
+          <div id="flashcard-mode" class="mode-section">
+            <div class="text-center mb-2"><span id="fc-progress" class="progress-badge">1 / 1</span></div>
+            <div class="card-box">
+              <img id="fc-img" class="word-img" style="display:none;" alt="單字圖卡" />
+              <div id="fc-word" class="word-text">-</div>
+              <div id="fc-meaning" class="meaning-text">-</div>
+            </div>
+            <div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-outline" onclick="prevWord()">⬅️ 上一張</button>
+                <button type="button" class="btn btn-primary" onclick="playCurrentWordAudio()">🔊 播放</button>
+                <button type="button" class="btn btn-outline" onclick="nextWord()">下一張 ➡️</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 關卡 2：看圖聽力測驗 -->
+          <div id="listening-mode" class="mode-section">
+            <div id="listening-quiz-view">
+              <div class="text-center mb-2"><span id="list-progress" class="progress-badge">題目 1 / 1</span></div>
+              <div class="card-box">
+                <button type="button" class="btn btn-primary mb-2" onclick="playQuizAudio()">🔊 點擊聽題目</button>
+                <p class="text-sm font-bold text-slate-600 m-0">請選出正確的代表圖片：</p>
+                <div id="quiz-options" class="option-grid"></div>
+                <div id="listening-feedback" class="feedback-box"></div>
+              </div>
+            </div>
+            <div id="listening-result-view" class="card-box text-center" style="display:none;"></div>
+          </div>
+
+          <!-- 關卡 3：單字辨音拼寫 -->
+          <div id="phonicsQuiz-mode" class="mode-section">
+            <div id="phonics-quiz-view">
+              <div class="text-center mb-2"><span id="phonics-progress" class="progress-badge">題目 1 / 1</span></div>
+              <div class="card-box">
+                <button type="button" class="btn btn-primary mb-2" onclick="playPhonicsQuizAudio()">🔊 點擊聽單字發音</button>
+                <p class="text-sm font-bold text-slate-600 m-0">請選出拼寫正確的英文單字：</p>
+                <div id="phonics-quiz-options" class="option-grid"></div>
+                <div id="phonics-feedback" class="feedback-box"></div>
+              </div>
+            </div>
+            <div id="phonics-result-view" class="card-box text-center" style="display:none;"></div>
+          </div>
+
+          <!-- 關卡 4：核心句子跟讀 -->
+          <div id="sentencePractice-mode" class="mode-section">
+            <div class="text-center mb-2"><span id="sentence-progress" class="progress-badge">句子 1 / 1</span></div>
+            <div class="card-box">
+              <div id="sentence-text" class="word-text" style="font-size:1.65rem;">-</div>
+              <div id="sentence-meaning" class="meaning-text">-</div>
+              <div id="sentence-feedback" class="feedback-box"></div>
+            </div>
+            <div>
+              <div class="btn-group mb-2">
+                <button type="button" class="btn btn-primary" onclick="playCurrentSentenceAudio()">🔊 播放示範句</button>
+                <button type="button" class="btn btn-success" onclick="startSentenceSpeechRecognition()">🎙️ 開始跟讀練習</button>
+              </div>
+              <div class="nav-row">
+                <button type="button" class="btn btn-outline" onclick="prevSentenceItem()">⬅️ 上一句</button>
+                <button type="button" class="btn btn-outline" onclick="nextSentenceItem()">下一句 ➡️</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 關卡 5：課文句型口說測驗 -->
+          <div id="speaking-mode" class="mode-section">
+            <div id="speaking-quiz-view">
+              <div class="text-center mb-2"><span id="spk-progress" class="progress-badge">句子 1 / 1</span></div>
+              <div class="card-box">
+                <img id="sp-img" class="word-img" style="display:none;" alt="句型圖" />
+                <div id="sp-word" class="word-text" style="font-size:1.65rem;">-</div>
+                <div id="sp-meaning" class="meaning-text">-</div>
+                <div id="speaking-feedback" class="feedback-box"></div>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary" onclick="playSpeakingSentence()">🔊 播放示範句</button>
+                <button type="button" class="btn btn-success" onclick="startSpeechRecognition()">🎙️ 按下開始朗讀</button>
+              </div>
+            </div>
+            <div id="speaking-result-view" class="card-box text-center" style="display:none;"></div>
+          </div>
+
+          <!-- 關卡 6：Story Time 故事雙語閱讀 -->
+          <div id="storyRead-mode" class="mode-section">
+            <div class="story-reader-toolbar">
+              <button id="story-play-all-btn" type="button" class="btn btn-primary" onclick="toggleStoryAutoPlay()">▶️ 全篇連播</button>
+              <button id="story-toggle-zh-btn" type="button" class="btn btn-outline" onclick="toggleStoryTranslation()">👁️ 隱藏中文</button>
+            </div>
+            <div id="story-reader-list" class="story-reader-list"></div>
+          </div>
+
+          <!-- 關卡 7：Story Time 故事聽力測驗 -->
+          <div id="storyListening-mode" class="mode-section">
+            <div id="story-listen-quiz-view">
+              <div class="text-center mb-2"><span id="story-listen-progress" class="progress-badge">題目 1 / 1</span></div>
+              <div class="card-box">
+                <button type="button" class="btn btn-primary mb-2" onclick="playStoryListenAudio()">🔊 聆聽故事句子</button>
+                <p class="text-sm font-bold text-slate-600 m-0">請選出這句話的正確中文意思：</p>
+                <div id="story-listen-options" class="flex flex-col gap-2.5 w-full mt-3"></div>
+                <div id="story-listen-feedback" class="feedback-box"></div>
+              </div>
+            </div>
+            <div id="story-listen-result-view" class="card-box text-center" style="display:none;"></div>
+          </div>
         </div>
       </div>
     </div>
-    <aside class="unit-sidebar-desktop" aria-label="學習單元側邊欄">
-      <div class="unit-sidebar-title">📚 第二層：點選切換單元</div>
-      <div id="unit-sidebar-list" class="unit-sidebar-list"></div>
-      <div class="keyboard-hint-bar">⌨️ 鍵盤：← → 換題｜空白鍵發音</div>
-    </aside>
-    <div class="content-area">
-      <div id="flashcard-mode" class="mode-section active"><div class="card-box"><img id="fc-img" class="word-img" src="" alt="圖片"><div class="word-text" id="fc-word">-</div><div class="meaning-text" id="fc-meaning">-</div></div><div class="btn-group"><button class="btn btn-outline" onclick="prevWord()">⬅️ 上一張</button><button class="btn btn-primary" onclick="playCurrentWordAudio()">🔊 播放</button><button class="btn btn-outline" onclick="nextWord()">下一張 ➡️</button></div></div>
-      <div id="listening-mode" class="mode-section"><div id="listening-quiz-view"><span class="progress-badge" id="list-progress">題目 1 / 1</span><div class="card-box" style="min-height:160px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playQuizAudio()">🔊 點擊聽題目</button><p style="font-weight:800;color:#64748b;">請選出正確答案：</p></div><div class="option-grid" id="quiz-options"></div><div id="listening-feedback" class="feedback-box"></div></div><div id="listening-result-view" style="display:none;"></div></div>
-      <div id="phonicsQuiz-mode" class="mode-section"><div id="phonics-quiz-view"><span class="progress-badge" id="phonics-progress">題目 1 / 1</span><div class="card-box" style="min-height:150px;flex:none;margin-top:10px;"><button class="btn btn-primary" onclick="playPhonicsQuizAudio()">🔊 點擊聽單字發音</button><p style="font-weight:800;color:#64748b;">請選出拼寫正確的英文：</p></div><div class="option-grid" id="phonics-quiz-options"></div><div id="phonics-feedback" class="feedback-box"></div></div><div id="phonics-result-view" style="display:none;"></div></div>
-      
-      <!-- 口說測驗 (Speaking Mode) 區塊 -->
-      <div id="speaking-mode" class="mode-section">
-        <div id="speaking-quiz-view">
-          <span class="progress-badge" id="spk-progress">句子 1 / 1</span>
-          <div class="card-box">
-            <img id="sp-img" class="word-img" src="" alt="圖片" style="display:none;">
-            <div class="word-text" id="sp-word" style="font-size:1.45rem;margin-top:18px;">-</div>
-            <div class="meaning-text" id="sp-meaning">-</div>
-          </div>
-          <button class="btn btn-primary" style="margin-bottom:10px;" onclick="playSpeakingSentence()">🔊 播放示範句</button>
-          <button class="btn btn-success" onclick="startSpeechRecognition()">🎙️ 按下開始唸</button>
-          <div id="speaking-feedback" class="feedback-box"></div>
-        </div>
-        <div id="speaking-result-view" style="display:none;"></div>
-      </div>
-
-      <div id="sentencePractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="sentence-progress">句子 1 / 1</span><div class="word-text" id="sentence-text" style="font-size:1.45rem;margin-top:18px;">-</div><div class="meaning-text" id="sentence-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentSentenceAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevSentenceItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextSentenceItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startSentenceSpeechRecognition()">🎙️ 開始跟讀</button><div id="sentence-feedback" class="feedback-box"></div></div>
-      <div id="storyPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="story-progress">Story Time 1 / 1</span><div class="word-text" id="story-text" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="story-meaning">-</div></div><button class="btn btn-primary" onclick="playCurrentStoryAudio()">🔊 播放示範</button><div class="nav-row"><button class="btn btn-outline" onclick="prevStoryItem()">⬅️ 上一句</button><button class="btn btn-outline" onclick="nextStoryItem()">下一句 ➡️</button></div><button class="btn btn-success" onclick="startStorySpeechRecognition()">🎙️ 開始跟讀</button><div id="story-feedback" class="feedback-box"></div></div>
-      <div id="patternPractice-mode" class="mode-section"><div class="card-box"><span class="progress-badge" id="pattern-progress">句型 1 / 1</span><div class="word-text" id="pattern-title" style="font-size:1.35rem;margin-top:18px;">-</div><div class="meaning-text" id="pattern-meaning">-</div><div id="pattern-template" style="margin-top:12px;font-weight:900;color:#0f172a;text-align:center;font-size:1.05rem;line-height:1.5;">-</div><div id="pattern-slots" style="margin-top:12px;width:100%;font-size:.9rem;color:#475569;text-align:left;"></div><div id="pattern-generated" style="margin-top:14px;width:100%;padding:12px;border-radius:16px;background:#f0fdf4;border:2px solid #86efac;color:#166534;font-size:1.1rem;font-weight:900;text-align:center;line-height:1.55;">請選擇欄位產生句子</div><div id="pattern-blank-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#fff7ed;border:2px solid #fdba74;text-align:left;"><div style="font-weight:900;color:#9a3412;margin-bottom:8px;">📝 填空選答案</div><div id="pattern-blank-question" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請先選擇欄位產生填空題</div><div id="pattern-blank-options" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;"></div><div id="pattern-blank-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-order-card" style="margin-top:12px;width:100%;padding:12px;border-radius:16px;background:#eef2ff;border:2px solid #a5b4fc;text-align:left;"><div style="font-weight:900;color:#3730a3;margin-bottom:8px;">🔀 拖曳排序</div><div id="pattern-order-target" style="font-weight:900;color:#0f172a;line-height:1.55;text-align:center;">請把單字排成正確句子</div><div style="margin-top:10px;font-size:.85rem;color:#64748b;font-weight:800;">可拖曳，也可點選單字加入答案區；點答案區單字可移回。</div><div id="pattern-order-bank" ondragover="patternAllowDrop(event)" ondrop="patternDropToBank(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:44px;padding:8px;border-radius:12px;background:white;border:1px dashed #818cf8;"></div><div id="pattern-order-answer" ondragover="patternAllowDrop(event)" ondrop="patternDropToAnswer(event)" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;min-height:48px;padding:8px;border-radius:12px;background:#f8fafc;border:2px dashed #6366f1;"></div><div class="nav-row" style="margin-top:10px;"><button class="btn btn-outline" onclick="resetPatternOrderQuiz()">重新排序</button><button class="btn btn-success" onclick="checkPatternOrderAnswer()">檢查排序</button></div><div id="pattern-order-feedback" class="feedback-box" style="margin-top:10px;"></div></div><div id="pattern-examples" style="margin-top:12px;width:100%;font-size:.92rem;color:#334155;text-align:left;line-height:1.55;"></div></div><button class="btn btn-primary" onclick="playCurrentPatternAudio()">🔊 播放產生句</button><div class="nav-row"><button class="btn btn-outline" onclick="prevPatternItem()">⬅️ 上一句型</button><button class="btn btn-outline" onclick="nextPatternItem()">下一句型 ➡️</button></div><button class="btn btn-success" onclick="startPatternSpeechRecognition()">🎙️ 跟讀產生句</button><div id="pattern-feedback" class="feedback-box"></div></div>
-    </div>
   </div>
-</div>
 
-<!-- 老師後台數據管理模組 -->
-<div class="admin-section-wrapper" id="admin-wrapper">
-  <div class="admin-container">
-    <div class="admin-nav-bar">
-      <div>
-        <strong id="admin-school-title" style="font-size:18px;">英語教材看板與管理</strong>
-        <span id="teacherBadge" style="margin-left:12px;background:#312e81;padding:4px 12px;border-radius:999px;font-size:13px;">教師</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <!-- 教師操作手冊按鈕 -->
-        <button class="px-3 py-2 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition" onclick="openTeacherGuideModal()">📑 教師手冊</button>
-        <button id="tabBtnDashboard" class="px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg" onclick="switchAdminTab('dashboard')">📊 數據看板</button>
-        <button id="tabBtnStudents" class="px-4 py-2 bg-white text-indigo-900 font-bold rounded-lg border border-indigo-200" onclick="switchAdminTab('students')">🧑‍🎓 名單管理</button>
-        <button id="tabBtnExams" class="px-4 py-2 bg-white text-indigo-900 font-bold rounded-lg border border-indigo-200" onclick="switchAdminTab('exams')">📝 考試指派與成果</button>
-        <button class="btn btn-outline ml-4" style="width:auto;padding:8px 16px;border-radius:999px;" onclick="closeAdminSection()">← 登出</button>
-      </div>
-    </div>
-
-    <!-- 面板 1：動態分析儀表板 -->
-    <div id="adminTabDashboard" style="display:block; width:100%;">
-      <div class="admin-control-bar">
-        <label style="font-weight:bold;color:#475569;">班級篩選：</label>
-        <select id="adminFilterClass" onchange="renderAdminFilteredData()"><option value="ALL">全部班級</option></select>
-        <label style="font-weight:bold;color:#475569;margin-left:10px;">題型模式：</label>
-        <select id="adminFilterMode" onchange="renderAdminFilteredData()">
-          <option value="ALL">全部題型</option>
-          <option value="listening">👂 看圖測驗</option>
-          <option value="phonicsQuiz">🔤 辨音測驗</option>
-          <option value="speaking">🎙️ 口說測驗</option>
-        </select>
-        <button class="btn btn-outline" style="width:auto;margin-left:auto;" onclick="fetchAdminRecords()">🔄 重新整理</button>
-        <button class="btn btn-primary" style="width:auto;padding:10px 18px;" onclick="exportAdminCsv()">📥 匯出 Excel</button>
+  <!-- 6. 教師後台管理專區（完整保留） -->
+  <div id="admin-wrapper" class="admin-section-wrapper">
+    <div class="admin-container">
+      <div class="admin-nav-bar">
+        <div>
+          <h2 id="admin-school-title" class="text-lg font-black m-0">南光國小 - 英語教材看板與管理</h2>
+          <span id="teacherBadge" class="text-xs bg-indigo-500 px-2.5 py-0.5 rounded-full font-bold">教師</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="openTeacherGuideModal()" class="px-3 py-2 bg-amber-400 text-slate-900 font-bold rounded-lg text-sm">📑 教師手冊</button>
+          <button id="tabBtnDashboard" type="button" onclick="switchAdminTab('dashboard')" class="px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg">📊 數據看板</button>
+          <button id="tabBtnStudents" type="button" onclick="switchAdminTab('students')" class="px-4 py-2 bg-white text-indigo-900 font-bold rounded-lg border border-indigo-200">🧑‍🎓 名單管理</button>
+          <button id="tabBtnExams" type="button" onclick="switchAdminTab('exams')" class="px-4 py-2 bg-white text-indigo-900 font-bold rounded-lg border border-indigo-200">📝 考試指派與成果</button>
+          <button type="button" onclick="closeAdminSection()" class="px-3 py-2 bg-rose-600 text-white font-bold rounded-lg text-sm">← 登出</button>
+        </div>
       </div>
 
-      <main class="w-full py-4 space-y-8" id="advanced-dashboard">
-        <section>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
-              <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">總測驗人次</p>
-              <p id="kpiTotalAttempts" class="text-2xl sm:text-3xl font-extrabold text-indigo-600 mt-1">0 <span class="text-xs font-normal text-slate-500">次</span></p>
-            </div>
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
-              <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">參與學生</p>
-              <p id="kpiUniqueStudents" class="text-2xl sm:text-3xl font-extrabold text-blue-600 mt-1">0 <span class="text-xs font-normal text-slate-500">人</span></p>
-              <p id="kpiAvgAttemptsPerStudent" class="text-xs text-slate-400 mt-1.5 flex items-center gap-1"></p>
-            </div>
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
-              <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">平均正確率</p>
-              <p id="kpiAvgAccuracy" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1">0%</p>
-            </div>
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
-              <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">滿分測驗次數</p>
-              <p id="kpiPerfectCount" class="text-2xl sm:text-3xl font-extrabold text-amber-500 mt-1">0 <span class="text-xs font-normal text-slate-500">次</span></p>
-              <p id="kpiPerfectRate" class="text-xs text-slate-400 mt-1.5 flex items-center gap-1"></p>
-            </div>
-          </div>
-        </section>
+      <!-- Tab 1: 數據看板 -->
+      <div id="adminTabDashboard">
+        <div class="admin-control-bar">
+          <label class="font-bold text-sm">班級篩選：</label>
+          <select id="adminFilterClass" onchange="renderAdminFilteredData()"><option value="ALL">全部班級</option></select>
+          <label class="font-bold text-sm">題型模式：</label>
+          <select id="adminFilterMode" onchange="renderAdminFilteredData()">
+            <option value="ALL">全部題型</option>
+            <option value="listening">👂 看圖測驗</option>
+            <option value="phonicsQuiz">🔤 辨音測驗</option>
+            <option value="speaking">🎙️ 口說測驗</option>
+            <option value="storyListening">📖 故事聽力</option>
+          </select>
+          <button type="button" onclick="fetchAdminRecords()" class="px-4 py-2 bg-sky-600 text-white font-bold rounded-lg text-sm">🔄 重新整理</button>
+          <button type="button" onclick="exportAdminCsv()" class="px-4 py-2 bg-emerald-600 text-white font-bold rounded-lg text-sm">📥 匯出 Excel</button>
+        </div>
 
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-            <h3 class="text-base font-bold text-slate-800">各班練習量與平均正確率</h3>
-            <div class="mt-4 relative h-64 chart-container"><canvas id="classChart"></canvas></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-xs font-bold text-slate-500">總測驗人次</div>
+            <div id="kpiTotalAttempts" class="text-2xl font-black text-indigo-600 mt-1">0 次</div>
           </div>
-          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-            <h3 class="text-base font-bold text-slate-800">高頻錯題排行 TOP 8</h3>
-            <div class="mt-4 relative h-64 chart-container"><canvas id="mistakeChart"></canvas></div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-xs font-bold text-slate-500">參與學生</div>
+            <div id="kpiUniqueStudents" class="text-2xl font-black text-emerald-600 mt-1">0 人</div>
+            <div id="kpiAvgAttemptsPerStudent" class="text-xs font-bold text-slate-400 mt-1">● 人均 0 次</div>
           </div>
-        </section>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-xs font-bold text-slate-500">平均正確率</div>
+            <div id="kpiAvgAccuracy" class="text-2xl font-black text-amber-600 mt-1">0%</div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-xs font-bold text-slate-500">滿分測驗次數</div>
+            <div id="kpiPerfectCount" class="text-2xl font-black text-rose-600 mt-1">0 次</div>
+            <div id="kpiPerfectRate" class="text-xs font-bold text-slate-400 mt-1">● 滿分率 0%</div>
+          </div>
+        </div>
 
-        <section class="space-y-6">
-          <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/80"><h3 class="font-bold text-slate-800">各班參與度與學習成效全覽表</h3></div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm" id="classTable">
-                <thead class="bg-slate-100 text-slate-600 text-xs uppercase font-semibold">
-                  <tr><th class="px-4 py-3 text-center">名次</th><th class="px-4 py-3">班級名稱</th><th class="px-4 py-3 text-center">測驗人次</th><th class="px-4 py-3 text-center">參與學生數</th><th class="px-4 py-3 text-right">正確率</th><th class="px-4 py-3 text-center">狀態診斷</th></tr>
-                </thead>
-                <tbody id="classTableBody" class="divide-y divide-slate-100"></tbody>
-              </table>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <h4 class="font-black text-slate-800 m-0 mb-3">各班練習量與平均正確率</h4>
+            <div class="h-60"><canvas id="classChart"></canvas></div>
           </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <h4 class="font-black text-slate-800 m-0 mb-3">高頻錯題排行 TOP 8</h4>
+            <div class="h-60"><canvas id="mistakeChart"></canvas></div>
+          </div>
+        </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col">
-              <div class="px-4 py-3 bg-blue-50 border-b border-blue-100"><h4 class="font-bold text-blue-900 text-sm">自學練習量 TOP 10</h4></div>
-              <div class="p-2 overflow-x-auto">
-                <table class="w-full text-xs text-left">
-                  <thead class="text-slate-500 uppercase border-b border-slate-100"><tr><th class="py-1.5 px-2">名次</th><th class="py-1.5 px-2">學生</th><th class="py-1.5 px-2 text-center">次數</th><th class="py-1.5 px-2 text-right">正確率</th></tr></thead>
-                  <tbody id="topAttemptsTableBody" class="divide-y divide-slate-100"></tbody>
-                </table>
-              </div>
-            </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col">
-              <div class="px-4 py-3 bg-emerald-50 border-b border-emerald-100"><h4 class="font-bold text-emerald-900 text-sm">高分精熟榜 TOP 10</h4></div>
-              <div class="p-2 overflow-x-auto">
-                <table class="w-full text-xs text-left">
-                  <thead class="text-slate-500 uppercase border-b border-slate-100"><tr><th class="py-1.5 px-2">名次</th><th class="py-1.5 px-2">學生</th><th class="py-1.5 px-2 text-center">測驗細節</th><th class="py-1.5 px-2 text-right">正確率</th></tr></thead>
-                  <tbody id="topAccuracyTableBody" class="divide-y divide-slate-100"></tbody>
-                </table>
-              </div>
-            </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col">
-              <div class="px-4 py-3 bg-rose-50 border-b border-rose-100"><h4 class="font-bold text-rose-900 text-sm">優先關懷輔導名單</h4></div>
-              <div class="p-2 overflow-x-auto">
-                <table class="w-full text-xs text-left">
-                  <thead class="text-slate-500 uppercase border-b border-slate-100"><tr><th class="py-1.5 px-2">名次</th><th class="py-1.5 px-2">學生</th><th class="py-1.5 px-2 text-center">測驗細節</th><th class="py-1.5 px-2 text-right">正確率</th></tr></thead>
-                  <tbody id="needHelpTableBody" class="divide-y divide-slate-100"></tbody>
-                </table>
-              </div>
-            </div>
-        <div class="bg-white p-4 rounded-xl border border-rose-200 shadow-sm mt-4">
-          <h4 class="font-bold text-rose-700 mb-2">🔥 全班高頻錯題 Top 5（課堂補救教學重點）</h4>
-          <table class="w-full text-sm text-left">
-            <thead class="text-xs text-slate-500 border-b">
-              <tr><th class="py-1.5 px-2">排名</th><th class="py-1.5 px-2">單字 / 句型</th><th class="py-1.5 px-2 text-right">累計答錯次數</th></tr>
-            </thead>
-            <tbody id="topWrongTableBody" class="divide-y divide-slate-100"></tbody>
+        <div class="admin-table-box mb-5">
+          <h4 class="font-black text-slate-800 m-0 mb-3">各班參與度與學習成效全覽表</h4>
+          <table class="admin-table">
+            <thead><tr><th>名次</th><th>班級名稱</th><th>測驗人次</th><th>參與學生數</th><th>正確率</th><th>狀態診斷</th></tr></thead>
+            <tbody id="classTableBody"></tbody>
           </table>
         </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+          <div class="admin-table-box">
+            <h4 class="font-black text-slate-800 m-0 mb-2">自學練習量 TOP 10</h4>
+            <table class="admin-table"><thead><tr><th>名次</th><th>學生</th><th>次數</th><th>正確率</th></tr></thead><tbody id="topAttemptsTableBody"></tbody></table>
           </div>
-        </section>
+          <div class="admin-table-box">
+            <h4 class="font-black text-slate-800 m-0 mb-2">高分精熟榜 TOP 10</h4>
+            <table class="admin-table"><thead><tr><th>名次</th><th>學生</th><th>測驗細節</th><th>正確率</th></tr></thead><tbody id="topAccuracyTableBody"></tbody></table>
+          </div>
+          <div class="admin-table-box">
+            <h4 class="font-black text-slate-800 m-0 mb-2">優先關懷輔導名單</h4>
+            <table class="admin-table"><thead><tr><th>名次</th><th>學生</th><th>測驗細節</th><th>正確率</th></tr></thead><tbody id="needHelpTableBody"></tbody></table>
+          </div>
+        </div>
 
-        <section class="mt-8">
-          <h3 class="text-base font-bold text-slate-800 mb-2">原始測驗紀錄明細</h3>
-          <div class="admin-table-box" style="padding: 0; overflow: hidden;">
-            <div style="overflow-x: auto; padding: 16px;">
-              <table class="admin-table" style="width: 100%;">
-                <thead><tr><th>時間</th><th>班級</th><th>座號</th><th>姓名</th><th>單元</th><th>題型</th><th>成績 (得分/總數)</th><th>錯題紀錄</th></tr></thead>
-                <tbody id="adminRecordsTbody">
-                  <tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:24px;">載入資料中...</td></tr>
-                </tbody>
-              </table>
+        <div class="admin-table-box">
+          <h4 class="font-black text-slate-800 m-0 mb-3">原始測驗紀錄明細</h4>
+          <table class="admin-table">
+            <thead><tr><th>時間</th><th>班級</th><th>座號</th><th>姓名</th><th>單元</th><th>題型</th><th>成績</th><th>錯題紀錄</th></tr></thead>
+            <tbody id="adminRecordsTbody"><tr><td colspan="8">載入資料中...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: 名單管理 -->
+      <div id="adminTabStudents" style="display:none;">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 mb-5">
+          <h4 class="font-black text-slate-800 m-0 mb-3">🧑‍🎓 單筆新增學生</h4>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+            <input id="singleAddSchool" type="text" placeholder="學校" class="p-2 border rounded-lg" />
+            <input id="singleAddClass" type="text" placeholder="班級 (例如: 六年一班)" class="p-2 border rounded-lg" />
+            <input id="singleAddNum" type="number" placeholder="座號" class="p-2 border rounded-lg" />
+            <input id="singleAddName" type="text" placeholder="姓名或遮罩" class="p-2 border rounded-lg" />
+            <input id="singleAddBook" type="text" placeholder="冊別 ID (sf1~sf8)" class="p-2 border rounded-lg" />
+          </div>
+          <button type="button" onclick="submitSingleStudent()" class="mt-3 px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg">➕ 儲存新增</button>
+          <div id="singleAddMsg" class="hidden"></div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200">
+          <div class="flex justify-between items-center mb-3">
+            <h4 class="font-black text-slate-800 m-0">📂 批次匯入學生名單 (CSV)</h4>
+            <button type="button" onclick="downloadStudentCsvTemplate()" class="px-3 py-1.5 bg-slate-100 text-slate-700 font-bold rounded-lg text-sm">📥 下載 CSV 範例檔</button>
+          </div>
+          <input id="batchCsvInput" type="file" accept=".csv" onchange="handleCsvFileSelect(event)" class="block w-full text-sm text-slate-600 mb-3" />
+          <div id="csvPreviewArea" class="hidden">
+            <p class="text-sm font-bold text-emerald-700">資料預覽 (成功解析 <span id="csvCount">0</span> 筆)</p>
+            <div class="max-h-60 overflow-y-auto border rounded-lg mb-3">
+              <table class="admin-table"><thead><tr><th>學校</th><th>班級</th><th>座號</th><th>姓名或遮罩</th><th>冊別 ID</th></tr></thead><tbody id="csvPreviewTbody"></tbody></table>
+            </div>
+            <div class="flex gap-2">
+              <button id="confirmBatchBtn" type="button" onclick="submitBatchStudents()" class="px-4 py-2 bg-emerald-600 text-white font-bold rounded-lg">🚀 確認無誤並匯入資料庫</button>
+              <button type="button" onclick="cancelBatchImport()" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold rounded-lg">取消重新上傳</button>
             </div>
           </div>
-        </section>
-      </main>
-    </div>
-
-    <!-- 面板 2：學生名單管理區塊 -->
-    <div id="adminTabStudents" style="display:none; width: 100%; padding-top: 20px;">
-      <!-- 單筆新增 -->
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6">
-        <h3 class="text-lg font-bold text-slate-800 mb-4">🧑‍🎓 單筆新增學生</h3>
-        <div class="flex flex-wrap gap-4 items-end">
-          <div class="flex-1 min-w-[100px]">
-            <label class="block text-sm font-bold text-slate-600 mb-1">學校</label>
-            <input type="text" id="singleAddSchool" class="w-full p-2 border border-slate-300 rounded-lg bg-slate-100 text-slate-500 focus:outline-none" value="南光國小" readonly>
-          </div>
-          <div class="flex-1 min-w-[120px]">
-            <label class="block text-sm font-bold text-slate-600 mb-1">班級 (例如: 六年一班)</label>
-            <input type="text" id="singleAddClass" class="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="填寫班級">
-          </div>
-          <div class="flex-1 min-w-[80px]">
-            <label class="block text-sm font-bold text-slate-600 mb-1">座號</label>
-            <input type="number" id="singleAddNum" class="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="例如: 1">
-          </div>
-          <div class="flex-1 min-w-[120px]">
-            <label class="block text-sm font-bold text-slate-600 mb-1">姓名或遮罩</label>
-            <input type="text" id="singleAddName" class="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="例如: 申O熙">
-          </div>
-          <div class="flex-1 min-w-[100px]">
-            <label class="block text-sm font-bold text-slate-600 mb-1">冊別 ID</label>
-            <input type="text" id="singleAddBook" class="w-full p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" value="sf7" placeholder="例如: sf7">
-          </div>
-          <button class="btn btn-success px-6 py-2 h-[42px]" onclick="submitSingleStudent()">➕ 儲存新增</button>
-        </div>
-        <div id="singleAddMsg" class="mt-3 hidden"></div>
-      </div>
-
-      <!-- 批次匯入 (CSV) -->
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-bold text-slate-800">📂 批次匯入學生名單 (CSV)</h3>
-          <button class="text-sm text-indigo-600 font-bold hover:underline" onclick="downloadStudentCsvTemplate()">📥 下載 CSV 範例檔</button>
-        </div>
-        
-        <div class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:bg-slate-50 transition">
-          <input type="file" id="batchCsvInput" accept=".csv" class="hidden" onchange="handleCsvFileSelect(event)">
-          <label for="batchCsvInput" class="cursor-pointer flex flex-col items-center justify-center">
-            <span class="text-4xl mb-2">📁</span>
-            <span class="font-bold text-slate-700 text-lg">點選或拖曳 CSV 檔案上傳</span>
-            <span class="text-sm text-slate-500 mt-1">請確保檔案包含「學校」、「班級」、「座號」、「姓名或遮罩」、「冊別 ID」欄位</span>
-          </label>
-        </div>
-        
-        <!-- 預覽與確認區塊 -->
-        <div id="csvPreviewArea" class="mt-6 hidden">
-          <div class="flex items-center justify-between mb-2">
-            <h4 class="font-bold text-slate-700">資料預覽 (成功解析 <span id="csvCount" class="text-indigo-600 font-black">0</span> 筆)</h4>
-          </div>
-          <div class="overflow-y-auto max-h-48 border border-slate-200 rounded-lg mb-4">
-            <table class="w-full text-left text-sm">
-              <thead class="bg-slate-100 text-slate-600 sticky top-0">
-                <tr>
-                  <th class="p-2 border-b border-slate-200">學校</th>
-                  <th class="p-2 border-b border-slate-200">班級</th>
-                  <th class="p-2 border-b border-slate-200">座號</th>
-                  <th class="p-2 border-b border-slate-200">姓名或遮罩</th>
-                  <th class="p-2 border-b border-slate-200">冊別 ID</th>
-                </tr>
-              </thead>
-              <tbody id="csvPreviewTbody" class="divide-y divide-slate-100"></tbody>
-            </table>
-          </div>
-          <div class="flex items-center gap-4">
-            <button id="confirmBatchBtn" class="btn btn-primary px-8 py-2" onclick="submitBatchStudents()">🚀 確認無誤並匯入資料庫</button>
-            <button class="btn btn-outline px-6 py-2" onclick="cancelBatchImport()">取消重新上傳</button>
-            <span id="batchAddMsg" class="text-sm hidden"></span>
-          </div>
+          <div id="batchAddMsg" class="hidden"></div>
         </div>
       </div>
-    </div>
 
-    <!-- 面板 3：考試指派與成效管理（含挑選學生重測、刪除試卷與示範音控制） -->
-    <div id="adminTabExams" style="display:none; width: 100%; padding-top: 20px;">
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-6">
-        <div class="flex justify-between items-center mb-3">
-          <h3 class="text-lg font-bold text-slate-800">📢 建立考卷（期中／期末定期考）</h3>
-          <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-1 rounded">單次鎖定・支援個別解鎖</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">考卷編號 (ID)</label>
-            <input type="text" id="adminExamId" class="w-full p-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-600 font-mono text-xs" readonly>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">測驗標題</label>
-            <input type="text" id="adminExamTitle" class="w-full p-2 border border-slate-300 rounded-lg text-sm" placeholder="例如: 114學年度 六年級英語期中定期評量">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">考試類型</label>
-            <select id="adminExamType" class="w-full p-2 border border-slate-300 rounded-lg text-sm font-bold">
+      <!-- Tab 3: 考試指派與成果 -->
+      <div id="adminTabExams" style="display:none;">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 mb-5">
+          <h4 class="font-black text-slate-800 m-0 mb-3">📢 建立考卷（期中／期末定期考）</h4>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-3">
+            <input id="adminExamId" type="text" placeholder="考卷編號 (ID)" class="p-2 border rounded-lg bg-slate-50" readonly />
+            <input id="adminExamTitle" type="text" placeholder="測驗標題" class="p-2 border rounded-lg" />
+            <select id="adminExamType" class="p-2 border rounded-lg">
               <option value="midterm">期中定期考 (Midterm)</option>
               <option value="final">期末定期考 (Final)</option>
             </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-indigo-700 mb-1">考卷適用冊別 (出題來源)</label>
-            <select id="adminExamBookSelect" class="w-full p-2 border-2 border-indigo-400 rounded-lg text-sm font-extrabold bg-indigo-50 text-indigo-900" onchange="onAdminExamBookChange()">
+            <select id="adminExamBookSelect" onchange="onAdminExamBookChange()" class="p-2 border rounded-lg">
               <option value="sf1">三年級上學期 (Super Fun 1)</option>
+              <option value="sf2">三年級下學期 (Super Fun 2)</option>
               <option value="sf3">四年級上學期 (Super Fun 3)</option>
+              <option value="sf4">四年級下學期 (Super Fun 4)</option>
               <option value="sf5">五年級上學期 (Super Fun 5)</option>
-              <option value="sf7" selected>六年級上學期 (Super Fun 7)</option>
+              <option value="sf6">五年級下學期 (Super Fun 6)</option>
+              <option value="sf7">六年級上學期 (Super Fun 7)</option>
+              <option value="sf8">六年級下學期 (Super Fun 8)</option>
             </select>
           </div>
-        </div>
-
-        <!-- 取消示範音檔核取方塊 -->
-        <div class="mb-4 bg-amber-50 p-3 rounded-lg border border-amber-200">
-          <label class="flex items-center gap-2 font-bold text-amber-900 text-sm cursor-pointer">
-            <input type="checkbox" id="adminDisableAudio" class="w-4 h-4 text-indigo-600 rounded">
-            <span>🔇 關閉口說示範音（純口說考核，不提供示範發音，學生直接看題朗讀）</span>
+          <label class="flex items-center gap-2 text-sm font-bold text-rose-700 mb-3">
+            <input id="adminDisableAudio" type="checkbox" /> 🔇 關閉口說示範音（純口說考核，不提供示範發音，學生直接看題朗讀）
           </label>
-        </div>
-
-        <div class="mb-4">
-          <label class="block text-xs font-bold text-slate-600 mb-1">施測班級（符合學生登入時自動推播）</label>
-          <div id="adminExamClassBoxes" class="flex flex-wrap gap-2 p-3 border border-slate-200 rounded-lg bg-slate-50 max-h-32 overflow-y-auto"></div>
-        </div>
-
-        <!-- 題庫按「單元」結構化呈現：聽力題庫 + 口說題庫 -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
-          <!-- 聽力題庫欄 -->
-          <div class="border border-slate-200 rounded-xl p-4">
-            <div class="flex justify-between items-center mb-2">
-              <strong class="text-sm text-blue-700">👂 題型一：多元聽力測驗</strong>
-              <span id="adminListeningCount" class="text-xs text-slate-500 font-bold">已選 0 題</span>
+          <div class="mb-3">
+            <div class="text-xs font-black text-slate-600 mb-1">施測班級（符合學生登入時自動推播）：</div>
+            <div id="adminExamClassBoxes" class="flex flex-wrap gap-2 p-2.5 bg-slate-50 rounded-xl border"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="flex justify-between font-black text-sm mb-1.5"><span>👂 題型一：多元聽力測驗</span><span id="adminListeningCount" class="text-indigo-600">已選 0 題</span></div>
+              <div class="mb-2">
+                <select id="adminListeningTypeFilter" onchange="onAdminListeningTypeChange()" class="w-full p-1.5 border border-indigo-200 rounded-lg text-xs font-black text-indigo-900 bg-white">
+                  <option value="listen_image">🖼️ 看圖選答案 (聽單字選圖片)</option>
+                  <option value="listen_tf">⭕❌ 是非判斷 (聽單字判圖文相符)</option>
+                  <option value="listen_response">💬 聽句選意 / 情境應答 (聽句子選中文)</option>
+                  <option value="listen_blank">✏️ 克漏字填空 (聽句子選空格單字)</option>
+                  <option value="listen_order">🧩 重組造句 (聽句子排列單字)</option>
+                </select>
+              </div>
+              <div id="adminListeningListContainer" class="max-h-56 overflow-y-auto space-y-2 text-xs"></div>
             </div>
-            <div id="adminListeningListContainer" class="max-h-80 overflow-y-auto space-y-3 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs"></div>
-          </div>
-
-          <!-- Phonics 口說欄 -->
-          <div class="border border-slate-200 rounded-xl p-4">
-            <div class="flex justify-between items-center mb-2">
-              <strong class="text-sm text-indigo-700">🔤 題型二：Phonics 發音 (口說)</strong>
-              <span id="adminPhonicsCount" class="text-xs text-slate-500 font-bold">已選 0 題</span>
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="flex justify-between font-black text-sm mb-2"><span>🔤 題型二：Phonics 發音 (口說)</span><span id="adminPhonicsCount" class="text-rose-600">已選 0 題</span></div>
+              <div id="adminPhonicsListContainer" class="max-h-64 overflow-y-auto space-y-2 text-xs"></div>
             </div>
-            <div id="adminPhonicsListContainer" class="max-h-80 overflow-y-auto space-y-3 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs"></div>
-          </div>
-
-          <!-- Lesson 句型口說欄 -->
-          <div class="border border-slate-200 rounded-xl p-4">
-            <div class="flex justify-between items-center mb-2">
-              <strong class="text-sm text-emerald-700">🧩 題型三：課本句型 (口說)</strong>
-              <span id="adminSentenceCount" class="text-xs text-slate-500 font-bold">已選 0 題</span>
+            <div class="border rounded-xl p-3 bg-slate-50">
+              <div class="flex justify-between font-black text-sm mb-2"><span>🧩 題型三：課本句型 (口說)</span><span id="adminSentenceCount" class="text-emerald-600">已選 0 題</span></div>
+              <div id="adminSentenceListContainer" class="max-h-64 overflow-y-auto space-y-2 text-xs"></div>
             </div>
-            <div id="adminSentenceListContainer" class="max-h-80 overflow-y-auto space-y-3 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs"></div>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <button type="button" onclick="saveAdminExamConfig()" class="px-5 py-2.5 bg-indigo-600 text-white font-black rounded-xl">🚀 發布／更新此考試</button>
+            <button type="button" onclick="initNewExamForm()" class="px-4 py-2.5 bg-slate-200 text-slate-800 font-bold rounded-xl">＋ 開新考卷</button>
+            <span id="adminExamSaveMsg" class="text-sm font-bold text-emerald-700"></span>
           </div>
         </div>
 
-        <div class="mt-5 flex gap-3 items-center">
-          <button class="btn btn-primary px-6 py-2" style="width:auto;" onclick="saveAdminExamConfig()">🚀 發布／更新此考試</button>
-          <button class="btn btn-outline px-4 py-2" style="width:auto;" onclick="initNewExamForm()">＋ 開新考卷</button>
-          <span id="adminExamSaveMsg" class="text-xs font-bold text-emerald-600 ml-2"></span>
-        </div>
-      </div>
-
-      <!-- 考卷列表與成績調閱（含連帶刪除與挑選學生重測按鈕） -->
-      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <h3 class="text-lg font-bold text-slate-800">📊 定期考成績名冊（按班級即時撈取，防當機）</h3>
-          <div class="flex flex-wrap gap-2 items-center">
-            <select id="examFilterExamId" class="p-2 border border-slate-300 rounded-lg text-xs font-bold" onchange="fetchAdminExamRecords()"></select>
-            <select id="examFilterClass" class="p-2 border border-slate-300 rounded-lg text-xs font-bold" onchange="fetchAdminExamRecords()"></select>
-            <button class="btn btn-outline" style="width:auto;padding:6px 12px;font-size:12px;" onclick="fetchAdminExamRecords()">🔄 重新整理</button>
-            <button class="btn btn-primary" style="width:auto;padding:6px 14px;font-size:12px;" onclick="exportExamRecordsCsv()">📥 匯出成績</button>
-            <button class="btn bg-rose-600 hover:bg-rose-700 text-white font-bold" style="width:auto;padding:6px 14px;font-size:12px;border:none;" onclick="handleDeleteCurrentExam()">🗑 刪除試卷與成績</button>
+        <div class="admin-table-box">
+          <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+            <h4 class="font-black text-slate-800 m-0">📊 定期考成績名冊</h4>
+            <div class="flex flex-wrap gap-2">
+              <select id="examFilterExamId" onchange="fetchAdminExamRecords()" class="p-2 border rounded-lg text-sm font-bold"><option value="">-- 請選擇考卷 --</option></select>
+              <select id="examFilterClass" onchange="fetchAdminExamRecords()" class="p-2 border rounded-lg text-sm font-bold"><option value="ALL">全部班級</option></select>
+              <button type="button" onclick="fetchAdminExamRecords()" class="px-3 py-1.5 bg-sky-600 text-white font-bold rounded-lg text-sm">🔄 重新整理</button>
+              <button type="button" onclick="exportExamRecordsCsv()" class="px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-sm">📥 匯出成績</button>
+              <button type="button" onclick="handleDeleteCurrentExam()" class="px-3 py-1.5 bg-rose-600 text-white font-bold rounded-lg text-sm">🗑 刪除試卷與成績</button>
+            </div>
           </div>
-        </div>
-
-        <div class="overflow-x-auto border border-slate-100 rounded-lg">
-          <table class="admin-table w-full text-left text-xs">
-            <thead class="bg-slate-100">
-              <tr>
-                <th class="p-2.5">交卷時間</th>
-                <th class="p-2.5">班級</th>
-                <th class="p-2.5 text-center">座號</th>
-                <th class="p-2.5">姓名</th>
-                <th class="p-2.5 text-right font-black">總成績</th>
-                <th class="p-2.5 text-center text-blue-700">聽力</th>
-                <th class="p-2.5 text-center">Phonics</th>
-                <th class="p-2.5 text-center">句型</th>
-                <th class="p-2.5">未通過題目</th>
-                <th class="p-2.5 text-center">重測操作</th>
-              </tr>
-            </thead>
-            <tbody id="adminExamRecordsTbody">
-              <tr><td colspan="10" class="text-center text-slate-400 py-6">請選擇考卷與班級開始查閱</td></tr>
-            </tbody>
+          <table class="admin-table">
+            <thead><tr><th>交卷時間</th><th>班級</th><th>座號</th><th>姓名</th><th>總成績</th><th>聽力</th><th>Phonics</th><th>句型</th><th>未通過題目</th><th>重測操作</th></tr></thead>
+            <tbody id="adminExamRecordsTbody"><tr><td colspan="10">請選擇考卷與班級開始查閱</td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ================== 學生使用說明彈窗（南光國小專屬，含麥克風排除） ================== -->
-<div class="admin-modal-wrapper" id="studentGuideModal" style="display:none;z-index:2500;padding:16px;">
-  <div style="background:#fff;width:100%;max-width:760px;max-height:88vh;border-radius:20px;display:flex;flex-direction:column;box-shadow:0 25px 50px rgba(0,0,0,0.25);overflow:hidden;">
-    <div style="padding:16px 20px;background:#f0fdf4;border-bottom:1px solid #bbf7d0;display:flex;justify-content:space-between;align-items:center;">
-      <strong id="student-guide-school-title" style="font-size:17px;color:#166534;">📖 學生英語自學與測驗指南</strong>
-      <button style="border:none;background:none;font-size:22px;cursor:pointer;color:#64748b;font-weight:bold;line-height:1;" onclick="closeStudentGuideModal()">✕</button>
-    </div>
-    <div style="padding:20px;overflow-y:auto;font-size:13.5px;color:#334155;line-height:1.65;">
-      <h4 style="margin:0 0 8px 0;color:#0f172a;font-size:15px;font-weight:800;">三步驟快速自主學習：</h4>
-      <ol style="margin:0 0 16px 0;padding-left:20px;">
-        <li><strong>驗證登入</strong>：選取自己的班級，輸入座號與完整姓名，按「驗證身分並開始上課」。</li>
-        <li><strong>選擇功能</strong>：
-          <ul>
-            <li><strong>🎧 教學音檔播放器</strong>：線上收聽課本 CD 音檔，支援上一首、下一首與進度調整。</li>
-            <li><strong>📚 學習與測驗</strong>：進入七大互動題庫練習單字、發音、口說與句型。若老師有指派定期考，首頁將直接顯示紅色作答按鈕！</li>
-          </ul>
-        </li>
-        <li><strong>挑選單元進度</strong>：第一層選學習題型，第二層選當週要複習的課次單元。</li>
-      </ol>
-
-      <h4 style="margin:16px 0 8px 0;color:#0f172a;font-size:15px;font-weight:800;">各題型玩法與操作要訣：</h4>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:16px;">
-        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
-          <strong style="color:#0f172a;">⚡ 閃示卡</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">看圖認字、中英對照，按「🔊 播放」聽外師正確發音。</span>
-        </div>
-        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
-          <strong style="color:#0f172a;">👂 看圖測驗</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">聽英文題目音檔，在 4 張圖片中選出正確代表圖。</span>
-        </div>
-        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
-          <strong style="color:#0f172a;">🔤 辨音測驗</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">仔細聆聽發音，從選項中找出拼寫完全正確的單字。</span>
-        </div>
-        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
-          <strong style="color:#0f172a;">🎙️ 口說測驗</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">聽完示範句後按「按下開始唸」對麥克風朗讀，AI 自動評分。</span>
-        </div>
-        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
-          <strong style="color:#0f172a;">📘 句子/故事跟讀</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">跟讀課本句型與 Story Time 對話，強化語調與口說流暢度。</span>
-        </div>
-        <div style="background:#f8fafc;padding:10px 12px;border-radius:10px;border:1px solid #e2e8f0;">
-          <strong style="color:#0f172a;">🧩 句型操練</strong><br>
-          <span style="font-size:12.5px;color:#64748b;">支援欄位換詞組句、填空選答，以及單字方塊拖曳排序造句。</span>
-        </div>
-      </div>
-
-      <!-- 口說測驗麥克風錯誤排除說明 -->
-      <div style="background:#fff7ed;padding:14px;border-radius:12px;border:1.5px solid #fdba74;margin-bottom:14px;">
-        <strong style="color:#c2410c;font-size:14px;display:flex;align-items:center;gap:6px;">
-          🛠️ 口說測驗・麥克風沒聲音／無法辨識排除步驟：
-        </strong>
-        <ul style="margin:6px 0 0 0;padding-left:20px;font-size:12.5px;color:#7c2d12;line-height:1.6;">
-          <li><strong>檢查權限</strong>：初次使用請務必點選「允許使用麥克風」。若曾點到封鎖，請點擊瀏覽器網址列最左側的<strong>「鎖頭」或「圖示」</strong>，將麥克風改為<strong>「允許」</strong>後重新整理頁面。</li>
-          <li><strong>建議瀏覽器</strong>：口說辨識功能採用最新網頁標準，請優先使用 <strong>Google Chrome</strong> 或 <strong>Microsoft Edge</strong> 瀏覽器。</li>
-          <li><strong>耳機插孔與開關</strong>：如果在電腦教室，請確認耳機麥克風插頭已牢固插入音訊孔，並檢查耳機線上是否有<strong>實體靜音開關</strong>被關閉。</li>
-          <li><strong>環境與音量</strong>：朗讀時請靠近麥克風、咬字清晰，並盡量在安靜環境中作答，避免環境噪音干擾 AI 辨識。</li>
-        </ul>
-      </div>
-
-      <div style="background:#eff6ff;padding:10px 14px;border-radius:10px;border-left:4px solid #3b82f6;font-size:12.5px;color:#1e40af;">
-        💡 <strong>系統提醒</strong>：完成看圖、辨音或口說測驗後，系統會自動將成績回傳至後台資料庫，不需截圖給老師！定期考交卷後將自動鎖定，重考需由老師解鎖。
-      </div>
-    </div>
-    <div style="padding:12px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;text-align:right;">
-      <button class="btn btn-outline" style="width:auto;padding:8px 24px;" onclick="closeStudentGuideModal()">關閉說明</button>
+  <!-- 彈窗 1：教師登入密碼驗證 -->
+  <div id="teacherAuthModal" class="admin-modal-wrapper">
+    <div class="login-box" style="max-width:360px;">
+      <h3>🔒 老師身分驗證</h3>
+      <p>請輸入教師專屬通行密碼</p>
+      <input type="password" id="modalPasscode" placeholder="請輸入通行密碼" onkeydown="if(event.key==='Enter') handleTeacherModalLogin()" />
+      <div id="modalLoginError" class="error-msg">密碼錯誤，請重新輸入</div>
+      <button type="button" class="login-btn mb-2" onclick="handleTeacherModalLogin()">進入成績後台</button>
+      <button type="button" class="btn btn-outline" onclick="closeTeacherAuthModal()">取消</button>
     </div>
   </div>
-</div>
 
-<!-- ================== 教師操作手冊彈窗（南光國小專屬，含麥克風排除） ================== -->
-<div class="admin-modal-wrapper" id="teacherGuideModal" style="display:none;z-index:2500;padding:16px;">
-  <div style="background:#fff;width:100%;max-width:850px;max-height:88vh;border-radius:20px;display:flex;flex-direction:column;box-shadow:0 25px 50px rgba(0,0,0,0.25);overflow:hidden;">
-    <div style="padding:16px 20px;background:#1e1b4b;color:white;display:flex;justify-content:space-between;align-items:center;">
-      <strong id="teacher-guide-school-title" style="font-size:17px;">📑 教師後台管理指南與數據解讀手冊</strong>
-      <button style="border:none;background:none;font-size:22px;cursor:pointer;color:#94a3b8;font-weight:bold;line-height:1;" onclick="closeTeacherGuideModal()">✕</button>
-    </div>
-    <div style="padding:20px;overflow-y:auto;font-size:13.5px;color:#334155;line-height:1.65;">
-      <h4 style="margin:0 0 8px 0;color:#1e1b4b;font-size:15px;font-weight:800;">📝 期中／期末口說考派卷流程：</h4>
-      <ul style="margin:0 0 16px 0;padding-left:20px;">
-        <li><strong>冊別連動</strong>：選擇要出題的冊別（如六年級選 sf7），題庫將自動切換為該年級專屬內容。</li>
-        <li><strong>單元化出題</strong>：Phonics 與 Lesson 句型已按課次完整分類，可點擊「全選」勾選整課，快速完成配題。</li>
-        <li><strong>示範音控制</strong>：可核取「關閉示範音」，進行純口說盲測考核。</li>
-        <li><strong>單次鎖定與個別解鎖</strong>：學生交卷後將自動鎖定無法重測；若需補考，老師可在成績名冊點擊「🔄 允許重測」解除該名學生鎖定。</li>
-        <li><strong>刪除試卷</strong>：選定考卷後點擊「🗑️ 刪除試卷與成績」，系統會同步將資料庫中的成績一併清空。</li>
-      </ul>
-
-      <h4 style="margin:16px 0 8px 0;color:#1e1b4b;font-size:15px;font-weight:800;">📊 數據看板核心解讀：</h4>
-      <ul style="margin:0 0 16px 0;padding-left:20px;">
-        <li><strong>高頻錯題排行 TOP 8</strong>：統計學生答錯頻率最高的單字，上課前可直接帶領全班加強盲點。</li>
-        <li><strong>優先關懷輔導名單</strong>：列出答對率偏低之學生，掌握需補救教學名單並安排課後輔導。</li>
-        <li><strong>自學練習量榜 & 高分精熟榜</strong>：激勵學生自主複習，可結合平時成績加分或課堂表揚。</li>
-        <li><strong>📥 匯出 Excel (CSV)</strong>：將測驗時間、班級、姓名、得分、總題數及錯題清單匯出留存。</li>
-      </ul>
-
-      <div style="background:#ecfdf5;padding:10px 14px;border-radius:10px;border-left:4px solid #10b981;font-size:12.5px;color:#065f46;">
-        🎧 <strong>CD 音檔播放器管理</strong>：<span id="teacher-guide-cd-desc">本平台可依學校設定開放或鎖定線上 CD 音檔播放功能，學生登入後可依冊別載入各單元曲目自學聆聽。</span>
+  <!-- 彈窗 2：學生使用說明 -->
+  <div id="studentGuideModal" class="admin-modal-wrapper">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 max-h-[85vh] overflow-y-auto shadow-2xl">
+      <div class="flex justify-between items-center mb-3">
+        <h3 id="student-guide-title" class="text-lg font-black text-sky-800 m-0">📖 學生英語自學與測驗指南</h3>
+        <button type="button" onclick="closeStudentGuideModal()" class="w-8 h-8 rounded-full bg-slate-100 font-black">✕</button>
       </div>
-    </div>
-    <div style="padding:12px 20px;background:#f8fafc;border-top:1px solid #e2e8f0;text-align:right;">
-      <button class="btn btn-primary" style="width:auto;padding:8px 24px;" onclick="closeTeacherGuideModal()">關閉手冊</button>
+      <div class="text-sm text-slate-700 space-y-2.5 leading-relaxed font-bold">
+        <p>🏝️ <strong>3D 英語島探索方式</strong>：用手指拖曳可 360° 旋轉海面，點擊島嶼或上方的漂浮名牌即可飛近預覽，也可直接按畫面下方的「◀ 上一座島 / 下一座島 ▶」自動巡航！</p>
+        <p>🚩 <strong>升起通關金旗</strong>：完成島上學習任務與測驗後，系統會自動上傳成績並在該座 3D 島嶼插上黃金通關旗幟！</p>
+        <p>🎙️ <strong>口說測驗小秘訣</strong>：初次使用請點選「允許使用麥克風」，建議使用 Chrome 或 Edge 瀏覽器，聽完「嗶」聲後靠近麥克風清晰朗讀。</p>
+      </div>
+      <button type="button" class="login-btn mt-4" onclick="closeStudentGuideModal()">我知道了，開始冒險！</button>
     </div>
   </div>
-</div>
 
-<script src="data/sf1-structured-data.js"></script><script src="data/sf3-structured-data.js"></script><script src="data/sf5-structured-data.js"></script><script src="data/sf7-structured-data.js"></script><script src="data/books.js"></script><script src="data/schools-config.js"></script><script src="data/students-map.js"></script><script src="data/pattern-drag-order-ux-patch.js"></script>
-<script src="js/core-auth.js"></script>
-<script src="js/practice.js"></script>
-<script src="js/pattern.js"></script>
-<script src="js/admin-dashboard.js"></script>
-<script src="js/exam.js"></script>
-<script src="js/admin-exam.js"></script>
-<script src="js/player.js"></script>
-
-<div id="unit-drawer-overlay" class="unit-drawer-overlay" onclick="if(event.target===this)closeUnitDrawer()">
-  <div class="unit-drawer-sheet">
-    <div class="unit-drawer-header">
-      <strong style="font-size:17px;color:#1e293b;">📚 請選擇要練習的單元</strong>
-      <button type="button" class="btn btn-outline" style="width:auto;padding:6px 12px;" onclick="closeUnitDrawer()">關閉 ✕</button>
+  <!-- 彈窗 3：教師手冊 -->
+  <div id="teacherGuideModal" class="admin-modal-wrapper">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 max-h-[85vh] overflow-y-auto shadow-2xl">
+      <div class="flex justify-between items-center mb-3">
+        <h3 id="teacher-guide-title" class="text-lg font-black text-indigo-900 m-0">📑 教師後台管理指南</h3>
+        <button type="button" onclick="closeTeacherGuideModal()" class="w-8 h-8 rounded-full bg-slate-100 font-black">✕</button>
+      </div>
+      <div class="text-sm text-slate-700 space-y-2 leading-relaxed font-bold">
+        <p>📝 <strong>定期考派卷</strong>：支援多元聽力、Phonics 與句型口說混合出題，學生登入 3D 英語島後會自動收到紅色定期評量登機證提醒。</p>
+        <p>🔄 <strong>單人重測解鎖</strong>：正式測驗交卷後會自動鎖定，若需補考可於成績名冊點擊「允許重測」。</p>
+      </div>
+      <button type="button" class="login-btn mt-4" onclick="closeTeacherGuideModal()">關閉手冊</button>
     </div>
-    <div id="unit-drawer-grid" class="unit-card-grid"></div>
   </div>
-</div>
 
+  <!-- 載入專案腳本（順序不可更動） -->
+  <script src="data/school-config.js"></script>
+  <script src="data/sf1-structured-data.js"></script>
+  <script src="data/sf2-structured-data.js"></script>
+  <script src="data/sf3-structured-data.js"></script>
+  <script src="data/sf4-structured-data.js"></script>
+  <script src="data/sf5-structured-data.js"></script>
+  <script src="data/sf6-structured-data.js"></script>
+  <script src="data/sf7-structured-data.js"></script>
+  <script src="data/sf8-structured-data.js"></script>
+  <script src="data/books.js"></script>
+  <script src="data/students-map.js"></script>
+  <script src="js/world-art.js"></script>
+  <script src="js/app-core.js"></script>
+  <script src="js/practice-modes.js"></script>
+  <script src="js/official-exam.js"></script>
+  <script src="js/teacher-admin.js"></script>
+  <script src="js/world-3d-engine.js"></script>
 </body>
 </html>

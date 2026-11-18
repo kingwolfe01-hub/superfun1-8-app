@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Fun 3D 立體英語島 v6 - 即時氣象台＋月相陰晴圓缺展示室</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/renderers/CSS2DRenderer.js"></script>
+</head>
+<body>
+  <div id="main-menu-wrapper" class="main-menu-wrapper world-3d-shell" style="display:flex;">
+    <div id="world-3d-viewport" class="world-3d-viewport">
+      <canvas id="world-3d-canvas"></canvas>
+      <div id="world-3d-labels" class="world-3d-labels"></div>
+    </div>
+
+    <header class="world-topbar hud-glass">
+      <div class="world-topbar-inner flex-wrap">
+        <div class="world-brand">
+          <span class="world-brand-icon">🏝️</span>
+          <div>
+            <div class="leading-tight">Super Fun 3D 英語島 v6（即時氣象＋月相系統）</div>
+            <div id="weather-status-label" class="text-[11px] font-bold text-emerald-700">☀️ 晴天（定位連線中...）</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="moon-phase-label" class="text-xs font-black bg-indigo-50 text-indigo-800 px-2.5 py-1 rounded-full border border-indigo-200">🌕 月相</span>
+          <div class="flex items-center gap-1 bg-white px-2 py-1 rounded-full border border-sky-200">
+            <button type="button" data-weather="sunny" onclick="window.set3DWeather && window.set3DWeather('sunny', '手動切換')" class="weather-mode-btn active px-2 py-0.5 rounded-full text-xs font-black cursor-pointer">☀️ 晴天</button>
+            <button type="button" data-weather="cloudy" onclick="window.set3DWeather && window.set3DWeather('cloudy', '手動切換')" class="weather-mode-btn px-2 py-0.5 rounded-full text-xs font-black cursor-pointer">☁️ 陰天</button>
+            <button type="button" data-weather="rainy" onclick="window.set3DWeather && window.set3DWeather('rainy', '手動切換')" class="weather-mode-btn px-2 py-0.5 rounded-full text-xs font-black cursor-pointer">🌧️ 雨天</button>
+            <button type="button" onclick="window.fetchLiveSchoolWeather && window.fetchLiveSchoolWeather()" class="px-2 py-0.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 cursor-pointer">📡 同步氣象台</button>
+          </div>
+          <div class="flex items-center gap-1.5 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">
+            <label class="text-xs font-black text-sky-900 inline-flex items-center gap-1">
+              <input type="checkbox" id="auto-realtime-chk" checked onchange="window.toggleAutoRealTime && window.toggleAutoRealTime(this.checked)" />
+              <span>🕒 即時</span>
+            </label>
+            <input type="range" id="day-night-slider" min="0" max="24" step="0.5" value="11.5" class="w-20 accent-sky-600" oninput="window.set3DTimeOfDay && window.set3DTimeOfDay(parseFloat(this.value))" />
+            <span id="time-display-label" class="text-xs font-black text-sky-800">即時</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="world-bottom-dock">
+      <div class="world-filter-bar hud-glass">
+        <button type="button" class="world-filter-tab active" onclick="demoFilter('all', this)">🗺️ 全部</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('phonics', this)">🎈 發音</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('lesson1', this)">1️⃣ Lesson 1</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('lesson2', this)">2️⃣ Lesson 2</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('lesson3', this)">3️⃣ Lesson 3</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('lesson4', this)">4️⃣ Lesson 4</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('topic1_story', this)">🏮 Topic 1 Story</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('topic2_story', this)">🏰 Topic 2 Story</button>
+        <button type="button" class="world-filter-tab" onclick="demoFilter('festival', this)">🎡 節慶</button>
+      </div>
+
+      <div class="nav-wheel-bar hud-glass">
+        <button type="button" class="wheel-nav-btn" onclick="window.navigate3DIsland && window.navigate3DIsland(-1)">◀ 上一座島</button>
+        <button type="button" class="wheel-center-btn" onclick="window.reset3DCameraView && window.reset3DCameraView()">🧭 回到全景</button>
+        <button type="button" class="wheel-nav-btn" onclick="window.navigate3DIsland && window.navigate3DIsland(1)">下一座島 ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../data/school-config.js"></script>
+  <script>
+    window.getAvailableMissionsForUnit = function() { return [1, 2, 3]; };
+    window.openStationPreviewDrawer = function(id) { console.log('預覽島嶼:', id); };
+    const demoCatalog = [
+      { id: 'u_rev', title: '全冊總複習紀念碑', category: 'review' },
+      { id: 'u_ls1', title: 'Lesson 1 單字句型', category: 'lesson1' },
+      { id: 'u_ls2', title: 'Lesson 2 單字句型', category: 'lesson2' },
+      { id: 'u_ls3', title: 'Lesson 3 單字句型', category: 'lesson3' },
+      { id: 'u_ls4', title: 'Lesson 4 單字句型', category: 'lesson4' },
+      { id: 'u_st1', title: 'Topic 1 - Story Time', category: 'topic1_story' },
+      { id: 'u_st2', title: 'Topic 2 - Story Time', category: 'topic2_story' },
+      { id: 'u_ph1', title: 'Phonics 發音熱氣球', category: 'phonics' },
+      { id: 'u_ft1', title: 'Festival 節慶摩天輪', category: 'festival' }
+    ];
+    const demoProgress = { u_ls1: { a: { completed: true }, b: { completed: true }, c: { completed: true } } };
+    function demoFilter(cat, btn) {
+      document.querySelectorAll('.world-filter-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      if (window.render3DWorldFromCatalog) window.render3DWorldFromCatalog(demoCatalog, demoProgress, cat);
+    }
+  </script>
+  <script src="../js/world-3d-engine.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.render3DWorldFromCatalog) window.render3DWorldFromCatalog(demoCatalog, demoProgress, 'all');
+    });
+  </script>
+</body>
+</html>
