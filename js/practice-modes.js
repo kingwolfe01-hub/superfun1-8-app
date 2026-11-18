@@ -247,8 +247,15 @@ function getAvailableMissionsForUnit(unit) {
     missions.push({ key: 'phonicsQuiz', name: '🔤 單字辨音拼寫', desc: '仔細聆聽發音，選出拼寫正確的單字', isScored: true });
   }
   if (hasSentences) {
-    missions.push({ key: 'sentencePractice', name: '📘 核心句子跟讀', desc: '逐句聆聽示範句並練習開口跟讀', isScored: false });
-    missions.push({ key: 'speaking', name: '🎙️ 課文句型口說測驗', desc: 'AI 語音辨識評分，完成後成績上傳後台', isScored: true });
+    const isLessonUnit = /^lesson[1-4]$/.test(unit.category || '');
+    if (isLessonUnit) {
+      missions.push({ key: 'sentencePractice', name: '📘 核心句子聆聽學習', desc: '逐句聆聽外師示範發音與中英對照', isScored: false });
+      missions.push({ key: 'sentenceListenEn', name: '🎧 句子聽力測驗（選英文）', desc: '聆聽句子發音，選出正確的英文句子', isScored: true });
+      missions.push({ key: 'sentenceListenZh', name: '💬 句子聽力測驗（選中文）', desc: '聆聽句子發音，選出正確的中文意思', isScored: true });
+    } else {
+      missions.push({ key: 'sentencePractice', name: '📘 核心句子跟讀', desc: '逐句聆聽示範句並練習開口跟讀', isScored: false });
+      missions.push({ key: 'speaking', name: '🎙️ 課文句型口說測驗', desc: 'AI 語音辨識評分，完成後成績上傳後台', isScored: true });
+    }
   }
   if (hasStories) {
     missions.push({ key: 'storyRead', name: '📖 Story Time 故事閱讀', desc: '完整故事雙語對照、點擊發音與全篇連播', isScored: false });
@@ -320,11 +327,14 @@ function launchUnitMission(modeKey) {
     document.getElementById('vocab-smart-back-btn').textContent = '← 返回 3D 英語島';
   }
 
+  const isLessonUnit = /^lesson[1-4]$/.test(selectedUnitObj.category || '');
   const modeTitleMap = {
     flashcard: '⚡ 單字閃示卡',
     listening: '👂 看圖聽力測驗',
     phonicsQuiz: '🔤 單字辨音拼寫',
-    sentencePractice: '📘 核心句子跟讀',
+    sentencePractice: isLessonUnit ? '📘 核心句子聆聽學習' : '📘 核心句子跟讀',
+    sentenceListenEn: '🎧 句子聽力測驗（選英文）',
+    sentenceListenZh: '💬 句子聽力測驗（選中文）',
     speaking: '🎙️ 課文句型口說測驗',
     storyRead: '📖 Story Time 故事閱讀',
     storyListening: '🎧 Story Time 故事聽力測驗'
@@ -334,6 +344,11 @@ function launchUnitMission(modeKey) {
   document.getElementById('vocab-header-subtitle').textContent = modeTitleMap[modeKey] || '';
   setActiveVocabView(modeKey + '-mode');
   refreshMissionMenuBadges();
+
+  const micBtn = document.getElementById('sentence-practice-mic-btn');
+  if (micBtn) {
+    micBtn.style.display = isLessonUnit ? 'none' : 'flex';
+  }
 
   if (modeKey === 'flashcard') {
     activeWordList = selectedUnitObj.words || [];
@@ -347,6 +362,12 @@ function launchUnitMission(modeKey) {
   } else if (modeKey === 'sentencePractice') {
     activeWordList = selectedUnitObj.sentences || [];
     updateSentencePractice();
+  } else if (modeKey === 'sentenceListenEn') {
+    activeWordList = selectedUnitObj.sentences || [];
+    restartSentenceListenEnQuiz();
+  } else if (modeKey === 'sentenceListenZh') {
+    activeWordList = selectedUnitObj.sentences || [];
+    restartSentenceListenZhQuiz();
   } else if (modeKey === 'speaking') {
     activeWordList = selectedUnitObj.sentences || [];
     restartSpeakingQuiz();
@@ -532,6 +553,166 @@ function startSentenceSpeechRecognition() {
   if (!item) return;
   const text = getItemText(item).replace(/[.?!,]/g, '').trim();
   startGenericRecognition({ word: text, sentence: text, meaning: '' }, 'sentence-feedback');
+}
+
+function getBookSentencePool() {
+  return [
+    ...Object.values(currentBook?.sentenceUnits || {}).flat(),
+    ...Object.values(currentBook?.dailyTalkUnits || {}).flat()
+  ];
+}
+
+// 關卡 5A：句子聽力測驗（聽聲音選出正確的英文句子）
+function restartSentenceListenEnQuiz() {
+  const validItems = safeList().filter(item => getItemText(item));
+  currentQuizList = shuffle(validItems);
+  quizIndex = 0; score = 0; wrongWords = [];
+  document.getElementById('sentence-listen-en-quiz-view').style.display = 'block';
+  document.getElementById('sentence-listen-en-result-view').style.display = 'none';
+  if (!currentQuizList.length) {
+    document.getElementById('sentence-listen-en-quiz-view').innerHTML = '<h3>此單元尚無可用句子題目</h3>';
+    return;
+  }
+  loadSentenceListenEnQuestion();
+}
+
+function loadSentenceListenEnQuestion() {
+  if (quizIndex >= currentQuizList.length) { showSimpleResult('sentenceListenEn'); return; }
+  const cur = currentQuizList[quizIndex];
+  document.getElementById('sentence-listen-en-progress').innerText = `題目 ${quizIndex + 1} / ${currentQuizList.length}`;
+  const fb = document.getElementById('sentence-listen-en-feedback');
+  fb.className = 'feedback-box';
+  fb.innerHTML = '';
+
+  const correctEn = getItemText(cur).trim();
+  const opts = [correctEn];
+  const seenNorm = new Set([normalizeText(correctEn)]);
+
+  const pickDistractors = (pool) => {
+    for (const r of shuffle(pool)) {
+      if (opts.length >= 4) break;
+      const cand = getItemText(r).trim();
+      const norm = normalizeText(cand);
+      if (cand && norm && !seenNorm.has(norm)) {
+        seenNorm.add(norm);
+        opts.push(cand);
+      }
+    }
+  };
+  pickDistractors(safeList());
+  if (opts.length < 4) pickDistractors(getBookSentencePool());
+
+  const box = document.getElementById('sentence-listen-en-options');
+  box.innerHTML = '';
+  shuffle(opts).forEach(choiceEn => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-outline';
+    btn.style.cssText = 'padding:13px 16px;font-size:1.02rem;text-align:left;justify-content:flex-start;line-height:1.4;';
+    btn.textContent = choiceEn;
+    btn.onclick = () => checkSentenceListenEnAnswer(choiceEn, cur);
+    box.appendChild(btn);
+  });
+  if (audioUnlocked) playAudio(cur);
+}
+
+function playSentenceListenEnAudio() {
+  playAudio(currentQuizList[quizIndex]);
+}
+
+function checkSentenceListenEnAnswer(selectedEn, curItem) {
+  document.querySelectorAll('#sentence-listen-en-options button').forEach(b => b.disabled = true);
+  const fb = document.getElementById('sentence-listen-en-feedback');
+  const correctEn = getItemText(curItem);
+  const meaningZh = getItemMeaning(curItem);
+  if (normalizeText(selectedEn) === normalizeText(correctEn)) {
+    score++;
+    playTone(659.25, 'sine', 0.15);
+    fb.className = 'feedback-box correct';
+    fb.innerHTML = `🎉 答對了！<br>${escapeHtml(correctEn)}${meaningZh ? '（' + escapeHtml(meaningZh) + '）' : ''}`;
+    setTimeout(() => { quizIndex++; loadSentenceListenEnQuestion(); }, 950);
+  } else {
+    wrongWords.push(curItem);
+    playTone(329.63, 'sawtooth', 0.25);
+    fb.className = 'feedback-box incorrect';
+    fb.innerHTML = `正確句子：<strong>${escapeHtml(correctEn)}</strong>${meaningZh ? '<br>中文意思：' + escapeHtml(meaningZh) : ''}`;
+    setTimeout(() => { quizIndex++; loadSentenceListenEnQuestion(); }, 1800);
+  }
+}
+
+// 關卡 5B：句子聽力測驗（聽聲音選出正確的中文句子）
+function restartSentenceListenZhQuiz() {
+  const validItems = safeList().filter(item => getItemText(item) && getItemMeaning(item));
+  currentQuizList = shuffle(validItems);
+  quizIndex = 0; score = 0; wrongWords = [];
+  document.getElementById('sentence-listen-zh-quiz-view').style.display = 'block';
+  document.getElementById('sentence-listen-zh-result-view').style.display = 'none';
+  if (!currentQuizList.length) {
+    document.getElementById('sentence-listen-zh-quiz-view').innerHTML = '<h3>此單元尚無可用中文句意題目</h3>';
+    return;
+  }
+  loadSentenceListenZhQuestion();
+}
+
+function loadSentenceListenZhQuestion() {
+  if (quizIndex >= currentQuizList.length) { showSimpleResult('sentenceListenZh'); return; }
+  const cur = currentQuizList[quizIndex];
+  document.getElementById('sentence-listen-zh-progress').innerText = `題目 ${quizIndex + 1} / ${currentQuizList.length}`;
+  const fb = document.getElementById('sentence-listen-zh-feedback');
+  fb.className = 'feedback-box';
+  fb.innerHTML = '';
+
+  const correctZh = getItemMeaning(cur).trim();
+  const opts = [correctZh];
+  const seenZh = new Set([correctZh.toLowerCase()]);
+
+  const pickDistractors = (pool) => {
+    for (const r of shuffle(pool)) {
+      if (opts.length >= 4) break;
+      const cand = getItemMeaning(r).trim();
+      if (cand && !seenZh.has(cand.toLowerCase())) {
+        seenZh.add(cand.toLowerCase());
+        opts.push(cand);
+      }
+    }
+  };
+  pickDistractors(safeList());
+  if (opts.length < 4) pickDistractors(getBookSentencePool());
+
+  const box = document.getElementById('sentence-listen-zh-options');
+  box.innerHTML = '';
+  shuffle(opts).forEach(choiceZh => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-outline';
+    btn.style.cssText = 'padding:13px 16px;font-size:1rem;text-align:left;justify-content:flex-start;line-height:1.4;';
+    btn.textContent = choiceZh;
+    btn.onclick = () => checkSentenceListenZhAnswer(choiceZh, cur);
+    box.appendChild(btn);
+  });
+  if (audioUnlocked) playAudio(cur);
+}
+
+function playSentenceListenZhAudio() {
+  playAudio(currentQuizList[quizIndex]);
+}
+
+function checkSentenceListenZhAnswer(selectedZh, curItem) {
+  document.querySelectorAll('#sentence-listen-zh-options button').forEach(b => b.disabled = true);
+  const fb = document.getElementById('sentence-listen-zh-feedback');
+  const correctZh = getItemMeaning(curItem).trim();
+  const correctEn = getItemText(curItem);
+  if (selectedZh === correctZh) {
+    score++;
+    playTone(659.25, 'sine', 0.15);
+    fb.className = 'feedback-box correct';
+    fb.innerHTML = `🎉 答對了！<br>${escapeHtml(correctEn)}`;
+    setTimeout(() => { quizIndex++; loadSentenceListenZhQuestion(); }, 950);
+  } else {
+    wrongWords.push(curItem);
+    playTone(329.63, 'sawtooth', 0.25);
+    fb.className = 'feedback-box incorrect';
+    fb.innerHTML = `正確意思：<strong>${escapeHtml(correctZh)}</strong><br>英文原句：${escapeHtml(correctEn)}`;
+    setTimeout(() => { quizIndex++; loadSentenceListenZhQuestion(); }, 1800);
+  }
 }
 
 function restartSpeakingQuiz() {
@@ -893,8 +1074,22 @@ function showSimpleResult(type) {
   submitQuizRecord(type, score, total, wrongWords);
   const uploadTipHtml = `<p id="${type}-upload-tip" class="text-xs font-bold text-slate-500 my-2">☁️ 正在同步記錄中...</p>`;
   const backMissionBtn = selectedUnitObj ? `<button type="button" class="btn btn-outline mt-2" onclick="openUnitMissionMenu('${selectedUnitObj.id}', false)">← 返回本單元任務選單</button>` : '';
-  const restartMap = { listening: 'restartListeningQuiz()', phonicsQuiz: 'restartPhonicsQuiz()', speaking: 'restartSpeakingQuiz()', storyListening: 'restartStoryListeningQuiz()' };
-  const viewPrefixMap = { listening: 'listening', phonicsQuiz: 'phonics', speaking: 'speaking', storyListening: 'story-listen' };
+  const restartMap = {
+    listening: 'restartListeningQuiz()',
+    phonicsQuiz: 'restartPhonicsQuiz()',
+    sentenceListenEn: 'restartSentenceListenEnQuiz()',
+    sentenceListenZh: 'restartSentenceListenZhQuiz()',
+    speaking: 'restartSpeakingQuiz()',
+    storyListening: 'restartStoryListeningQuiz()'
+  };
+  const viewPrefixMap = {
+    listening: 'listening',
+    phonicsQuiz: 'phonics',
+    sentenceListenEn: 'sentence-listen-en',
+    sentenceListenZh: 'sentence-listen-zh',
+    speaking: 'speaking',
+    storyListening: 'story-listen'
+  };
   const prefix = viewPrefixMap[type];
   document.getElementById(`${prefix}-quiz-view`).style.display = 'none';
   const resEl = document.getElementById(`${prefix}-result-view`);

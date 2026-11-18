@@ -348,7 +348,7 @@
             <div>
               <div class="btn-group mb-2">
                 <button type="button" class="btn btn-primary" onclick="playCurrentSentenceAudio()">🔊 播放示範句</button>
-                <button type="button" class="btn btn-success" onclick="startSentenceSpeechRecognition()">🎙️ 開始跟讀練習</button>
+                <button id="sentence-practice-mic-btn" type="button" class="btn btn-success" onclick="startSentenceSpeechRecognition()">🎙️ 開始跟讀練習</button>
               </div>
               <div class="nav-row">
                 <button type="button" class="btn btn-outline" onclick="prevSentenceItem()">⬅️ 上一句</button>
@@ -373,6 +373,34 @@
               </div>
             </div>
             <div id="speaking-result-view" class="card-box text-center" style="display:none;"></div>
+          </div>
+
+          <!-- 關卡 5A：句子聽力測驗（聽聲音選出正確的英文句子） -->
+          <div id="sentenceListenEn-mode" class="mode-section">
+            <div id="sentence-listen-en-quiz-view">
+              <div class="text-center mb-2"><span id="sentence-listen-en-progress" class="progress-badge">題目 1 / 1</span></div>
+              <div class="card-box">
+                <button type="button" class="btn btn-primary mb-2" onclick="playSentenceListenEnAudio()">🔊 聆聽句子發音</button>
+                <p class="text-sm font-bold text-slate-600 m-0">請選出你聽到的正確英文句子：</p>
+                <div id="sentence-listen-en-options" class="flex flex-col gap-2.5 w-full mt-3"></div>
+                <div id="sentence-listen-en-feedback" class="feedback-box"></div>
+              </div>
+            </div>
+            <div id="sentence-listen-en-result-view" class="card-box text-center" style="display:none;"></div>
+          </div>
+
+          <!-- 關卡 5B：句子聽力測驗（聽聲音選出正確的中文句子） -->
+          <div id="sentenceListenZh-mode" class="mode-section">
+            <div id="sentence-listen-zh-quiz-view">
+              <div class="text-center mb-2"><span id="sentence-listen-zh-progress" class="progress-badge">題目 1 / 1</span></div>
+              <div class="card-box">
+                <button type="button" class="btn btn-primary mb-2" onclick="playSentenceListenZhAudio()">🔊 聆聽句子發音</button>
+                <p class="text-sm font-bold text-slate-600 m-0">請選出這句話的正確中文意思：</p>
+                <div id="sentence-listen-zh-options" class="flex flex-col gap-2.5 w-full mt-3"></div>
+                <div id="sentence-listen-zh-feedback" class="feedback-box"></div>
+              </div>
+            </div>
+            <div id="sentence-listen-zh-result-view" class="card-box text-center" style="display:none;"></div>
           </div>
 
           <!-- 關卡 6：Story Time 故事雙語閱讀 -->
@@ -429,6 +457,8 @@
             <option value="ALL">全部題型</option>
             <option value="listening">👂 看圖測驗</option>
             <option value="phonicsQuiz">🔤 辨音測驗</option>
+            <option value="sentenceListenEn">🎧 句子聽力(英)</option>
+            <option value="sentenceListenZh">💬 句子聽力(中)</option>
             <option value="speaking">🎙️ 口說測驗</option>
             <option value="storyListening">📖 故事聽力</option>
           </select>

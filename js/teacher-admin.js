@@ -2,6 +2,8 @@
 const modeNames = {
   listening: '看圖測驗',
   phonicsQuiz: '辨音測驗',
+  sentenceListenEn: '句子聽力(英)',
+  sentenceListenZh: '句子聽力(中)',
   speaking: '口說測驗',
   storyListening: '故事聽力測驗'
 };
