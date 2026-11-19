@@ -446,4 +446,165 @@ table.admin-table th { background: #f8fafc; color: #475569; font-weight: 900; }
 
 .weather-mode-btn.active { background: #0284c7 !important; color: #ffffff !important; border-color: #0284c7 !important; }
 
-@media (max-width: 639px) { .nav-wheel-bar { flex-wrap: wrap; justify-content: center; border-radius: 22px; padding: 6px 10px; gap: 6px; } .wheel-nav-btn, .wheel-center-btn { padding: 6px 11px; font-size: 0.8rem; } }
+/* =========================================================
+   手機版專屬響應式排版優化 (< 768px) - 僅作用於小螢幕，不影響電腦/平板
+   ========================================================= */
+@media (max-width: 767px) {
+  /* 1. 頂部導覽列：單行緊湊配置＋避開 iPhone 動態島／瀏海 */
+  .world-topbar {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .world-topbar-inner {
+    padding: 7px 10px;
+    gap: 6px;
+  }
+  .world-brand {
+    gap: 7px;
+    font-size: 0.92rem;
+    min-width: 0;
+  }
+  .world-brand > div {
+    min-width: 0;
+  }
+  .world-brand > div > div:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #dynamic-school-header {
+    font-size: 10px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .world-brand-icon {
+    padding: 4px 7px;
+    font-size: 1rem;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .world-status-pills {
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .stamp-counter-pill {
+    padding: 4px 8px;
+    font-size: 0.74rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .logout-mini-btn {
+    padding: 4px 9px;
+    font-size: 0.74rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* 2. 手機版定期考橫幅位置下移避免遮擋頂部 */
+  .mobile-exam-banner {
+    top: calc(54px + env(safe-area-inset-top, 0px));
+    left: 10px;
+    right: 10px;
+    padding: 8px 11px;
+    border-radius: 14px;
+  }
+
+  /* 3. 底部控制塢與分類篩選列：修復膠囊異常拉高，還原精緻單行橫向滑動列 */
+  .world-bottom-dock {
+    bottom: max(8px, env(safe-area-inset-bottom, 8px));
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .world-bottom-dock .world-filter-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+    padding: 5px 8px;
+    gap: 6px;
+    border-radius: 999px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .world-bottom-dock .world-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .world-filter-tab,
+  .world-filter-select {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    padding: 0 11px;
+    font-size: 0.76rem;
+    line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 999px;
+  }
+  .world-filter-select {
+    padding-right: 10px;
+  }
+
+  /* 4. 底部導覽輪盤：全部按鈕壓縮在同一行不折行 */
+  .nav-wheel-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    max-width: 100%;
+    padding: 5px 8px;
+    gap: 4px;
+    border-radius: 999px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-wheel-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .wheel-nav-btn,
+  .wheel-center-btn,
+  .wheel-cd-btn,
+  .nav-wheel-bar .weather-mode-btn {
+    height: 32px;
+    padding: 0 8px;
+    font-size: 0.74rem;
+    line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 5. 3D 島嶼漂浮名牌緊湊化：減少窄螢幕重疊與裁切 */
+  .island-floating-tag {
+    padding: 3px 7px;
+    border-radius: 12px;
+    border-width: 2px;
+    max-width: 118px;
+  }
+  .island-tag-title {
+    font-size: 10.5px;
+    line-height: 1.2;
+  }
+  .island-tag-badge {
+    font-size: 9.5px;
+    line-height: 1.15;
+  }
+
+  /* 6. 登島預覽抽屜卡避開底部控制列 */
+  .station-preview-drawer {
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+    padding: 13px 15px;
+    border-radius: 20px;
+  }
+}
