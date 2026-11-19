@@ -119,7 +119,19 @@ function handleStudentLogin() {
         }
         if (serverBookId && typeof bookData !== 'undefined' && bookData[serverBookId]) {
           const baseClassInfo = (typeof getClassBookInfo === 'function') ? (getClassBookInfo(school, gradeClass) || {}) : {};
-          resolved = { ok: true, classInfo: { ...baseClassInfo, bookId: serverBookId }, book: bookData[serverBookId] };
+          const targetBook = bookData[serverBookId];
+          const bookNumMatch = String(serverBookId).match(/(\d+)/);
+          const inferredSemester = targetBook.semester || (bookNumMatch ? (parseInt(bookNumMatch[1], 10) % 2 === 1 ? '上學期' : '下學期') : (baseClassInfo.semester || ''));
+          resolved = {
+            ok: true,
+            classInfo: {
+              ...baseClassInfo,
+              grade: targetBook.grade || baseClassInfo.grade || '',
+              semester: inferredSemester,
+              bookId: serverBookId
+            },
+            book: targetBook
+          };
         }
         if (!resolved || !resolved.ok) {
           showError(resolved ? resolved.message : '對應不到冊別資訊，請檢查教材設定檔。');
